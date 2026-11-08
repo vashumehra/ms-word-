@@ -3,59 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CapCut Web Studio - Video Editor &amp; Auto Captions</title>
+  <title>VASHU Video Studio - AI Video Editor &amp; 9:16 Shorts</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     * { font-family: 'Plus Jakarta Sans', sans-serif; user-select: none; }
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
-    .capcut-bg { background-color: #121214; }
-    .capcut-panel { background-color: #1a1a1e; }
-    .capcut-darker { background-color: #141416; }
-    .capcut-border { border-color: #27272a; }
+    .vashu-bg { background-color: #121214; }
+    .vashu-panel { background-color: #1a1a1e; }
+    .vashu-darker { background-color: #141416; }
+    .vashu-border { border-color: #27272a; }
   </style>
 </head>
-<body class="capcut-bg text-slate-200 h-screen w-screen overflow-hidden flex flex-col text-xs">
+<body class="vashu-bg text-slate-200 h-screen w-screen overflow-hidden flex flex-col text-xs">
 
   <!-- 1. TOP HEADER NAVIGATION -->
-  <header class="h-11 border-b capcut-border capcut-panel px-4 flex items-center justify-between shrink-0">
+  <header class="h-12 border-b vashu-border vashu-panel px-4 flex items-center justify-between shrink-0">
     <div class="flex items-center gap-3">
-      <!-- CapCut Logo Icon -->
+      <!-- VASHU Branding Logo -->
       <div class="flex items-center gap-2">
-        <div class="w-6 h-6 bg-gradient-to-tr from-cyan-400 to-blue-500 rounded flex items-center justify-center font-black text-black text-sm">C</div>
-        <span class="font-bold text-sm text-white tracking-wide">CapCut <span class="text-slate-400 font-normal text-xs">Web Studio</span></span>
+        <div class="w-7 h-7 bg-gradient-to-tr from-cyan-400 via-teal-400 to-indigo-500 rounded-lg flex items-center justify-center font-black text-black text-sm shadow-md shadow-cyan-500/20">V</div>
+        <div class="flex flex-col">
+          <span class="font-extrabold text-sm text-white tracking-wider flex items-center gap-1.5">
+            VASHU <span class="text-teal-400 text-xs font-bold">Studio</span>
+          </span>
+          <span class="text-[9px] text-zinc-500 font-semibold -mt-0.5">Pro AI Video Editor</span>
+        </div>
       </div>
-      <div class="h-4 w-[1px] bg-zinc-700 mx-1"></div>
-      <span class="text-zinc-400 hover:text-white cursor-pointer transition">Untitled Project</span>
+      <div class="h-4 w-[1px] bg-zinc-700 mx-2"></div>
+      <span class="text-zinc-400 hover:text-white cursor-pointer transition text-[11px]">Vashu_Project_01</span>
     </div>
 
-    <!-- Center Mode Switch -->
-    <div class="flex items-center bg-zinc-900 border capcut-border rounded-lg p-0.5">
-      <button onclick="setRatio('9:16')" id="btn916" class="px-3 py-1 bg-zinc-800 text-white rounded font-bold text-[11px] shadow">9:16 TikTok/Shorts</button>
+    <!-- Center Aspect Ratio Switcher -->
+    <div class="flex items-center bg-zinc-900 border vashu-border rounded-lg p-0.5">
+      <button onclick="setRatio('9:16')" id="btn916" class="px-3 py-1 bg-zinc-800 text-white rounded font-bold text-[11px] shadow">9:16 Shorts/Reels</button>
       <button onclick="setRatio('16:9')" id="btn169" class="px-3 py-1 text-zinc-400 hover:text-white rounded text-[11px] font-medium">16:9 Landscape</button>
       <button onclick="setRatio('1:1')" id="btn11" class="px-3 py-1 text-zinc-400 hover:text-white rounded text-[11px] font-medium">1:1 Square</button>
     </div>
 
-    <!-- Action Buttons -->
+    <!-- Right Header Actions -->
     <div class="flex items-center gap-2">
       <button onclick="document.getElementById('fileInput').click()" class="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg font-semibold flex items-center gap-1.5 transition">
-        <span>+ Import Media</span>
+        <span>+ Import File</span>
       </button>
       <button onclick="exportCurrentProject()" id="exportBtn" class="px-4 py-1.5 bg-gradient-to-r from-teal-400 to-cyan-500 hover:from-teal-500 hover:to-cyan-600 text-black font-extrabold rounded-lg shadow-md transition">
-        Export 🚀
+        Export Video 🚀
       </button>
       <input type="file" id="fileInput" accept="video/*" class="hidden" onchange="handleImportVideo(event)">
     </div>
   </header>
 
-  <!-- 2. MAIN WORKSPACE (SIDEBAR + ASSETS PANEL + PREVIEW CANVAS + PROPERTIES) -->
+  <!-- 2. MAIN WORKSPACE -->
   <div class="flex-1 flex overflow-hidden">
     
-    <!-- LEFT TOOL SELECTOR BAR (CapCut Tools) -->
-    <div class="w-16 capcut-darker border-r capcut-border flex flex-col items-center py-3 gap-5 shrink-0 text-[10px] text-zinc-400">
+    <!-- LEFT TOOL SELECTOR BAR (CapCut Style) -->
+    <div class="w-16 vashu-darker border-r vashu-border flex flex-col items-center py-3 gap-5 shrink-0 text-[10px] text-zinc-400">
       <button onclick="switchTab('media')" id="tab-media" class="flex flex-col items-center gap-1 text-teal-400 hover:text-white transition">
         <span class="text-base">📁</span><span>Media</span>
       </button>
@@ -73,53 +78,60 @@
       </button>
     </div>
 
-    <!-- SECONDARY ASSET / TOOL PANEL -->
-    <div class="w-64 capcut-panel border-r capcut-border p-4 flex flex-col shrink-0 overflow-y-auto">
+    <!-- SECONDARY TOOL / ASSET PANEL -->
+    <div class="w-72 vashu-panel border-r vashu-border p-4 flex flex-col shrink-0 overflow-y-auto">
       
-      <!-- Panel 1: Media Library -->
+      <!-- Panel 1: Media Library (Upload + URL Link) -->
       <div id="panel-media" class="space-y-4">
         <div class="flex items-center justify-between">
-          <h3 class="font-bold text-white text-xs uppercase tracking-wider">Project Media</h3>
-          <span class="text-[10px] text-zinc-500">Local Storage</span>
+          <h3 class="font-bold text-white text-xs uppercase tracking-wider">Add Media</h3>
+          <span class="text-[10px] text-teal-400 font-semibold">VASHU Core</span>
         </div>
 
+        <!-- 1. Video URL Input -->
+        <div class="bg-zinc-900 border vashu-border p-3 rounded-xl space-y-2">
+          <label class="block text-[11px] font-bold text-zinc-300">Paste Video Link:</label>
+          <input type="text" id="urlInput" placeholder="Direct video link (.mp4 URL)..." 
+            class="w-full px-2.5 py-2 bg-zinc-950 border vashu-border rounded-lg text-xs text-white focus:outline-none focus:border-teal-400">
+          <button onclick="importFromUrl()" id="addUrlBtn" class="w-full py-2 bg-teal-500 hover:bg-teal-600 text-black font-extrabold rounded-lg transition text-xs">
+            Load Link Into Editor 🔗
+          </button>
+        </div>
+
+        <!-- 2. Device File Upload -->
         <div onclick="document.getElementById('fileInput').click()" 
-          class="border border-dashed capcut-border hover:border-teal-500 rounded-xl p-6 text-center cursor-pointer transition bg-zinc-900/40">
+          class="border border-dashed vashu-border hover:border-teal-500 rounded-xl p-5 text-center cursor-pointer transition bg-zinc-900/40">
           <div class="text-2xl mb-1">☁️</div>
-          <p class="font-bold text-white text-xs">Drop or Click to Upload</p>
-          <p class="text-[10px] text-zinc-500 mt-1">MP4, MOV, WebM clips</p>
+          <p class="font-bold text-white text-xs">Select from Device</p>
+          <p class="text-[10px] text-zinc-500 mt-1">MP4, MOV, WebM</p>
         </div>
 
-        <div class="border-t capcut-border pt-3">
-          <label class="block text-[11px] font-bold text-zinc-400 mb-1.5">Paste Video URL:</label>
-          <div class="flex gap-1.5">
-            <input type="text" id="urlInput" placeholder="Direct MP4 web link..." 
-              class="w-full px-2.5 py-1.5 bg-zinc-900 border capcut-border rounded text-[11px] text-white focus:outline-none focus:border-teal-400">
-            <button onclick="importFromUrl()" class="px-2.5 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded font-bold text-[10px]">Add</button>
+        <!-- Media Card Preview -->
+        <div id="mediaCardPreview" class="hidden p-3 bg-zinc-900 border vashu-border rounded-xl flex items-center justify-between">
+          <div class="truncate mr-2">
+            <p class="font-bold text-white text-xs truncate" id="mediaNameDisplay">video_file.mp4</p>
+            <p class="text-[10px] text-teal-400">● Loaded into Timeline</p>
           </div>
-        </div>
-
-        <div id="mediaThumbnailList" class="space-y-2 mt-4">
-          <!-- Imported media card preview -->
+          <button onclick="restartPlayback()" class="text-xs text-zinc-400 hover:text-white px-2 py-1 bg-zinc-800 rounded">Replay</button>
         </div>
       </div>
 
-      <!-- Panel 2: CapCut Auto Captions -->
+      <!-- Panel 2: Auto Captions AI -->
       <div id="panel-captions" class="hidden space-y-4">
-        <h3 class="font-bold text-white text-xs uppercase tracking-wider">Auto Captions AI</h3>
+        <h3 class="font-bold text-white text-xs uppercase tracking-wider">Vashu Auto Captions</h3>
         <p class="text-[11px] text-zinc-400">Speech-to-text subtitle generator for viral Shorts &amp; Reels.</p>
         
-        <div class="bg-zinc-900 border capcut-border p-3 rounded-xl space-y-3">
+        <div class="bg-zinc-900 border vashu-border p-3 rounded-xl space-y-3">
           <div>
             <label class="block text-[10px] font-bold text-zinc-400 mb-1">Spoken Language:</label>
-            <select class="w-full bg-zinc-800 border capcut-border rounded px-2 py-1 text-white">
+            <select class="w-full bg-zinc-800 border vashu-border rounded px-2 py-1 text-white text-xs">
               <option>Bilingual / Hinglish</option>
               <option>Hindi (हिंदी)</option>
               <option>English (US)</option>
             </select>
           </div>
 
-          <button onclick="generateAutoCaptions()" id="genCapBtn" class="w-full py-2 bg-teal-500 hover:bg-teal-600 text-black font-extrabold rounded-lg transition">
+          <button onclick="generateAutoCaptions()" id="genCapBtn" class="w-full py-2 bg-teal-500 hover:bg-teal-600 text-black font-extrabold rounded-lg transition text-xs">
             ✨ Generate Auto Captions
           </button>
         </div>
@@ -127,40 +139,40 @@
         <div id="captionsLog" class="text-[10px] text-zinc-400 space-y-1"></div>
       </div>
 
-      <!-- Panel 3: Text & Titles -->
-      <div id="panel-text" class="hidden space-y-3">
-        <h3 class="font-bold text-white text-xs uppercase tracking-wider">Trending Text Styles</h3>
-        <button onclick="applyPresetText('WAIT FOR END 🔥')" class="w-full p-2.5 bg-zinc-900 hover:bg-zinc-800 border capcut-border rounded-lg text-left font-bold text-yellow-400">
-          🔥 Viral Hook ("WAIT FOR END")
+      <!-- Panel 3: Trending Text Presets -->
+      <div id="panel-text" class="hidden space-y-2.5">
+        <h3 class="font-bold text-white text-xs uppercase tracking-wider">Hook Titles</h3>
+        <button onclick="applyPresetText('WAIT FOR THE END 🔥')" class="w-full p-2.5 bg-zinc-900 hover:bg-zinc-800 border vashu-border rounded-lg text-left font-bold text-yellow-400">
+          🔥 Viral Hook ("WAIT FOR THE END")
         </button>
-        <button onclick="applyPresetText('SECRET TRICK 🤫')" class="w-full p-2.5 bg-zinc-900 hover:bg-zinc-800 border capcut-border rounded-lg text-left font-bold text-cyan-400">
+        <button onclick="applyPresetText('SECRET TRICK 🤫')" class="w-full p-2.5 bg-zinc-900 hover:bg-zinc-800 border vashu-border rounded-lg text-left font-bold text-cyan-400">
           🤫 Secret Reveal Headline
         </button>
-        <button onclick="applyPresetText('100% WORKING 🚀')" class="w-full p-2.5 bg-zinc-900 hover:bg-zinc-800 border capcut-border rounded-lg text-left font-bold text-red-500">
+        <button onclick="applyPresetText('100% WORKING 🚀')" class="w-full p-2.5 bg-zinc-900 hover:bg-zinc-800 border vashu-border rounded-lg text-left font-bold text-red-500">
           🚀 Highlight Punchline
         </button>
       </div>
 
-      <!-- Panel 4: Video Filters -->
+      <!-- Panel 4: Cinematic Filters -->
       <div id="panel-filters" class="hidden space-y-3">
-        <h3 class="font-bold text-white text-xs uppercase tracking-wider">Cinematic Filters</h3>
+        <h3 class="font-bold text-white text-xs uppercase tracking-wider">Color Grade Filters</h3>
         <div class="grid grid-cols-2 gap-2">
-          <div onclick="setFilter('none')" class="p-2 bg-zinc-900 hover:bg-zinc-800 border capcut-border rounded-lg text-center cursor-pointer font-bold">Original</div>
-          <div onclick="setFilter('vibrant')" class="p-2 bg-zinc-900 hover:bg-zinc-800 border capcut-border rounded-lg text-center cursor-pointer font-bold text-teal-400">Vibrant</div>
-          <div onclick="setFilter('cinematic')" class="p-2 bg-zinc-900 hover:bg-zinc-800 border capcut-border rounded-lg text-center cursor-pointer font-bold text-amber-400">Cinematic</div>
-          <div onclick="setFilter('bw')" class="p-2 bg-zinc-900 hover:bg-zinc-800 border capcut-border rounded-lg text-center cursor-pointer font-bold text-zinc-400">B &amp; W</div>
+          <div onclick="setFilter('none')" class="p-2.5 bg-zinc-900 hover:bg-zinc-800 border vashu-border rounded-lg text-center cursor-pointer font-bold">Original</div>
+          <div onclick="setFilter('vibrant')" class="p-2.5 bg-zinc-900 hover:bg-zinc-800 border vashu-border rounded-lg text-center cursor-pointer font-bold text-teal-400">Vibrant</div>
+          <div onclick="setFilter('cinematic')" class="p-2.5 bg-zinc-900 hover:bg-zinc-800 border vashu-border rounded-lg text-center cursor-pointer font-bold text-amber-400">Cinematic</div>
+          <div onclick="setFilter('bw')" class="p-2.5 bg-zinc-900 hover:bg-zinc-800 border vashu-border rounded-lg text-center cursor-pointer font-bold text-zinc-400">B &amp; W</div>
         </div>
       </div>
 
-      <!-- Panel 5: Background Audio -->
+      <!-- Panel 5: Background Audio Tracks -->
       <div id="panel-audio" class="hidden space-y-3">
-        <h3 class="font-bold text-white text-xs uppercase tracking-wider">Trending Audio Tracks</h3>
-        <div class="p-2.5 bg-zinc-900 border capcut-border rounded-lg flex items-center justify-between">
+        <h3 class="font-bold text-white text-xs uppercase tracking-wider">Shorts Background Audio</h3>
+        <div class="p-2.5 bg-zinc-900 border vashu-border rounded-lg flex items-center justify-between">
           <div>
             <p class="font-bold text-white">Upbeat Phonk Beat</p>
-            <p class="text-[10px] text-zinc-500">0:30 &bull; Shorts BGM</p>
+            <p class="text-[10px] text-zinc-500">0:30 &bull; Royalty Free</p>
           </div>
-          <button class="px-2 py-1 bg-zinc-800 hover:bg-zinc-700 rounded text-teal-400 font-bold">+ Use</button>
+          <button class="px-2 py-1 bg-zinc-800 hover:bg-zinc-700 rounded text-teal-400 font-bold">+ Track</button>
         </div>
       </div>
 
@@ -170,19 +182,19 @@
     <div class="flex-1 bg-black flex flex-col items-center justify-center p-4 relative overflow-hidden">
       
       <!-- Video Player Canvas -->
-      <div id="previewFrame" class="relative rounded-xl overflow-hidden shadow-2xl border capcut-border bg-zinc-950 flex items-center justify-center transition-all duration-300"
+      <div id="previewFrame" class="relative rounded-xl overflow-hidden shadow-2xl border vashu-border bg-zinc-950 flex items-center justify-center transition-all duration-300"
         style="width: 250px; height: 444px;">
         <canvas id="mainCanvas" width="720" height="1280" class="w-full h-full object-cover"></canvas>
         
         <div id="emptyPrompt" class="absolute text-center p-4">
           <div class="w-12 h-12 rounded-full bg-zinc-900 text-zinc-500 flex items-center justify-center mx-auto mb-2 text-xl">▶</div>
-          <p class="font-bold text-zinc-400">Import media to start editing</p>
-          <p class="text-[10px] text-zinc-600 mt-1">CapCut Timeline Engine Ready</p>
+          <p class="font-bold text-zinc-300">Link paste karein ya file chunein</p>
+          <p class="text-[10px] text-zinc-600 mt-1">Vashu Studio Timeline Ready</p>
         </div>
       </div>
 
-      <!-- Playback Controls Bar -->
-      <div class="absolute bottom-4 flex items-center gap-4 bg-zinc-900/90 backdrop-blur px-4 py-1.5 rounded-full border capcut-border shadow-lg">
+      <!-- Playback Controls Floating Bar -->
+      <div class="absolute bottom-4 flex items-center gap-4 bg-zinc-900/90 backdrop-blur px-4 py-1.5 rounded-full border vashu-border shadow-lg">
         <span id="currentTimeLabel" class="text-zinc-400 font-mono text-[11px]">00:00</span>
         <button onclick="togglePlayback()" id="playBtn" class="text-white hover:text-teal-400 font-black text-sm px-2">▶</button>
         <button onclick="restartPlayback()" class="text-zinc-400 hover:text-white text-xs">↺</button>
@@ -192,28 +204,28 @@
     </div>
 
     <!-- RIGHT PROPERTIES INSPECTOR PANEL -->
-    <div class="w-64 capcut-panel border-l capcut-border p-4 flex flex-col shrink-0 space-y-4">
+    <div class="w-64 vashu-panel border-l vashu-border p-4 flex flex-col shrink-0 space-y-4">
       <h3 class="font-bold text-white text-xs uppercase tracking-wider">Video Inspector</h3>
 
       <div>
         <label class="block text-[11px] font-bold text-zinc-400 mb-1">Headline Text:</label>
-        <input type="text" id="inspectorText" placeholder="Enter headline text..." 
-          class="w-full px-2.5 py-1.5 bg-zinc-900 border capcut-border rounded text-[11px] text-white focus:outline-none focus:border-teal-400">
+        <input type="text" id="inspectorText" placeholder="Headline text likhein..." 
+          class="w-full px-2.5 py-1.5 bg-zinc-900 border vashu-border rounded text-[11px] text-white focus:outline-none focus:border-teal-400">
       </div>
 
       <div class="grid grid-cols-2 gap-2">
         <div>
           <label class="block text-[11px] font-bold text-zinc-400 mb-1">Color:</label>
-          <select id="inspectorColor" class="w-full px-2 py-1 bg-zinc-900 border capcut-border rounded text-white text-[11px]">
-            <option value="#FACC15">Yellow</option>
-            <option value="#FFFFFF" selected>White</option>
+          <select id="inspectorColor" class="w-full px-2 py-1 bg-zinc-900 border vashu-border rounded text-white text-[11px]">
+            <option value="#FACC15" selected>Yellow</option>
+            <option value="#FFFFFF">White</option>
             <option value="#22D3EE">Cyan</option>
             <option value="#EF4444">Red</option>
           </select>
         </div>
         <div>
           <label class="block text-[11px] font-bold text-zinc-400 mb-1">Position:</label>
-          <select id="inspectorPos" class="w-full px-2 py-1 bg-zinc-900 border capcut-border rounded text-white text-[11px]">
+          <select id="inspectorPos" class="w-full px-2 py-1 bg-zinc-900 border vashu-border rounded text-white text-[11px]">
             <option value="top">Top</option>
             <option value="center">Center</option>
             <option value="bottom" selected>Bottom</option>
@@ -221,17 +233,9 @@
         </div>
       </div>
 
-      <div>
-        <label class="block text-[11px] font-bold text-zinc-400 mb-1">Scale / Crop Fit:</label>
-        <select id="inspectorFit" class="w-full px-2 py-1 bg-zinc-900 border capcut-border rounded text-white text-[11px]">
-          <option value="cover" selected>Auto 9:16 Center Fill</option>
-          <option value="contain">Original Aspect Fit</option>
-        </select>
-      </div>
-
-      <div class="border-t capcut-border pt-3">
+      <div class="border-t vashu-border pt-3">
         <label class="block text-[11px] font-bold text-zinc-400 mb-1">Export Duration:</label>
-        <select id="exportDuration" class="w-full px-2 py-1 bg-zinc-900 border capcut-border rounded text-white text-[11px]">
+        <select id="exportDuration" class="w-full px-2 py-1 bg-zinc-900 border vashu-border rounded text-white text-[11px]">
           <option value="30">30s Viral Short</option>
           <option value="60" selected>60s Full Short</option>
           <option value="180">180s (3 Min) Video</option>
@@ -244,11 +248,11 @@
   </div>
 
   <!-- 3. BOTTOM MULTI-TRACK TIMELINE -->
-  <div class="h-44 capcut-darker border-t capcut-border flex flex-col shrink-0">
+  <div class="h-44 vashu-darker border-t vashu-border flex flex-col shrink-0">
     
     <!-- Timeline Toolbar -->
-    <div class="h-8 border-b capcut-border px-4 flex items-center justify-between text-zinc-400 text-[11px]">
-      <div class="flex items-center gap-3">
+    <div class="h-8 border-b vashu-border px-4 flex items-center justify-between text-zinc-400 text-[11px]">
+      <div class="flex items-center gap-4">
         <button onclick="splitClip()" class="hover:text-white flex items-center gap-1">✂️ <span>Split</span></button>
         <button onclick="deleteClip()" class="hover:text-white flex items-center gap-1">🗑️ <span>Delete</span></button>
         <button onclick="speedUp()" class="hover:text-white flex items-center gap-1">⚡ <span>Speed (1.0x)</span></button>
@@ -260,26 +264,26 @@
     </div>
 
     <!-- Timeline Tracks Area -->
-    <div class="flex-1 p-2 space-y-1.5 overflow-x-auto relative" id="timelineTrackContainer">
+    <div class="flex-1 p-2 space-y-1.5 overflow-x-auto relative">
       
-      <!-- Track 1: Text & Overlay Track -->
-      <div class="h-7 bg-zinc-900/80 rounded border capcut-border flex items-center px-3 relative">
+      <!-- Track 1: Text Track -->
+      <div class="h-7 bg-zinc-900/80 rounded border vashu-border flex items-center px-3 relative">
         <span class="text-[10px] font-bold text-yellow-400 shrink-0 mr-2">T Text</span>
         <div id="textTrackClip" class="h-5 bg-yellow-500/20 border border-yellow-500/50 rounded px-2 text-[10px] text-yellow-300 font-medium flex items-center truncate">
           Active Caption Track
         </div>
       </div>
 
-      <!-- Track 2: Main Video Track -->
-      <div class="h-10 bg-zinc-900 rounded border capcut-border flex items-center px-3 relative">
+      <!-- Track 2: Video Track -->
+      <div class="h-10 bg-zinc-900 rounded border vashu-border flex items-center px-3 relative">
         <span class="text-[10px] font-bold text-teal-400 shrink-0 mr-2">🎬 Video</span>
         <div id="videoTrackClip" class="h-7 bg-teal-500/20 border border-teal-500/50 rounded px-2 text-[10px] text-teal-300 font-medium flex items-center truncate w-3/4">
           No Media Loaded
         </div>
       </div>
 
-      <!-- Track 3: Audio Track -->
-      <div class="h-6 bg-zinc-900/80 rounded border capcut-border flex items-center px-3 relative">
+      <!-- Track 3: Audio Waveform Track -->
+      <div class="h-6 bg-zinc-900/80 rounded border vashu-border flex items-center px-3 relative">
         <span class="text-[10px] font-bold text-cyan-400 shrink-0 mr-2">🎵 Audio</span>
         <div class="h-4 bg-cyan-500/20 border border-cyan-500/40 rounded px-2 text-[9px] text-cyan-300 flex items-center w-2/3 truncate">
           Original Audio Waveform
@@ -290,12 +294,12 @@
 
   </div>
 
-  <!-- Hidden HTML5 Video Backend -->
-  <video id="hiddenCapCutVideo" playsinline crossorigin="anonymous" style="display: none;"></video>
+  <!-- Hidden Working Video -->
+  <video id="hiddenVashuVideo" playsinline crossorigin="anonymous" style="display: none;"></video>
 
   <!-- JAVASCRIPT ENGINE -->
   <script>
-    const video = document.getElementById('hiddenCapCutVideo');
+    const video = document.getElementById('hiddenVashuVideo');
     const canvas = document.getElementById('mainCanvas');
     const ctx = canvas.getContext('2d');
     let activeFilter = 'none';
@@ -304,7 +308,6 @@
     let mediaRecorder = null;
     let recordedChunks = [];
 
-    // Switch Left Tabs
     function switchTab(name) {
       ['media', 'captions', 'text', 'filters', 'audio'].forEach(t => {
         document.getElementById(`panel-${t}`).classList.add('hidden');
@@ -314,7 +317,6 @@
       document.getElementById(`tab-${name}`).classList.add('text-teal-400');
     }
 
-    // Ratio Switcher
     function setRatio(ratio) {
       currentRatio = ratio;
       const frame = document.getElementById('previewFrame');
@@ -340,7 +342,6 @@
       }
     }
 
-    // Media Import
     function handleImportVideo(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -349,13 +350,14 @@
 
     function importFromUrl() {
       const url = document.getElementById('urlInput').value.trim();
-      if (!url) return alert("Enter video URL!");
-      loadVideoSource(url, "Web Stream Video");
+      if (!url) return alert("Pehle direct video link dalein!");
+      loadVideoSource(url, "Web Streamed Clip");
     }
 
     function loadVideoSource(src, label) {
       document.getElementById('emptyPrompt').style.display = 'none';
-      document.getElementById('systemStatus').innerText = "Loading media...";
+      document.getElementById('systemStatus').innerText = "Loading video into Vashu Studio...";
+      
       video.src = src;
       video.load();
 
@@ -364,12 +366,17 @@
         isPlaying = true;
         document.getElementById('playBtn').innerText = "❚❚";
         document.getElementById('videoTrackClip').innerText = label;
-        document.getElementById('systemStatus').innerText = "✔ Ready in CapCut Studio!";
+        document.getElementById('mediaNameDisplay').innerText = label;
+        document.getElementById('mediaCardPreview').classList.remove('hidden');
+        document.getElementById('systemStatus').innerText = "✔ Video Active in 9:16 Shorts!";
         renderLoop();
+      };
+
+      video.onerror = () => {
+        document.getElementById('systemStatus').innerText = "Error: Link could not be streamed. Use direct MP4 link or upload file.";
       };
     }
 
-    // Canvas Rendering Loop
     function renderLoop() {
       if (!video.videoWidth) return;
 
@@ -378,7 +385,7 @@
       const vW = video.videoWidth;
       const vH = video.videoHeight;
 
-      // Crop / Fit Math
+      // 9:16 Auto Center Crop
       const targetRatio = cW / cH;
       const videoRatio = vW / vH;
       let sW, sH, sX, sY;
@@ -391,7 +398,7 @@
         sX = 0; sY = (vH - sH) / 2;
       }
 
-      // Filters
+      // Filter settings
       if (activeFilter === 'vibrant') ctx.filter = "saturate(1.4) contrast(1.15)";
       else if (activeFilter === 'cinematic') ctx.filter = "contrast(1.25) brightness(0.9) saturate(1.1)";
       else if (activeFilter === 'bw') ctx.filter = "grayscale(1)";
@@ -400,7 +407,7 @@
       ctx.drawImage(video, sX, sY, sW, sH, 0, 0, cW, cH);
       ctx.filter = "none";
 
-      // CapCut Text Overlay
+      // Overlay Headline Text
       const title = document.getElementById('inspectorText').value.trim();
       if (title) {
         const color = document.getElementById('inspectorColor').value;
@@ -418,7 +425,6 @@
         ctx.fillText(title, cW / 2, yPos);
       }
 
-      // Time labels
       document.getElementById('currentTimeLabel').innerText = formatTime(video.currentTime);
       document.getElementById('totalTimeLabel').innerText = formatTime(video.duration || 0);
 
@@ -431,7 +437,6 @@
       return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
     }
 
-    // Playback
     function togglePlayback() {
       if (video.paused) {
         video.play();
@@ -447,16 +452,15 @@
       video.play();
     }
 
-    // Tools
     function setFilter(name) {
       activeFilter = name;
-      document.getElementById('systemStatus').innerText = `Filter applied: ${name}`;
+      document.getElementById('systemStatus').innerText = `Filter: ${name}`;
     }
 
     function applyPresetText(text) {
       document.getElementById('inspectorText').value = text;
       document.getElementById('textTrackClip').innerText = text;
-      document.getElementById('systemStatus').innerText = `Caption set: ${text}`;
+      document.getElementById('systemStatus').innerText = `Headline: ${text}`;
     }
 
     function generateAutoCaptions() {
@@ -465,7 +469,7 @@
       btn.innerText = "Analyzing audio tracks...";
       setTimeout(() => {
         applyPresetText("VIRAL MOMENT 🔥");
-        log.innerHTML = "✔ Auto captions matched with waveform.<br>✔ Dynamic 9:16 subtitle layer created.";
+        log.innerHTML = "✔ Auto captions synced with waveform.<br>✔ Dynamic 9:16 subtitle layer created.";
         btn.innerText = "✨ Generate Auto Captions";
       }, 1200);
     }
@@ -479,15 +483,15 @@
       video.src = "";
       document.getElementById('emptyPrompt').style.display = 'block';
       document.getElementById('videoTrackClip').innerText = "No Media Loaded";
-      document.getElementById('systemStatus').innerText = "Track cleared.";
+      document.getElementById('mediaCardPreview').classList.add('hidden');
+      document.getElementById('systemStatus').innerText = "Timeline cleared.";
     }
 
     function speedUp() {
       video.playbackRate = video.playbackRate === 1 ? 1.5 : 1;
-      document.getElementById('systemStatus').innerText = `Playback speed: ${video.playbackRate}x`;
+      document.getElementById('systemStatus').innerText = `Speed: ${video.playbackRate}x`;
     }
 
-    // Export Engine
     function exportCurrentProject() {
       if (!video.src) return alert("Pehle video add karein!");
       const expBtn = document.getElementById('exportBtn');
@@ -495,7 +499,7 @@
 
       expBtn.disabled = true;
       expBtn.innerText = "Exporting...";
-      document.getElementById('systemStatus').innerText = `Rendering ${maxSec}s video in CapCut engine...`;
+      document.getElementById('systemStatus').innerText = `Rendering ${maxSec}s video in Vashu Studio...`;
 
       recordedChunks = [];
       video.currentTime = 0;
@@ -513,10 +517,10 @@
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `CapCut_Export_${Date.now()}.webm`;
+        a.download = `Vashu_Short_${Date.now()}.webm`;
         a.click();
         expBtn.disabled = false;
-        expBtn.innerText = "Export 🚀";
+        expBtn.innerText = "Export Video 🚀";
         document.getElementById('systemStatus').innerText = "✔ Video download ready!";
       };
 
