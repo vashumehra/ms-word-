@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VASHU AI - Multi-Clip Auto Shorts Studio</title>
+  <title>VASHU AI - NextGen Video Repurposer</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -12,8 +12,8 @@
     * { font-family: 'Plus Jakarta Sans', sans-serif; }
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-    .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
-    .word-active { color: #facc15; text-shadow: 0 0 16px rgba(250, 204, 21, 0.8); transform: scale(1.15); display: inline-block; }
+    .glass-card { background: rgba(30, 41, 59, 0.75); backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .neon-text { text-shadow: 0 0 20px rgba(139, 92, 246, 0.6); }
   </style>
 </head>
 <body class="bg-[#0B0F19] text-slate-100 min-h-screen flex flex-col justify-between selection:bg-purple-600 selection:text-white">
@@ -24,7 +24,7 @@
       <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-cyan-400 flex items-center justify-center font-black text-white text-lg shadow-lg shadow-purple-500/30">V</div>
       <div>
         <span class="font-black text-sm tracking-wide text-white flex items-center gap-2">
-          VASHU <span class="text-[9px] uppercase font-extrabold tracking-widest px-2 py-0.5 rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/30">Pro Multi-Clipper</span>
+          VASHU <span class="text-[9px] uppercase font-extrabold tracking-widest px-2 py-0.5 rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/30">Studio X</span>
         </span>
       </div>
     </div>
@@ -32,15 +32,15 @@
     <div class="flex items-center gap-3">
       <div class="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-purple-400 font-bold text-xs flex items-center gap-1.5">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        Multi-Clip AI Engine
+        Multi-Clip AI Active
       </div>
       <button onclick="location.reload()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-xl border border-slate-700 transition">
-        + New Video
+        + New Project
       </button>
     </div>
   </header>
 
-  <!-- SCREEN 0: INPUT & VIDEO VERIFICATION -->
+  <!-- SCREEN 0: HERO INGESTION -->
   <main id="screenHero" class="flex-1 max-w-4xl w-full mx-auto px-4 py-12 flex flex-col items-center justify-center text-center">
     
     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-purple-950/60 border border-purple-500/40 rounded-full text-purple-300 text-xs font-extrabold mb-5">
@@ -53,7 +53,7 @@
     </h1>
     
     <p class="text-slate-400 text-xs sm:text-sm max-w-lg mb-8">
-      Link paste karein ya device se video chunein. AI poori video scan karke saare viral moments alag-alag 9:16 Shorts me convert kar dega.
+      Link paste karein ya device se file chunein. AI poori video scan karke saare clips bana dega.
     </p>
 
     <div class="w-full max-w-2xl glass-card p-6 rounded-3xl shadow-2xl space-y-4">
@@ -75,11 +75,9 @@
 
       <div onclick="document.getElementById('nativeFileInput').click()" 
         class="border border-dashed border-slate-700 hover:border-purple-500 bg-slate-900/40 rounded-2xl p-6 cursor-pointer transition flex flex-col items-center justify-center group">
-        <div class="w-12 h-12 rounded-2xl bg-purple-600/10 group-hover:bg-purple-600/20 text-purple-400 flex items-center justify-center text-xl mb-2 transition">
-          📁
-        </div>
-        <p class="font-bold text-xs sm:text-sm text-slate-200">Select MP4 Video from Computer / Mobile</p>
-        <p class="text-[11px] text-slate-500 mt-0.5">High Speed &bull; Full Duration Multi-Clip Processing</p>
+        <div class="w-12 h-12 rounded-2xl bg-purple-600/10 group-hover:bg-purple-600/20 text-purple-400 flex items-center justify-center text-xl mb-2 transition">📁</div>
+        <p class="font-bold text-xs sm:text-sm text-slate-200">Select MP4 Video from Device</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">High Speed &bull; Guaranteed Local Ingest</p>
         <input type="file" id="nativeFileInput" accept="video/*" class="hidden" onchange="handleNativeFile(event)">
       </div>
     </div>
@@ -94,7 +92,7 @@
           <img id="realThumbImg" src="" alt="Thumbnail" class="w-14 h-11 rounded-xl object-cover bg-slate-800 border border-slate-700 shrink-0">
           <div class="truncate text-left">
             <h4 class="font-bold text-xs text-white truncate" id="videoTitleDisplay">Video Title</h4>
-            <p class="text-[10px] text-purple-400" id="videoAuthorDisplay">Video Verified</p>
+            <p class="text-[10px] text-purple-400" id="videoAuthorDisplay">Verified Video</p>
           </div>
         </div>
         <span class="text-xs font-bold bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-700 text-slate-300">1080p HD</span>
@@ -205,7 +203,7 @@
     </div>
   </main>
 
-  <!-- SCREEN 4: FULL MULTI-CLIPS DASHBOARD (Playable + Word-by-Word Captions) -->
+  <!-- SCREEN 4: MULTI-CLIPS DASHBOARD -->
   <main id="screenClipsDashboard" class="hidden flex-1 max-w-5xl w-full mx-auto px-4 py-8 flex flex-col space-y-6">
     
     <div class="flex items-center justify-between glass-card rounded-2xl p-4 shadow-sm flex-wrap gap-2">
@@ -214,14 +212,12 @@
         <span class="px-2.5 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-full text-[10px] font-bold">100% Synced</span>
       </div>
       <button onclick="downloadAllGeneratedClips()" class="px-5 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-extrabold rounded-xl shadow transition">
-        Download All Clips (ZIP / MP4) 📥
+        Download All Clips 📥
       </button>
     </div>
 
-    <!-- Multi-Clip Feed List Container -->
-    <div class="space-y-6" id="multiClipsFeed">
-      <!-- Generated Dynamically by JS -->
-    </div>
+    <!-- Multi-Clip Feed List -->
+    <div class="space-y-6" id="multiClipsFeed"></div>
 
   </main>
 
@@ -233,16 +229,14 @@
   <script>
     let chosenTemplate = 'mrbeast';
     let masterVideoUrl = "";
-    let activePlayingClipId = null;
 
-    // Generated Multiple Clips Data (Full Playlist extracted from video)
+    // Multi-Clips Catalog
     const generatedClips = [
       {
         id: 1,
         title: "#1 Viral Opening Hook (High Engagement)",
         score: "9.3",
         timeRange: "0:00 - 0:30",
-        snippet: "Yahan par sabse bada turning point aata hai, jab hum AI automation se video ko 9:16 me fit karte hain.",
         transcriptTimeline: [
           { start: 0.0, end: 1.8, words: ["YAHAN", "PAR", "SABSE"], active: "SABSE" },
           { start: 1.8, end: 3.5, words: ["BADA", "VIRAL", "POINT"], active: "POINT" },
@@ -257,7 +251,6 @@
         title: "#2 Climax Secret Reveal (Trending Soundbite)",
         score: "9.0",
         timeRange: "0:30 - 1:00",
-        snippet: "Aapne kabhi socha bhi nahi hoga ki bina kisi technical skill ke itni smooth auto-captioning ho sakti hai.",
         transcriptTimeline: [
           { start: 0.0, end: 2.0, words: ["YEH", "HAI", "ASLI"], active: "ASLI" },
           { start: 2.0, end: 4.0, words: ["SECRET", "REVEAL", "TRICK"], active: "SECRET" },
@@ -271,7 +264,6 @@
         title: "#3 Question & Explanation Punchline",
         score: "8.7",
         timeRange: "1:00 - 1:35",
-        snippet: "Har koi poochta hai ki shorts viral kaise karein, iska sabse seedha jawab visual hook aur word pacing hai.",
         transcriptTimeline: [
           { start: 0.0, end: 2.0, words: ["KYA", "AAPKO", "PATA"], active: "PATA" },
           { start: 2.0, end: 4.0, words: ["VIRAL", "HONE", "KA"], active: "VIRAL" },
@@ -284,7 +276,6 @@
         title: "#4 Final Call To Action & Summary",
         score: "8.5",
         timeRange: "1:35 - 2:05",
-        snippet: "Agar aap is workflow ko follow karte hain toh engagement 10 guna zyada boost hoga.",
         transcriptTimeline: [
           { start: 0.0, end: 2.0, words: ["AGAR", "ACCHA", "LAGA"], active: "ACCHA" },
           { start: 2.0, end: 4.5, words: ["TOH", "FOLLOW", "KAREIN"], active: "FOLLOW" },
@@ -293,7 +284,6 @@
       }
     ];
 
-    // Link Search & Validation
     async function handleLinkVerify() {
       const url = document.getElementById('videoLinkInput').value.trim();
       const err = document.getElementById('searchErr');
@@ -329,7 +319,7 @@
           document.getElementById('videoAuthorDisplay').innerText = data.author_name || "Verified Creator";
           document.getElementById('realThumbImg').src = data.thumbnail_url || `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 
-          // Universal direct web stream sample
+          // Universal Direct MP4 Stream
           masterVideoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4";
 
           btn.disabled = false;
@@ -346,7 +336,6 @@
       }
     }
 
-    // Direct File Select
     function handleNativeFile(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -399,7 +388,7 @@
       }, 500);
     }
 
-    // RENDER ALL MULTIPLE CLIPS INTO DASHBOARD FEED
+    // RENDER MULTI CLIPS
     function renderMultiClipsDashboard() {
       const container = document.getElementById('multiClipsFeed');
       container.innerHTML = "";
@@ -410,15 +399,15 @@
         card.className = "glass-card rounded-3xl p-6 shadow-2xl flex flex-col md:flex-row gap-6 items-center text-left";
         card.innerHTML = `
           <!-- 9:16 Video Stage -->
-          <div class="w-[230px] aspect-[9/16] bg-black rounded-2xl overflow-hidden relative shadow-2xl border border-slate-700 shrink-0 flex items-center justify-center">
+          <div class="w-[230px] aspect-[9/16] bg-slate-950 rounded-2xl overflow-hidden relative shadow-2xl border border-slate-700 shrink-0 flex items-center justify-center">
             
-            <video id="player_${clip.id}" loop playsinline preload="auto" class="w-full h-full object-cover">
-              <source src="${masterVideoUrl}" type="video/mp4">
+            <!-- Video Object (Direct Binding - Eliminates Black Screen) -->
+            <video id="player_${clip.id}" loop playsinline muted preload="auto" class="w-full h-full object-cover">
             </video>
 
             <!-- Subtitle Layer -->
-            <div class="absolute bottom-12 inset-x-2 text-center pointer-events-none select-none px-2 z-20">
-              <p id="subOverlay_${clip.id}" class="font-black text-sm uppercase leading-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)] text-white">
+            <div class="absolute bottom-10 inset-x-2 text-center pointer-events-none select-none px-2 z-20">
+              <p id="subOverlay_${clip.id}" class="font-black text-sm uppercase leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)] text-white">
                 READY TO PLAY
               </p>
             </div>
@@ -431,17 +420,17 @@
             <span class="absolute top-2 left-2 bg-black/70 backdrop-blur text-white font-bold text-[10px] px-2 py-0.5 rounded z-20">${clip.timeRange}</span>
           </div>
 
-          <!-- Info & Live Words Details -->
+          <!-- Info Details -->
           <div class="flex-1 space-y-4 w-full">
             <div class="flex items-center justify-between">
               <div>
                 <h3 class="font-extrabold text-base text-white">${clip.title}</h3>
-                <p class="text-xs text-purple-400">Virality Rating: ${clip.score}/10 &bull; Auto-Framed 9:16</p>
+                <p class="text-xs text-purple-400">Virality Rating: ${clip.score}/10 &bull; 9:16 Vertical Center</p>
               </div>
               <span class="text-xl font-black text-purple-400 bg-purple-950/60 border border-purple-500/40 px-3 py-1 rounded-xl">${clip.score}</span>
             </div>
 
-            <!-- Action Buttons Strip -->
+            <!-- Action Buttons -->
             <div class="flex flex-wrap items-center gap-2.5 text-xs">
               <button onclick="toggleClipPlay(${clip.id})" id="btnPlay_${clip.id}" class="px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-extrabold rounded-xl shadow transition">
                 ▶ Play Clip
@@ -471,19 +460,22 @@
         `;
         container.appendChild(card);
 
-        // Bind Subtitle TimeUpdate for each video
+        // Explicit direct property assignment (Guarantees video loads and paints)
         const vid = document.getElementById(`player_${clip.id}`);
+        vid.src = masterVideoUrl;
+        vid.load();
+
         vid.ontimeupdate = () => syncClipCaptions(clip.id, vid);
       });
     }
 
-    // PLAY/PAUSE CONTROLLER (GUARANTEED REAL PLAYBACK)
+    // PLAY/PAUSE ENGINE
     function toggleClipPlay(clipId) {
       const vid = document.getElementById(`player_${clipId}`);
       const centerBtn = document.getElementById(`centerPlay_${clipId}`);
       const btnPlay = document.getElementById(`btnPlay_${clipId}`);
 
-      // Pause any other clip that is playing
+      // Pause other playing clips
       generatedClips.forEach(c => {
         if (c.id !== clipId) {
           const other = document.getElementById(`player_${c.id}`);
@@ -496,16 +488,16 @@
       });
 
       if (vid.paused) {
+        vid.muted = false; // Unmute on explicit user click
         vid.play().then(() => {
           centerBtn.classList.add('hidden');
           btnPlay.innerText = "❚❚ Pause Clip";
-          activePlayingClipId = clipId;
-        }).catch(err => {
-          console.log("Audio unlock:", err);
+        }).catch(() => {
+          // If browser policy blocks sound, play muted instantly
           vid.muted = true;
           vid.play();
           centerBtn.classList.add('hidden');
-          btnPlay.innerText = "❚❚ Pause Clip (Muted)";
+          btnPlay.innerText = "❚❚ Pause Clip";
         });
       } else {
         vid.pause();
@@ -522,7 +514,7 @@
       document.getElementById(`btnPlay_${clipId}`).innerText = "❚❚ Pause Clip";
     }
 
-    // REAL-TIME AUTO-CAPTION WORD HIGHLIGHT LOGIC
+    // AUTO-CAPTION WORD HIGHLIGHT
     function syncClipCaptions(clipId, vid) {
       const clip = generatedClips.find(c => c.id === clipId);
       if (!clip) return;
@@ -548,13 +540,11 @@
 
       if (addEmojis) colored += (clipId % 2 === 1 ? " 🔥" : " 🚀");
 
-      // Update on top of Video
       document.getElementById(`subOverlay_${clipId}`).innerHTML = colored;
-      // Update in Info Box
       document.getElementById(`liveText_${clipId}`).innerHTML = `"${colored}"`;
     }
 
-    // 100% CLEAN MP4 DOWNLOAD (NO VLC / MPC-HC CODEC CRASH)
+    // CLEAN MP4 DOWNLOAD
     function downloadSpecificClip(clipId) {
       if (!masterVideoUrl) return alert("Pehle video select karein!");
 
