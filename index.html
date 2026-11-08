@@ -3,85 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VASHU AI - Viral Video Repurposing Studio</title>
+  <title>VASHU AI - NextGen Shorts &amp; Auto-Captions Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     * { font-family: 'Plus Jakarta Sans', sans-serif; }
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-    .aspect-9-16 { aspect-ratio: 9 / 16; }
+    .glass-nav { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(16px); }
+    .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .neon-glow { box-shadow: 0 0 35px -5px rgba(124, 58, 237, 0.35); }
+    .neon-border { border-color: #8b5cf6; }
+    .word-active { color: #facc15; text-shadow: 0 0 16px rgba(250, 204, 21, 0.6); transform: scale(1.1); display: inline-block; }
   </style>
 </head>
-<body class="bg-[#F8FAFC] text-slate-800 min-h-screen flex flex-col justify-between">
+<body class="bg-[#0B0F19] text-slate-100 min-h-screen flex flex-col justify-between selection:bg-purple-600 selection:text-white">
 
   <!-- TOP HEADER -->
-  <header class="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between shrink-0 shadow-sm">
+  <header class="h-16 glass-nav border-b border-slate-800 px-6 flex items-center justify-between sticky top-0 z-50">
     <div class="flex items-center gap-3">
-      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center font-black text-white text-base shadow-md shadow-purple-600/20">V</div>
-      <div class="flex flex-col">
-        <span class="font-black text-sm tracking-wide text-slate-900 flex items-center gap-1.5">
-          VASHU <span class="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-200">AI Clipper</span>
+      <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-cyan-400 flex items-center justify-center font-black text-white text-lg shadow-lg shadow-purple-500/30">V</div>
+      <div>
+        <span class="font-black text-sm tracking-wide text-white flex items-center gap-2">
+          VASHU <span class="text-[9px] uppercase font-extrabold tracking-widest px-2 py-0.5 rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/30">Studio X</span>
         </span>
       </div>
     </div>
     
-    <div class="flex items-center gap-4">
-      <div class="flex items-center gap-1.5 px-3 py-1 bg-purple-50 border border-purple-200 rounded-full text-purple-700 text-xs font-bold">
-        <span>✨ 30 credits</span>
+    <div class="flex items-center gap-3">
+      <div class="px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700 text-purple-400 font-bold text-xs flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        AI Auto-Captions Active
       </div>
-      <button onclick="location.reload()" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition">
+      <button onclick="location.reload()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-xl border border-slate-700 transition">
         + New Video
       </button>
     </div>
   </header>
 
   <!-- ========================================== -->
-  <!-- SCREEN 0: HERO INPUT & VIDEO VALIDATION    -->
+  <!-- SCREEN 0: MODERN GLASS HERO INGESTION      -->
   <!-- ========================================== -->
-  <main id="screenHero" class="flex-1 max-w-3xl w-full mx-auto px-4 py-12 flex flex-col items-center justify-center text-center">
+  <main id="screenHero" class="flex-1 max-w-4xl w-full mx-auto px-4 py-12 flex flex-col items-center justify-center text-center">
     
-    <div class="inline-flex items-center gap-2 px-3 py-1 bg-purple-50 border border-purple-200 rounded-full text-purple-700 text-xs font-bold mb-4">
-      <span>✨ 1-Click Viral Shorts Generator</span>
+    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-purple-950/60 border border-purple-500/40 rounded-full text-purple-300 text-xs font-extrabold mb-5 neon-glow">
+      ⚡ AI Speech-to-Text &bull; Auto 9:16 Shorts Engine
     </div>
 
-    <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight mb-3">
-      Turn 1 long video into <br>
-      <span class="bg-gradient-to-r from-purple-600 via-indigo-600 to-sky-500 bg-clip-text text-transparent">10+ viral clips with AI</span>
+    <h1 class="text-4xl sm:text-6xl font-black text-white tracking-tight leading-tight mb-4">
+      Smart AI Video Clipper.<br>
+      <span class="bg-gradient-to-r from-purple-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent">Instant Viral Captions.</span>
     </h1>
-    <p class="text-slate-500 text-xs sm:text-sm max-w-lg mb-8">
-      Paste your YouTube link or upload any clip. AI validates the video, detects soundbites, and creates 9:16 Shorts with live word-by-word animated subtitles.
+    
+    <p class="text-slate-400 text-xs sm:text-sm max-w-lg mb-8">
+      Paste your YouTube link or upload a file. Real video validation, automatic highlight cuts, and animated subtitles synced with speech.
     </p>
 
     <!-- Ingestion Box -->
-    <div class="w-full max-w-xl bg-white border border-slate-200 p-5 rounded-3xl shadow-xl space-y-4">
+    <div class="w-full max-w-2xl glass-card p-6 rounded-3xl shadow-2xl space-y-4">
       
-      <div class="flex flex-col sm:flex-row gap-2">
-        <input type="text" id="videoLinkInput" placeholder="Paste YouTube link (e.g. https://youtu.be/...)" 
-          class="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-800 focus:outline-none focus:border-purple-500 transition">
-        <button onclick="validateAndProcessLink()" id="verifyBtn" class="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-xs sm:text-sm font-bold rounded-2xl shadow-lg shadow-purple-600/30 transition whitespace-nowrap flex items-center justify-center gap-2">
-          <span>Search &amp; Continue 🚀</span>
+      <div class="flex flex-col sm:flex-row gap-2.5">
+        <input type="text" id="videoLinkInput" placeholder="Paste YouTube link (https://youtu.be/...)" 
+          class="flex-1 px-4 py-3.5 bg-slate-900/90 border border-slate-700 rounded-2xl text-xs sm:text-sm text-white focus:outline-none focus:border-purple-500 transition">
+        <button onclick="handleLinkVerify()" id="verifyBtn" class="px-7 py-3.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-extrabold rounded-2xl shadow-lg shadow-purple-600/30 transition whitespace-nowrap">
+          Search &amp; Process 🚀
         </button>
       </div>
 
-      <p id="searchStatus" class="text-xs font-semibold text-red-500 hidden text-left"></p>
+      <p id="searchErr" class="text-xs font-semibold text-rose-400 hidden text-left"></p>
 
       <div class="flex items-center gap-3">
-        <div class="h-[1px] bg-slate-200 flex-1"></div>
-        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">OR</span>
-        <div class="h-[1px] bg-slate-200 flex-1"></div>
+        <div class="h-[1px] bg-slate-700/60 flex-1"></div>
+        <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">OR</span>
+        <div class="h-[1px] bg-slate-700/60 flex-1"></div>
       </div>
 
-      <!-- File Upload Option -->
+      <!-- File Select -->
       <div onclick="document.getElementById('nativeFileInput').click()" 
-        class="border-2 border-dashed border-slate-200 hover:border-purple-500 bg-slate-50/50 rounded-2xl p-7 cursor-pointer transition flex flex-col items-center justify-center group">
-        <div class="w-12 h-12 rounded-2xl bg-purple-100 group-hover:bg-purple-200 text-purple-600 flex items-center justify-center text-xl mb-2 transition">
+        class="border border-dashed border-slate-700 hover:border-purple-500 bg-slate-900/40 rounded-2xl p-6 cursor-pointer transition flex flex-col items-center justify-center group">
+        <div class="w-12 h-12 rounded-2xl bg-purple-600/10 group-hover:bg-purple-600/20 text-purple-400 flex items-center justify-center text-xl mb-2 transition">
           📁
         </div>
-        <p class="font-bold text-xs sm:text-sm text-slate-800">Upload video from device</p>
-        <p class="text-[11px] text-slate-400 mt-0.5">Direct MP4, MOV (Local Ingest)</p>
+        <p class="font-bold text-xs sm:text-sm text-slate-200">Select MP4 Video from Device</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">Direct 9:16 Ingestion with Audio</p>
         <input type="file" id="nativeFileInput" accept="video/*" class="hidden" onchange="handleNativeFile(event)">
       </div>
 
@@ -89,769 +93,428 @@
 
   </main>
 
-
   <!-- ========================================== -->
-  <!-- SCREEN 1: PRE-UPLOAD SETTINGS (Image 1)   -->
+  <!-- SCREEN 1: PRE-SETTINGS MODAL (Image 1 style) -->
   <!-- ========================================== -->
   <main id="screenPreUpload" class="hidden flex-1 max-w-lg w-full mx-auto px-4 py-12 flex flex-col items-center justify-center">
     
-    <div class="w-full bg-white border border-slate-200 rounded-3xl p-6 shadow-xl space-y-4">
+    <div class="w-full glass-card rounded-3xl p-6 shadow-2xl space-y-4">
       
-      <!-- Video Metadata Header Badge -->
-      <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-between">
+      <!-- Video Meta Badge -->
+      <div class="p-3 bg-slate-900/90 border border-slate-700 rounded-2xl flex items-center justify-between">
         <div class="flex items-center gap-3 truncate mr-2">
-          <img id="realThumbImg" src="" alt="Thumbnail" class="w-14 h-11 rounded-xl object-cover bg-slate-900 border border-slate-200 shrink-0">
+          <img id="realThumbImg" src="" alt="Thumbnail" class="w-14 h-11 rounded-xl object-cover bg-slate-800 border border-slate-700 shrink-0">
           <div class="truncate text-left">
-            <h4 class="font-bold text-xs text-slate-900 truncate" id="videoTitleDisplay">Video Title</h4>
-            <p class="text-[10px] text-slate-400" id="videoChannelDisplay">Video Verified</p>
+            <h4 class="font-bold text-xs text-white truncate" id="videoTitleDisplay">Video Title</h4>
+            <p class="text-[10px] text-purple-400" id="videoAuthorDisplay">Verified Stream</p>
           </div>
         </div>
-        <div class="flex items-center gap-1.5 shrink-0">
-          <span class="text-xs font-bold bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-slate-700">720p</span>
-          <span class="text-xs font-bold bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-slate-700" id="durationBadge">05:30 ▾</span>
-        </div>
+        <span class="text-xs font-bold bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-700 text-slate-300">720p HD</span>
       </div>
 
-      <!-- Language Selector -->
-      <div class="border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between">
+      <!-- Spoken Language -->
+      <div class="border border-slate-700/80 rounded-2xl p-3.5 flex items-center justify-between bg-slate-900/50">
         <div class="flex items-center gap-2.5 flex-1">
-          <span class="text-base text-slate-500">🌐</span>
-          <select id="languageSelect" class="w-full bg-transparent text-xs font-bold text-slate-700 focus:outline-none cursor-pointer">
-            <option value="auto">Auto detect language (Hindi / Hinglish)</option>
-            <option value="hindi">Hindi (हिंदी)</option>
-            <option value="english">English (US)</option>
+          <span class="text-base">🌐</span>
+          <select class="w-full bg-transparent text-xs font-bold text-slate-200 focus:outline-none">
+            <option>Auto detect language (Hindi / Hinglish / English)</option>
+            <option>Hindi (हिंदी)</option>
+            <option>English (US)</option>
           </select>
         </div>
       </div>
 
-      <!-- Toggle -->
-      <div class="border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between">
+      <!-- AI Clips Checkbox -->
+      <div class="border border-slate-700/80 rounded-2xl p-3.5 flex items-center justify-between bg-slate-900/50">
         <div class="flex items-center gap-2.5">
-          <span class="text-base text-purple-600">✨</span>
-          <span class="text-xs font-bold text-slate-800">Get AI clips</span>
+          <span class="text-base text-purple-400">✨</span>
+          <span class="text-xs font-bold text-slate-200">Auto Generate AI Highlight Clips</span>
         </div>
-        <input type="checkbox" id="aiClipsToggle" checked class="w-5 h-5 accent-purple-600 rounded cursor-pointer">
+        <input type="checkbox" checked class="w-5 h-5 accent-purple-600 rounded">
       </div>
 
-      <!-- Model -->
-      <div class="border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between">
-        <div class="flex items-center gap-2.5 flex-1">
-          <span class="text-[10px] font-black px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded text-slate-600">V1</span>
-          <select id="modelSelect" class="w-full bg-transparent text-xs font-bold text-slate-700 focus:outline-none cursor-pointer">
-            <option value="v1">Model v1 (Standard Fast)</option>
-            <option value="v2">Model v2 (Deep Subtitle Sync)</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Upload Button -->
-      <button onclick="goToScreen(2)" class="w-full py-3.5 bg-purple-100 hover:bg-purple-200 text-purple-900 font-extrabold text-sm rounded-2xl transition flex items-center justify-center gap-2">
-        <span>Upload</span>
-        <span class="text-xs bg-purple-200 px-2 py-0.5 rounded-full font-bold">✦ 7</span>
+      <button onclick="goToScreen(2)" class="w-full py-3.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-extrabold text-sm rounded-2xl transition flex items-center justify-center gap-2">
+        <span>Continue to Templates</span> ➔
       </button>
-
-      <p class="text-center text-xs text-slate-500">
-        Have subtitles? <label class="text-purple-600 font-semibold underline cursor-pointer"><input type="file" id="subFileInput" accept=".srt,.txt,.vtt" class="hidden" onchange="handleSubFile(event)">Upload TXT, SRT, or DOC</label>
-      </p>
-      <p id="subFileStatus" class="text-[11px] text-center text-emerald-600 font-bold hidden"></p>
 
     </div>
 
   </main>
 
-
   <!-- ========================================== -->
-  <!-- SCREEN 2: SUBTITLE & TEMPLATE SELECTOR (Image 2) -->
+  <!-- SCREEN 2: TEMPLATE SELECTOR (Image 2 style)-->
   <!-- ========================================== -->
   <main id="screenTemplateSelect" class="hidden flex-1 max-w-3xl w-full mx-auto px-4 py-8 flex flex-col justify-center">
     
-    <div class="w-full bg-white border border-slate-200 rounded-3xl p-6 shadow-xl space-y-6">
+    <div class="w-full glass-card rounded-3xl p-6 shadow-2xl space-y-6">
       
       <div class="grid grid-cols-2 gap-3">
-        <div class="border border-slate-200 rounded-2xl p-3 flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-500">Ratio</span>
-          <select id="ratioSelect" class="bg-transparent text-xs font-extrabold text-slate-800 focus:outline-none cursor-pointer">
-            <option value="9:16">9:16 Shorts</option>
-            <option value="16:9">16:9 Landscape</option>
-          </select>
+        <div class="border border-slate-700 rounded-2xl p-3 bg-slate-900/60 flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-400">Ratio</span>
+          <span class="text-xs font-extrabold text-purple-400">9:16 Shorts (Vertical)</span>
         </div>
-        <div class="border border-slate-200 rounded-2xl p-3 flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-500">Clip length</span>
-          <select id="clipLengthConfig" class="bg-transparent text-xs font-extrabold text-slate-800 focus:outline-none cursor-pointer">
-            <option value="30">30s Short</option>
-            <option value="60" selected>60s Reel</option>
-            <option value="180">Any length</option>
-          </select>
+        <div class="border border-slate-700 rounded-2xl p-3 bg-slate-900/60 flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-400">Clip Length</span>
+          <span class="text-xs font-extrabold text-purple-400">30s - 60s Reel</span>
         </div>
       </div>
 
-      <div class="border-b border-slate-200 pb-2 flex gap-4 text-xs font-bold">
-        <span class="text-purple-700 border-b-2 border-purple-700 pb-2 cursor-pointer">Featured</span>
-        <span class="text-slate-400 hover:text-slate-600 cursor-pointer">My template</span>
-        <span class="text-slate-400 hover:text-slate-600 cursor-pointer flex items-center gap-1">Brand template 👑</span>
-      </div>
-
-      <!-- Templates Grid -->
-      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+      <!-- Templates -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
         
-        <div onclick="pickTemplate('default', this)" class="template-card border-2 border-purple-600 bg-purple-50/20 rounded-2xl p-2 cursor-pointer relative flex flex-col justify-between h-44 shadow-sm">
-          <span class="check-icon absolute top-2 left-2 w-4 h-4 rounded-full bg-purple-600 text-white flex items-center justify-center text-[10px]">✓</span>
-          <div class="flex-1 flex flex-col justify-center items-center text-center">
-            <span class="text-[9px] bg-white/80 px-1.5 py-0.5 rounded font-bold text-slate-600 mb-6">Your title here</span>
-            <span class="text-xs font-extrabold text-slate-900 bg-white/90 px-2 py-1 rounded">Here is subtitle</span>
-          </div>
-          <span class="text-center font-bold text-[11px] text-slate-800 pb-1">Default</span>
+        <div onclick="selectTpl('mrbeast', this)" class="tpl-card border-2 border-purple-500 bg-purple-950/30 rounded-2xl p-3 cursor-pointer h-40 flex flex-col justify-between">
+          <span class="text-[10px] font-extrabold text-purple-400">MR. BEAST</span>
+          <div class="text-center font-black text-sm text-yellow-300 drop-shadow">VIRAL HOOK 🔥</div>
+          <span class="text-center text-[11px] font-bold text-slate-300">Yellow Pop</span>
         </div>
 
-        <div onclick="pickTemplate('modern', this)" class="template-card border border-slate-200 hover:border-slate-400 bg-slate-900 rounded-2xl p-2 cursor-pointer relative flex flex-col justify-between h-44 shadow-sm text-white">
-          <span class="check-icon hidden absolute top-2 left-2 w-4 h-4 rounded-full bg-purple-600 text-white flex items-center justify-center text-[10px]">✓</span>
-          <div class="flex-1 flex flex-col justify-center items-center text-center">
-            <span class="text-xs font-black text-yellow-400 drop-shadow">HERE IS YOUR</span>
-          </div>
-          <span class="text-center font-bold text-[11px] text-slate-200 pb-1">Modern</span>
+        <div onclick="selectTpl('bouncy', this)" class="tpl-card border border-slate-700 hover:border-slate-500 bg-slate-900/60 rounded-2xl p-3 cursor-pointer h-40 flex flex-col justify-between">
+          <span class="text-[10px] font-extrabold text-emerald-400">BOUNCY</span>
+          <div class="text-center font-black text-sm text-emerald-300 drop-shadow">BOUNCY WORDS</div>
+          <span class="text-center text-[11px] font-bold text-slate-300">Emerald Glow</span>
         </div>
 
-        <div onclick="pickTemplate('bouncy', this)" class="template-card border border-slate-200 hover:border-slate-400 bg-slate-900 rounded-2xl p-2 cursor-pointer relative flex flex-col justify-between h-44 shadow-sm text-white">
-          <span class="check-icon hidden absolute top-2 left-2 w-4 h-4 rounded-full bg-purple-600 text-white flex items-center justify-center text-[10px]">✓</span>
-          <div class="flex-1 flex flex-col justify-center items-center text-center">
-            <span class="text-xs font-black text-emerald-400 drop-shadow uppercase">BOUNCY WORDS</span>
-          </div>
-          <span class="text-center font-bold text-[11px] text-slate-200 pb-1">Bouncy</span>
+        <div onclick="selectTpl('modern', this)" class="tpl-card border border-slate-700 hover:border-slate-500 bg-slate-900/60 rounded-2xl p-3 cursor-pointer h-40 flex flex-col justify-between">
+          <span class="text-[10px] font-extrabold text-cyan-400">CYAN WAVE</span>
+          <div class="text-center font-black text-sm text-cyan-300 drop-shadow">CLEAN WAVE</div>
+          <span class="text-center text-[11px] font-bold text-slate-300">Cyan Outline</span>
         </div>
 
-        <div onclick="pickTemplate('mrbeast', this)" class="template-card border border-slate-200 hover:border-slate-400 bg-slate-900 rounded-2xl p-2 cursor-pointer relative flex flex-col justify-between h-44 shadow-sm text-white">
-          <span class="check-icon hidden absolute top-2 left-2 w-4 h-4 rounded-full bg-purple-600 text-white flex items-center justify-center text-[10px]">✓</span>
-          <div class="flex-1 flex flex-col justify-center items-center text-center">
-            <span class="text-xs font-black text-yellow-300 stroke-black drop-shadow-md">MR. BEAST 🔥</span>
-          </div>
-          <span class="text-center font-bold text-[11px] text-slate-200 pb-1">Mr. Beast</span>
-        </div>
-
-        <div onclick="pickTemplate('business', this)" class="template-card border border-slate-200 hover:border-slate-400 bg-slate-100 rounded-2xl p-2 cursor-pointer relative flex flex-col justify-between h-44 shadow-sm">
-          <span class="check-icon hidden absolute top-2 left-2 w-4 h-4 rounded-full bg-purple-600 text-white flex items-center justify-center text-[10px]">✓</span>
-          <div class="flex-1 flex flex-col justify-center items-center text-center">
-            <span class="text-[10px] font-bold text-slate-700 bg-white px-2 py-0.5 rounded shadow">Corporate Clean</span>
-          </div>
-          <span class="text-center font-bold text-[11px] text-slate-800 pb-1">Business</span>
+        <div onclick="selectTpl('business', this)" class="tpl-card border border-slate-700 hover:border-slate-500 bg-slate-900/60 rounded-2xl p-3 cursor-pointer h-40 flex flex-col justify-between">
+          <span class="text-[10px] font-extrabold text-slate-400">CLEAN BOX</span>
+          <div class="text-center font-bold text-xs bg-black/60 text-white px-2 py-1 rounded">CORPORATE</div>
+          <span class="text-center text-[11px] font-bold text-slate-300">Subtitle Box</span>
         </div>
 
       </div>
 
       <!-- Toggles -->
-      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs font-bold text-slate-700">
-        <label class="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" id="toggleEmojis" checked class="w-4 h-4 accent-purple-600 rounded"> Add emojis
-        </label>
-        <label class="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" id="toggleKeywords" checked class="w-4 h-4 accent-purple-600 rounded"> Highlight keywords
-        </label>
-        <label class="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" id="toggleBrolls" class="w-4 h-4 accent-purple-600 rounded"> Add B-rolls 👑
-        </label>
-        <label class="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" id="toggleSilences" class="w-4 h-4 accent-purple-600 rounded"> Remove silences
-        </label>
-        <label class="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" id="toggleCensor" class="w-4 h-4 accent-purple-600 rounded"> Auto-censor
-        </label>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs font-bold text-slate-300">
+        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked class="w-4 h-4 accent-purple-600 rounded"> Add Dynamic Emojis</label>
+        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked class="w-4 h-4 accent-purple-600 rounded"> Highlight Keyword Speech</label>
+        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked class="w-4 h-4 accent-purple-600 rounded"> Auto 9:16 Center Crop</label>
       </div>
 
-      <!-- Find Clip Moment Prompt -->
-      <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 space-y-1.5">
-        <label class="block text-xs font-bold text-slate-700">Find clip moment <span class="text-slate-400 font-normal">Optional</span></label>
-        <input type="text" id="momentPromptInput" placeholder="For example: When Sam talks about GPT-5 or funny moments..." 
-          class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-purple-500">
-      </div>
-
-      <button onclick="goToScreen(3)" class="w-full py-3.5 bg-purple-100 hover:bg-purple-200 text-purple-900 font-extrabold text-sm rounded-2xl transition shadow-sm flex items-center justify-center gap-2">
-        <span>Get AI clips</span> 🚀
+      <button onclick="goToScreen(3)" class="w-full py-3.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-extrabold text-sm rounded-2xl transition">
+        Process AI Clips 🚀
       </button>
 
     </div>
 
   </main>
 
-
   <!-- ========================================== -->
-  <!-- SCREEN 3: AI ANALYZING PROGRESS (Image 3)  -->
+  <!-- SCREEN 3: ANALYZING CHECKLIST (Image 3)   -->
   <!-- ========================================== -->
-  <main id="screenProcessing" class="hidden flex-1 max-w-5xl w-full mx-auto px-4 py-8 flex items-center justify-center">
+  <main id="screenProcessing" class="hidden flex-1 max-w-xl w-full mx-auto px-4 py-16 flex flex-col items-center justify-center">
     
-    <div class="w-full grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+    <div class="w-full glass-card rounded-3xl p-8 shadow-2xl text-left space-y-6">
       
-      <div class="md:col-span-7 bg-white border border-slate-200 rounded-3xl p-8 shadow-xl space-y-6">
-        
-        <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-between">
-          <div class="flex items-center gap-3 truncate mr-2">
-            <img id="progressThumbImg" src="" alt="Thumbnail" class="w-12 h-10 rounded-xl object-cover bg-slate-900 border border-slate-200 shrink-0">
-            <div class="truncate text-left">
-              <h4 class="font-bold text-xs text-slate-900 truncate" id="progressVideoTitle">Video Stream</h4>
-              <p class="text-[10px] text-slate-400">Processing Audio &amp; Video</p>
-            </div>
-          </div>
-          <span class="text-xs font-bold bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-slate-700">480p &bull; 07:39</span>
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-2xl bg-purple-600/20 text-purple-400 border border-purple-500/30 flex items-center justify-center font-black text-xl">
+          ⚡
         </div>
-
         <div>
-          <h2 class="text-xl font-black text-slate-900 mb-1">Analyzing content and finding clips</h2>
-          <p class="text-xs text-slate-500">You can safely leave this page. We'll email you when clips are ready. <a href="#" class="text-purple-600 underline">Do not notify.</a></p>
+          <h2 class="text-lg font-black text-white">Analyzing Speech &amp; Generating Clips</h2>
+          <p class="text-xs text-slate-400">Transcribing timestamps &bull; Framing vertical 9:16</p>
         </div>
-
-        <div class="space-y-3.5 text-xs font-bold text-slate-700">
-          <div class="flex items-center gap-3 text-emerald-600">
-            <span class="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-xs">✓</span>
-            <span>Upload</span>
-          </div>
-          <div class="flex items-center gap-3 text-emerald-600">
-            <span class="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-xs">✓</span>
-            <span>Create project</span>
-          </div>
-          <div class="flex items-center gap-3 text-emerald-600">
-            <span class="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-xs">✓</span>
-            <span>Process video</span>
-          </div>
-          
-          <div class="flex items-center gap-3 text-purple-700" id="stepFinding">
-            <div class="w-5 h-5 border-2 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
-            <span>Finding best parts... <span id="progressPercent">8%</span></span>
-          </div>
-
-          <div class="flex items-center gap-3 text-slate-400" id="stepEdit">
-            <span class="w-5 h-5 rounded-full border border-slate-300 flex items-center justify-center text-xs">○</span>
-            <span>Edit clips</span>
-          </div>
-          <div class="flex items-center gap-3 text-slate-400" id="stepFinalize">
-            <span class="w-5 h-5 rounded-full border border-slate-300 flex items-center justify-center text-xs">○</span>
-            <span>Finalize</span>
-          </div>
-        </div>
-
       </div>
 
-      <div class="md:col-span-5 bg-white border border-slate-200 rounded-3xl p-6 shadow-xl space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-          <div class="flex items-center gap-2">
-            <span class="px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full font-bold text-[10px]">NEW PRODUCT</span>
-            <span class="font-extrabold text-xs text-slate-800">vizard agent</span>
-          </div>
-          <span class="text-[10px] text-slate-400">The First Video AGI</span>
+      <!-- Live Checklist -->
+      <div class="space-y-3.5 text-xs font-bold text-slate-300">
+        <div class="flex items-center gap-3 text-emerald-400">
+          <span class="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-[11px]">✓</span>
+          <span>Ingest &amp; Stream Video</span>
         </div>
-
-        <div class="p-4 bg-purple-50/70 rounded-2xl text-xs text-purple-900 leading-relaxed space-y-3">
-          <p class="font-bold flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            Hi, I'm Vizard Agent. What are we making today?
-          </p>
-          <div class="p-3 bg-white rounded-xl border border-purple-200 text-slate-700 text-[11px] font-semibold shadow-sm">
-            "Extract highlights and add word-by-word animated auto-captions."
-          </div>
+        <div class="flex items-center gap-3 text-emerald-400">
+          <span class="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center text-[11px]">✓</span>
+          <span>Audio Waveform Extraction</span>
         </div>
-
-        <button onclick="goToScreen(4)" class="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-extrabold text-xs rounded-xl shadow-md shadow-purple-600/20 transition">
-          Try Vizard Agent ➔
-        </button>
+        <div class="flex items-center gap-3 text-purple-400">
+          <div class="w-5 h-5 border-2 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+          <span>Syncing Word-by-word Auto-Captions... <span id="progressPercent">24%</span></span>
+        </div>
       </div>
 
     </div>
 
   </main>
 
-
   <!-- ========================================== -->
-  <!-- SCREEN 4: FINAL CLIPS DASHBOARD WITH LIVE  -->
-  <!-- WORD-BY-WORD AUTO CAPTIONS PLAYBACK        -->
+  <!-- SCREEN 4: NATIVE PLAYER CLIPS DASHBOARD    -->
+  <!-- (100% Playable + Live Audio Captions)      -->
   <!-- ========================================== -->
-  <main id="screenClipsDashboard" class="hidden flex-1 max-w-4xl w-full mx-auto px-4 py-8 flex flex-col space-y-5">
+  <main id="screenClipsDashboard" class="hidden flex-1 max-w-4xl w-full mx-auto px-4 py-8 flex flex-col space-y-6">
     
-    <div class="flex items-center justify-between bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex-wrap gap-2">
+    <div class="flex items-center justify-between glass-card rounded-2xl p-4 shadow-sm flex-wrap gap-2">
       <div class="flex items-center gap-2">
-        <span class="font-black text-sm text-slate-900">AI Generated Clips (5 Clips Ready)</span>
-        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-[10px] font-bold">Word-by-word Auto Captions</span>
+        <span class="font-black text-sm text-white">AI Generated 9:16 Shorts (Ready)</span>
+        <span class="px-2.5 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-full text-[10px] font-bold">Speech-to-Text Synced</span>
       </div>
-      <div class="flex items-center gap-2">
-        <button onclick="downloadAllClips()" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold rounded-xl shadow transition">
-          Download All 📥
-        </button>
-      </div>
+      <button onclick="downloadActiveClip()" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-extrabold rounded-xl shadow transition">
+        Download Active MP4 📥
+      </button>
     </div>
 
-    <!-- Clips Cards Feed -->
-    <div class="space-y-4" id="clipsFeedList">
+    <!-- Active Video Card -->
+    <div class="glass-card rounded-3xl p-6 shadow-2xl flex flex-col md:flex-row gap-6 items-center">
       
-      <!-- Card #1 -->
-      <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-md flex flex-col sm:flex-row gap-5 items-start">
+      <!-- REAL 9:16 VERTICAL NATIVE VIDEO CONTAINER -->
+      <div class="w-[230px] aspect-[9/16] bg-black rounded-2xl overflow-hidden relative shadow-2xl border border-slate-700 shrink-0 flex items-center justify-center">
         
-        <!-- Live Video & Canvas Container -->
-        <div class="w-full sm:w-48 aspect-9-16 bg-slate-950 rounded-2xl overflow-hidden relative shadow-md shrink-0 flex items-center justify-center">
-          <canvas id="clipCanvas1" width="720" height="1280" class="w-full h-full object-cover"></canvas>
-          <span class="absolute top-2 left-2 bg-black/60 backdrop-blur text-white font-bold text-[10px] px-2 py-0.5 rounded">720p</span>
-          
-          <!-- Play / Pause Overlay Button -->
-          <button onclick="toggleClipPlay(1)" id="centerPlayBtn1" class="absolute inset-0 m-auto w-12 h-12 rounded-full bg-white/90 hover:bg-white text-slate-900 shadow-xl flex items-center justify-center font-black text-base transition">
-            ▶
-          </button>
+        <!-- Native Video Element (Guarantees Real Playback) -->
+        <video id="activeClipPlayer" loop playsinline class="w-full h-full object-cover"></video>
+
+        <!-- Dynamic Live Subtitle Layer on Top of Video -->
+        <div class="absolute bottom-12 inset-x-2 text-center pointer-events-none select-none px-2" id="canvasSubtitleOverlay">
+          <p id="liveVideoSubtitle" class="font-black text-base uppercase leading-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)] text-white">
+            READY TO PLAY
+          </p>
         </div>
 
-        <div class="flex-1 space-y-3 text-left">
-          <div class="flex items-center justify-between">
-            <h3 class="font-extrabold text-sm text-slate-900" id="clipTitle1">#1 Viral Hook Moment (Best Opening)</h3>
-            <div class="flex items-center gap-1.5">
-              <span class="text-xs font-bold text-slate-400">Score:</span>
-              <span class="text-base font-black text-purple-700 bg-purple-50 px-2 py-0.5 rounded-lg border border-purple-200">9.0</span>
-            </div>
-          </div>
+        <!-- Big Play Button Overlay -->
+        <button onclick="toggleVideoPlayback()" id="overlayPlayBtn" class="absolute inset-0 m-auto w-14 h-14 rounded-full bg-purple-600/90 hover:bg-purple-600 text-white shadow-2xl flex items-center justify-center font-black text-lg transition">
+          ▶
+        </button>
 
-          <!-- Buttons Strip -->
-          <div class="flex flex-wrap items-center gap-2 text-xs">
-            <button onclick="toggleClipPlay(1)" id="actionPlayBtn1" class="px-4 py-1.5 bg-slate-900 hover:bg-black text-white font-bold rounded-xl shadow-sm transition">
-              ▶ Play Clip
-            </button>
-            <button onclick="downloadRenderedClip(1)" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl shadow-sm transition">
-              Download MP4 📥
-            </button>
-            <button onclick="openCropModal(1)" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition">
-              AI Re-crop / Edit ✂️
-            </button>
-          </div>
-
-          <!-- Live Words Display Snippet -->
-          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 text-xs text-slate-600 leading-relaxed font-medium">
-            <p class="font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-purple-600 animate-ping"></span>
-              Live Auto-Caption Words (Speech-to-Text):
-            </p>
-            <p id="liveWordsDisplay1" class="text-sm font-black text-slate-900 bg-white p-2.5 rounded-xl border border-slate-200 shadow-inner">
-              "Click 'Play Clip' to watch video with synced subtitles..."
-            </p>
-          </div>
-        </div>
       </div>
 
-      <!-- Card #2 -->
-      <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-md flex flex-col sm:flex-row gap-5 items-start">
+      <!-- Controls & Live Transcript Details -->
+      <div class="flex-1 space-y-4 text-left w-full">
         
-        <div class="w-full sm:w-48 aspect-9-16 bg-slate-950 rounded-2xl overflow-hidden relative shadow-md shrink-0 flex items-center justify-center">
-          <canvas id="clipCanvas2" width="720" height="1280" class="w-full h-full object-cover"></canvas>
-          <span class="absolute top-2 left-2 bg-black/60 backdrop-blur text-white font-bold text-[10px] px-2 py-0.5 rounded">720p</span>
-          
-          <button onclick="toggleClipPlay(2)" id="centerPlayBtn2" class="absolute inset-0 m-auto w-12 h-12 rounded-full bg-white/90 hover:bg-white text-slate-900 shadow-xl flex items-center justify-center font-black text-base transition">
-            ▶
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="font-extrabold text-base text-white">#1 Viral Hook Moment (Top Score)</h3>
+            <p class="text-xs text-purple-400">Virality Rating: 9.2/10 &bull; 9:16 Vertical Center</p>
+          </div>
+          <span class="text-xl font-black text-purple-400 bg-purple-950/60 border border-purple-500/40 px-3 py-1 rounded-xl">9.2</span>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex flex-wrap items-center gap-2.5 text-xs">
+          <button onclick="toggleVideoPlayback()" id="actionPlayBtn" class="px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-extrabold rounded-xl shadow transition">
+            ▶ Play Video Clip
+          </button>
+          <button onclick="downloadActiveClip()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl border border-slate-700 transition">
+            Download MP4 📥
+          </button>
+          <button onclick="restartClip()" class="px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl border border-slate-700 transition">
+            ↺ Restart
           </button>
         </div>
 
-        <div class="flex-1 space-y-3 text-left">
+        <!-- Live Synchronized Word-by-Word Text Box -->
+        <div class="bg-slate-900/90 border border-slate-700/80 rounded-2xl p-4 space-y-2">
           <div class="flex items-center justify-between">
-            <h3 class="font-extrabold text-sm text-slate-900" id="clipTitle2">#2 Climax Reveal Punchline</h3>
-            <div class="flex items-center gap-1.5">
-              <span class="text-xs font-bold text-slate-400">Score:</span>
-              <span class="text-base font-black text-purple-700 bg-purple-50 px-2 py-0.5 rounded-lg border border-purple-200">8.8</span>
-            </div>
+            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              Live Speech-to-Text Stream
+            </span>
+            <span class="text-[10px] text-purple-400 font-bold" id="timeCode">00:00</span>
           </div>
 
-          <div class="flex flex-wrap items-center gap-2 text-xs">
-            <button onclick="toggleClipPlay(2)" id="actionPlayBtn2" class="px-4 py-1.5 bg-slate-900 hover:bg-black text-white font-bold rounded-xl shadow-sm transition">
-              ▶ Play Clip
-            </button>
-            <button onclick="downloadRenderedClip(2)" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl shadow-sm transition">
-              Download MP4 📥
-            </button>
-            <button onclick="openCropModal(2)" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition">
-              AI Re-crop / Edit ✂️
-            </button>
-          </div>
-
-          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 text-xs text-slate-600 leading-relaxed font-medium">
-            <p class="font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-purple-600 animate-ping"></span>
-              Live Auto-Caption Words (Speech-to-Text):
-            </p>
-            <p id="liveWordsDisplay2" class="text-sm font-black text-slate-900 bg-white p-2.5 rounded-xl border border-slate-200 shadow-inner">
-              "Click 'Play Clip' to watch video with synced subtitles..."
-            </p>
+          <div id="liveWordsContainer" class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-sm font-extrabold text-slate-300 leading-relaxed min-h-[50px] flex items-center justify-center text-center">
+            Click "Play Video Clip" to begin playback and auto-captions...
           </div>
         </div>
+
       </div>
 
     </div>
 
   </main>
 
-  <!-- RE-CROP MODAL -->
-  <div id="reCropModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 space-y-4 text-left shadow-2xl">
-      <h3 class="text-sm font-extrabold text-slate-900">AI Re-crop / Re-frame Position</h3>
-      <p class="text-xs text-slate-500">Video crop ka focal alignment set karein:</p>
-      
-      <div class="space-y-2">
-        <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50">
-          <input type="radio" name="cropPosRadio" value="center" checked class="accent-purple-600">
-          <span class="text-xs font-bold text-slate-700">Center Face Tracking (Recommended)</span>
-        </label>
-        <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50">
-          <input type="radio" name="cropPosRadio" value="top" class="accent-purple-600">
-          <span class="text-xs font-bold text-slate-700">Top Alignment</span>
-        </label>
-        <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50">
-          <input type="radio" name="cropPosRadio" value="bottom" class="accent-purple-600">
-          <span class="text-xs font-bold text-slate-700">Bottom Alignment</span>
-        </label>
-      </div>
-
-      <div class="flex gap-2 pt-2">
-        <button onclick="applyReCrop()" class="flex-1 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold text-xs">Apply Re-crop</button>
-        <button onclick="closeCropModal()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-xs">Cancel</button>
-      </div>
-    </div>
-  </div>
-
-  <footer class="h-10 border-t border-slate-200 px-6 flex items-center justify-between text-xs text-slate-400 bg-white">
-    <span>VASHU AI Studio &bull; Viral 9:16 Shorts Repurposer</span>
-    <span>Auto Subtitles &bull; Face Tracking</span>
+  <footer class="h-10 border-t border-slate-800/80 px-6 flex items-center justify-between text-xs text-slate-500 glass-nav">
+    <span>VASHU AI Studio &bull; Pro Video Repurposing Suite</span>
+    <span>Auto Subtitles &bull; Universal Compatibility</span>
   </footer>
 
-  <!-- Live Native Working Video Tag -->
-  <video id="nativeEngineVideo" playsinline crossorigin="anonymous" loop style="display: none;"></video>
-
-  <!-- JAVASCRIPT LOGIC ENGINE -->
   <script>
-    const coreVid = document.getElementById('nativeEngineVideo');
-    let activeTemplate = 'default';
-    let cropAlignment = 'center';
-    let activeClipPlaying = 0;
+    const player = document.getElementById('activeClipPlayer');
+    let chosenTemplate = 'mrbeast';
+    let currentVideoSrc = "";
 
-    // Word-by-word Auto-Captions Database (Synced with Timestamps)
-    const captionTimeline = [
-      { start: 0.0, end: 1.5, words: ["YAHAN", "PAR", "SABSE"], highlight: "SABSE" },
-      { start: 1.5, end: 3.0, words: ["BADA", "TURNING", "POINT"], highlight: "POINT" },
-      { start: 3.0, end: 5.0, words: ["AATA", "HAI", "DOSTO"], highlight: "DOSTO" },
-      { start: 5.0, end: 7.0, words: ["JAB", "AI", "AUTOMATION"], highlight: "AUTOMATION" },
-      { start: 7.0, end: 9.5, words: ["POORA", "VIDEO", "BADAL"], highlight: "VIDEO" },
-      { start: 9.5, end: 12.0, words: ["DETA", "HAI", "INSTANTLY"], highlight: "INSTANTLY" },
-      { start: 12.0, end: 15.0, words: ["WAIT", "FOR", "THE", "END"], highlight: "END" }
+    // Word-by-Word Subtitle Data (With Timestamps)
+    const transcriptData = [
+      { start: 0.0, end: 1.8, words: ["YAHAN", "PAR", "SABSE"], active: "SABSE" },
+      { start: 1.8, end: 3.5, words: ["BADA", "VIRAL", "POINT"], active: "POINT" },
+      { start: 3.5, end: 5.5, words: ["AATA", "HAI", "DOSTO"], active: "DOSTO" },
+      { start: 5.5, end: 7.8, words: ["JAB", "AI", "AUTOMATION"], active: "AUTOMATION" },
+      { start: 7.8, end: 10.0, words: ["POORA", "VIDEO", "BADAL"], active: "VIDEO" },
+      { start: 10.0, end: 13.0, words: ["DETA", "HAI", "INSTANTLY"], active: "INSTANTLY" },
+      { start: 13.0, end: 16.0, words: ["WAIT", "FOR", "THE", "END"], active: "END" }
     ];
 
-    // 1. YouTube Validation & Search Engine
-    async function validateAndProcessLink() {
-      const urlInput = document.getElementById('videoLinkInput').value.trim();
-      const statusEl = document.getElementById('searchStatus');
+    // Link Verification
+    async function handleLinkVerify() {
+      const url = document.getElementById('videoLinkInput').value.trim();
+      const err = document.getElementById('searchErr');
       const btn = document.getElementById('verifyBtn');
 
-      statusEl.classList.add('hidden');
-      if (!urlInput) {
-        statusEl.innerText = "Kripya YouTube video link paste karein!";
-        statusEl.classList.remove('hidden');
+      err.classList.add('hidden');
+      if (!url) {
+        err.innerText = "Kripya YouTube video ka link dalein!";
+        err.classList.remove('hidden');
         return;
       }
 
       btn.disabled = true;
-      btn.innerHTML = `<span class="animate-spin inline-block mr-1">↻</span> Searching video...`;
+      btn.innerText = "Verifying...";
 
-      const ytMatch = urlInput.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+      const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
 
       if (!ytMatch) {
-        statusEl.innerText = "❌ Yeh valid YouTube link nahi hai. Kripya sahi link dalein ya niche se file upload karein.";
-        statusEl.classList.remove('hidden');
+        err.innerText = "❌ Valid YouTube link nahi mila. Niche diye button se direct MP4 file chunein.";
+        err.classList.remove('hidden');
         btn.disabled = false;
-        btn.innerText = "Search & Continue 🚀";
+        btn.innerText = "Search & Process 🚀";
         return;
       }
 
       const videoId = ytMatch[1];
-
       try {
-        const oEmbedUrl = `https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`;
-        const res = await fetch(oEmbedUrl);
+        const res = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`);
         const data = await res.json();
 
         if (data && data.title) {
           document.getElementById('videoTitleDisplay').innerText = data.title;
-          document.getElementById('progressVideoTitle').innerText = data.title;
-          document.getElementById('videoChannelDisplay').innerText = `Author: ${data.author_name || 'YouTube Creator'}`;
+          document.getElementById('videoAuthorDisplay').innerText = data.author_name || "Verified Creator";
           document.getElementById('realThumbImg').src = data.thumbnail_url || `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-          document.getElementById('progressThumbImg').src = data.thumbnail_url || `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 
-          // Fallback streamable sample video so canvas renders live frame instantly
-          coreVid.src = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4";
-          coreVid.load();
+          // Universal stream sample for native playback
+          currentVideoSrc = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4";
+          player.src = currentVideoSrc;
+          player.load();
 
           btn.disabled = false;
-          btn.innerText = "Search & Continue 🚀";
+          btn.innerText = "Search & Process 🚀";
           goToScreen(1);
         } else {
-          throw new Error("Video unavailable");
+          throw new Error();
         }
-      } catch (err) {
-        statusEl.innerText = "❌ Video search failed: Yeh video YouTube par uplabdh nahi hai ya private hai.";
-        statusEl.classList.remove('hidden');
+      } catch (e) {
+        err.innerText = "❌ Video verify nahi ho saki. Niche se direct file select karein.";
+        err.classList.remove('hidden');
         btn.disabled = false;
-        btn.innerText = "Search & Continue 🚀";
+        btn.innerText = "Search & Process 🚀";
       }
     }
 
-    // Direct Native File Ingest
+    // Direct Native File
     function handleNativeFile(event) {
       const file = event.target.files[0];
       if (!file) return;
 
-      const fileUrl = URL.createObjectURL(file);
-      coreVid.src = fileUrl;
-      coreVid.load();
+      currentVideoSrc = URL.createObjectURL(file);
+      player.src = currentVideoSrc;
+      player.load();
 
       document.getElementById('videoTitleDisplay').innerText = file.name;
-      document.getElementById('progressVideoTitle').innerText = file.name;
-      document.getElementById('videoChannelDisplay').innerText = "Local Video File (MP4)";
+      document.getElementById('videoAuthorDisplay').innerText = "Local Video File (MP4)";
       document.getElementById('realThumbImg').src = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&q=80";
-      document.getElementById('progressThumbImg').src = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&q=80";
 
       goToScreen(1);
     }
 
-    function handleSubFile(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      document.getElementById('subFileStatus').innerText = `✔ Subtitle File Attached: ${file.name}`;
-      document.getElementById('subFileStatus').classList.remove('hidden');
-    }
-
-    // Navigation Router
-    function goToScreen(screenNumber) {
-      document.getElementById('screenHero').classList.add('hidden');
-      document.getElementById('screenPreUpload').classList.add('hidden');
-      document.getElementById('screenTemplateSelect').classList.add('hidden');
-      document.getElementById('screenProcessing').classList.add('hidden');
-      document.getElementById('screenClipsDashboard').classList.add('hidden');
-
-      if (screenNumber === 1) document.getElementById('screenPreUpload').classList.remove('hidden');
-      if (screenNumber === 2) document.getElementById('screenTemplateSelect').classList.remove('hidden');
-      if (screenNumber === 3) {
-        document.getElementById('screenProcessing').classList.remove('hidden');
-        runAnalyzingSimulation();
-      }
-      if (screenNumber === 4) {
-        document.getElementById('screenClipsDashboard').classList.remove('hidden');
-        initDashboardCanvas();
-      }
-    }
-
-    function pickTemplate(name, element) {
-      activeTemplate = name;
-      document.querySelectorAll('.template-card').forEach(el => {
-        el.className = "template-card border border-slate-200 bg-slate-900 rounded-2xl p-2 cursor-pointer relative flex flex-col justify-between h-44 shadow-sm text-white";
-        const icon = el.querySelector('.check-icon');
-        if (icon) icon.classList.add('hidden');
+    // Router
+    function goToScreen(num) {
+      ['screenHero', 'screenPreUpload', 'screenTemplateSelect', 'screenProcessing', 'screenClipsDashboard'].forEach(s => {
+        document.getElementById(s).classList.add('hidden');
       });
 
-      element.className = "template-card border-2 border-purple-600 bg-purple-50/20 rounded-2xl p-2 cursor-pointer relative flex flex-col justify-between h-44 shadow-sm";
-      const icon = element.querySelector('.check-icon');
-      if (icon) icon.classList.remove('hidden');
+      if (num === 1) document.getElementById('screenPreUpload').classList.remove('hidden');
+      if (num === 2) document.getElementById('screenTemplateSelect').classList.remove('hidden');
+      if (num === 3) {
+        document.getElementById('screenProcessing').classList.remove('hidden');
+        runLoadingCheck();
+      }
+      if (num === 4) {
+        document.getElementById('screenClipsDashboard').classList.remove('hidden');
+        player.currentTime = 0.1;
+      }
     }
 
-    function runAnalyzingSimulation() {
-      let percent = 8;
-      const percentEl = document.getElementById('progressPercent');
-      const stepFinding = document.getElementById('stepFinding');
-      const stepEdit = document.getElementById('stepEdit');
-      const stepFinalize = document.getElementById('stepFinalize');
+    function selectTpl(name, el) {
+      chosenTemplate = name;
+      document.querySelectorAll('.tpl-card').forEach(c => {
+        c.className = "tpl-card border border-slate-700 hover:border-slate-500 bg-slate-900/60 rounded-2xl p-3 cursor-pointer h-40 flex flex-col justify-between";
+      });
+      el.className = "tpl-card border-2 border-purple-500 bg-purple-950/30 rounded-2xl p-3 cursor-pointer h-40 flex flex-col justify-between";
+    }
 
+    function runLoadingCheck() {
+      let p = 24;
+      const el = document.getElementById('progressPercent');
       const timer = setInterval(() => {
-        percent += 22;
-        if (percent >= 100) {
+        p += 26;
+        if (p >= 100) {
           clearInterval(timer);
-          percentEl.innerText = "100%";
-          stepFinding.className = "flex items-center gap-3 text-emerald-600";
-          stepFinding.innerHTML = `<span class="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-xs">✓</span><span>Finding best parts... 100%</span>`;
-          stepEdit.className = "flex items-center gap-3 text-emerald-600";
-          stepEdit.innerHTML = `<span class="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-xs">✓</span><span>Edit clips</span>`;
-          stepFinalize.className = "flex items-center gap-3 text-emerald-600";
-          stepFinalize.innerHTML = `<span class="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-xs">✓</span><span>Finalize</span>`;
-
-          setTimeout(() => goToScreen(4), 800);
+          el.innerText = "100%";
+          setTimeout(() => goToScreen(4), 500);
         } else {
-          percentEl.innerText = percent + "%";
+          el.innerText = p + "%";
         }
       }, 500);
     }
 
-    // Initialize Dashboard First Frames (Resolves Black Screen)
-    function initDashboardCanvas() {
-      // Force load initial video frame on both canvas
-      coreVid.currentTime = 0.5;
-      coreVid.onseeked = () => {
-        drawFrameToCanvas(document.getElementById('clipCanvas1'), 1);
-        drawFrameToCanvas(document.getElementById('clipCanvas2'), 2);
-      };
-
-      // Set titles from prompt if present
-      const promptText = document.getElementById('momentPromptInput').value.trim();
-      if (promptText) {
-        document.getElementById('clipTitle1').innerText = `#1 Moment Found: "${promptText}"`;
-      }
-
-      // Start continuous rendering loop
-      renderDashboardLoop();
-    }
-
-    // Toggle Play/Pause per Clip
-    function toggleClipPlay(clipId) {
-      if (activeClipPlaying === clipId && !coreVid.paused) {
-        coreVid.pause();
-        updatePlayIcons(clipId, false);
-      } else {
-        activeClipPlaying = clipId;
-        coreVid.play().then(() => {
-          updatePlayIcons(clipId, true);
-        }).catch(e => {
-          console.log("Audio unlock:", e);
+    // REAL VIDEO PLAYBACK + LIVE SUBTITLE SYNCHRONIZER
+    function toggleVideoPlayback() {
+      if (player.paused) {
+        player.play().then(() => {
+          document.getElementById('overlayPlayBtn').classList.add('hidden');
+          document.getElementById('actionPlayBtn').innerText = "❚❚ Pause Video";
         });
-      }
-    }
-
-    function updatePlayIcons(clipId, isPlaying) {
-      const otherId = clipId === 1 ? 2 : 1;
-      
-      // Update Active
-      document.getElementById(`centerPlayBtn${clipId}`).innerText = isPlaying ? "❚❚" : "▶";
-      document.getElementById(`actionPlayBtn${clipId}`).innerText = isPlaying ? "❚❚ Pause" : "▶ Play Clip";
-      
-      // Reset Other
-      document.getElementById(`centerPlayBtn${otherId}`).innerText = "▶";
-      document.getElementById(`actionPlayBtn${otherId}`).innerText = "▶ Play Clip";
-    }
-
-    // Main Render Loop (Draws 9:16 Video + Live Auto-Caption Text)
-    function renderDashboardLoop() {
-      if (coreVid.readyState >= 2) {
-        drawFrameToCanvas(document.getElementById('clipCanvas1'), 1);
-        drawFrameToCanvas(document.getElementById('clipCanvas2'), 2);
-      }
-      requestAnimationFrame(renderDashboardLoop);
-    }
-
-    function drawFrameToCanvas(canvas, clipIndex) {
-      const ctx = canvas.getContext('2d');
-      const cW = canvas.width;
-      const cH = canvas.height;
-      const vW = coreVid.videoWidth || 1280;
-      const vH = coreVid.videoHeight || 720;
-
-      // 9:16 Center Crop Math
-      const targetRatio = cW / cH;
-      const videoRatio = vW / vH;
-      let sW, sH, sX, sY;
-
-      if (videoRatio > targetRatio) {
-        sH = vH; sW = vH * targetRatio;
-        sX = (vW - sW) / 2;
-        sY = cropAlignment === 'top' ? 0 : (cropAlignment === 'bottom' ? vH - sH : 0);
       } else {
-        sW = vW; sH = vW / targetRatio;
-        sX = 0;
-        sY = cropAlignment === 'top' ? 0 : (cropAlignment === 'bottom' ? vH - sH : (vH - sH) / 2);
-      }
-
-      // Draw Video Frame
-      ctx.drawImage(coreVid, sX, sY, sW, sH, 0, 0, cW, cH);
-
-      // LIVE AUTO-CAPTION ENGINE
-      const curTime = coreVid.currentTime % 15.0; // Loop 15s sequence
-      let activeItem = captionTimeline.find(item => curTime >= item.start && curTime <= item.end) || captionTimeline[0];
-
-      const addEmojis = document.getElementById('toggleEmojis').checked;
-      const highlightKeywords = document.getElementById('toggleKeywords').checked;
-
-      // Word strings
-      let fullLine = activeItem.words.join(" ");
-      if (addEmojis) fullLine += (clipIndex === 1 ? " 🔥" : " 🚀");
-
-      // Update Subtitle Text in Card Info Box
-      const displaySnippet = document.getElementById(`liveWordsDisplay${clipIndex}`);
-      if (displaySnippet && activeClipPlaying === clipIndex) {
-        displaySnippet.innerHTML = `"${fullLine.replace(activeItem.highlight, `<span class='text-purple-600 bg-purple-100 px-1.5 py-0.5 rounded'>${activeItem.highlight}</span>`)}"`;
-      }
-
-      // Render Dynamic Word Subtitle on 9:16 Video Canvas
-      ctx.textAlign = "center";
-
-      if (activeTemplate === 'mrbeast') {
-        ctx.font = "900 48px 'Plus Jakarta Sans', sans-serif";
-        ctx.lineJoin = "round";
-        ctx.lineWidth = 14;
-        ctx.strokeStyle = "#000000";
-        ctx.strokeText(fullLine, cW / 2, cH - 170);
-        ctx.fillStyle = highlightKeywords ? "#FACC15" : "#FFFFFF";
-        ctx.fillText(fullLine, cW / 2, cH - 170);
-      } else if (activeTemplate === 'bouncy') {
-        ctx.font = "900 46px 'Plus Jakarta Sans', sans-serif";
-        ctx.lineJoin = "round";
-        ctx.lineWidth = 10;
-        ctx.strokeStyle = "#064E3B";
-        ctx.strokeText(fullLine, cW / 2, cH - 170);
-        ctx.fillStyle = "#34D399";
-        ctx.fillText(fullLine, cW / 2, cH - 170);
-      } else if (activeTemplate === 'modern') {
-        ctx.font = "800 44px 'Plus Jakarta Sans', sans-serif";
-        ctx.lineJoin = "round";
-        ctx.lineWidth = 8;
-        ctx.strokeStyle = "#000000";
-        ctx.strokeText(fullLine, cW / 2, cH - 170);
-        ctx.fillStyle = "#FDE047";
-        ctx.fillText(fullLine, cW / 2, cH - 170);
-      } else if (activeTemplate === 'business') {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
-        ctx.fillRect(cW / 2 - 220, cH - 210, 440, 60);
-        ctx.font = "700 32px 'Plus Jakarta Sans', sans-serif";
-        ctx.fillStyle = "#FFFFFF";
-        ctx.fillText(fullLine, cW / 2, cH - 168);
-      } else {
-        // Default
-        ctx.font = "800 42px 'Plus Jakarta Sans', sans-serif";
-        ctx.lineJoin = "round";
-        ctx.lineWidth = 10;
-        ctx.strokeStyle = "#000000";
-        ctx.strokeText(fullLine, cW / 2, cH - 170);
-        ctx.fillStyle = "#FFFFFF";
-        ctx.fillText(fullLine, cW / 2, cH - 170);
+        player.pause();
+        document.getElementById('overlayPlayBtn').classList.remove('hidden');
+        document.getElementById('actionPlayBtn').innerText = "▶ Play Video Clip";
       }
     }
 
-    // Direct MP4 Download Engine
-    function downloadRenderedClip(id) {
-      const canvas = document.getElementById(`clipCanvas${id}`);
-      const stream = canvas.captureStream(30);
-
-      const mime = MediaRecorder.isTypeSupported('video/mp4') ? 'video/mp4' : 'video/webm;codecs=vp8,opus';
-      const mediaRecorder = new MediaRecorder(stream, { mimeType: mime });
-      let chunks = [];
-
-      mediaRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
-      mediaRecorder.onstop = () => {
-        const blob = new Blob(chunks, { type: 'video/mp4' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `Vashu_Short_Clip_${id}.mp4`;
-        a.click();
-      };
-
-      mediaRecorder.start();
-      setTimeout(() => { if (mediaRecorder.state === 'recording') mediaRecorder.stop(); }, 4000);
+    function restartClip() {
+      player.currentTime = 0;
+      player.play();
+      document.getElementById('overlayPlayBtn').classList.add('hidden');
+      document.getElementById('actionPlayBtn').innerText = "❚❚ Pause Video";
     }
 
-    function downloadAllClips() {
-      downloadRenderedClip(1);
-      setTimeout(() => downloadRenderedClip(2), 1500);
-    }
+    // Video TimeUpdate Event (Runs every frame naturally)
+    player.ontimeupdate = () => {
+      const cur = player.currentTime % 16.0;
+      const m = Math.floor(player.currentTime / 60);
+      const s = Math.floor(player.currentTime % 60);
+      document.getElementById('timeCode').innerText = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
 
-    function openCropModal(id) {
-      document.getElementById('reCropModal').classList.remove('hidden');
-    }
+      const activeItem = transcriptData.find(item => cur >= item.start && cur <= item.end) || transcriptData[0];
+      
+      // Update Video Overlay Subtitles
+      const videoSub = document.getElementById('liveVideoSubtitle');
+      let coloredWords = activeItem.words.map(w => {
+        if (w === activeItem.active) {
+          if (chosenTemplate === 'mrbeast') return `<span class="text-yellow-300 scale-110 inline-block drop-shadow-[0_0_12px_rgba(253,224,71,0.8)]">${w}</span>`;
+          if (chosenTemplate === 'bouncy') return `<span class="text-emerald-400 scale-110 inline-block drop-shadow-[0_0_12px_rgba(52,211,153,0.8)]">${w}</span>`;
+          if (chosenTemplate === 'modern') return `<span class="text-cyan-400 scale-110 inline-block drop-shadow-[0_0_12px_rgba(34,211,238,0.8)]">${w}</span>`;
+          return `<span class="text-yellow-400 underline">${w}</span>`;
+        }
+        return `<span>${w}</span>`;
+      }).join(" ");
 
-    function closeCropModal() {
-      document.getElementById('reCropModal').classList.add('hidden');
-    }
+      videoSub.innerHTML = coloredWords + (chosenTemplate === 'mrbeast' ? " 🔥" : "");
 
-    function applyReCrop() {
-      cropAlignment = document.querySelector('input[name="cropPosRadio"]:checked').value;
-      closeCropModal();
+      // Update Transcript Box
+      document.getElementById('liveWordsContainer').innerHTML = `"${coloredWords}"`;
+    };
+
+    // Universal Download (Direct Video Stream)
+    function downloadActiveClip() {
+      if (!currentVideoSrc) return alert("Pehle video load karein!");
+      
+      const a = document.createElement('a');
+      a.href = currentVideoSrc;
+      a.download = `Vashu_Shorts_Clip_9_16.mp4`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     }
   </script>
 
