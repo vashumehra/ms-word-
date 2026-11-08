@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Video to Shorts Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4">
+
+  <div class="max-w-lg w-full bg-slate-800 p-8 rounded-2xl shadow-2xl border border-slate-700 text-center">
+    
+    <div class="inline-block p-3 bg-indigo-600/20 text-indigo-400 rounded-full mb-3 text-2xl">
+      🎬
+    </div>
+    
+    <h1 class="text-2xl font-bold mb-2">Video to AI Shorts</h1>
+    <p class="text-slate-400 text-sm mb-6">Kisi bhi video ka link daalein, AI automatically main clips aur subtitles ke sath Shorts bana dega.</p>
+
+    <!-- Input Form -->
+    <div class="space-y-4 text-left">
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 mb-1">Video Link (YouTube / URL):</label>
+        <input type="url" id="videoUrl" placeholder="https://www.youtube.com/watch?v=..." 
+          class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:outline-none focus:border-indigo-500">
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 mb-1">Shorts Length:</label>
+        <select id="clipLength" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:outline-none focus:border-indigo-500">
+          <option value="30">Auto (30 to 60 Seconds)</option>
+          <option value="15">Short (15 to 30 Seconds)</option>
+        </select>
+      </div>
+
+      <button onclick="startProcessing()" id="genBtn" 
+        class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 font-bold rounded-lg text-sm tracking-wide uppercase transition shadow-lg shadow-indigo-600/30">
+        Generate AI Shorts 🚀
+      </button>
+    </div>
+
+    <!-- Status Output -->
+    <div id="statusBox" class="mt-6 hidden p-4 bg-slate-900 rounded-lg border border-slate-700 text-xs text-slate-300 space-y-2">
+      <div id="statusText">⏳ Video process ho rahi hai...</div>
+      <div class="w-full bg-slate-700 h-1.5 rounded-full overflow-hidden">
+        <div id="progressBar" class="bg-indigo-500 h-full w-1/4 animate-pulse"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function startProcessing() {
+      const url = document.getElementById('videoUrl').value.trim();
+      if (!url) {
+        alert("Kripya pehle video ka link daalein!");
+        return;
+      }
+      document.getElementById('statusBox').classList.remove('hidden');
+      document.getElementById('genBtn').disabled = true;
+      document.getElementById('statusText').innerText = "1. Audio extract aur transcribe ho raha hai...";
+      
+      // Yahan backend API call trigger hogi
+    }
+  </script>
+</body>
+</html>
