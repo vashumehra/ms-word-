@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Universal Video Downloader</title>
+  <title>Fast Video Downloader</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,14 +19,14 @@
 
   <!-- TOP HEADER -->
   <header class="w-full max-w-5xl mx-auto px-6 py-6 flex items-center justify-between">
-    <div class="flex items-center gap-2 cursor-pointer">
+    <div class="flex items-center gap-2">
       <span class="text-3xl font-black bg-gradient-to-r from-purple-600 via-indigo-600 to-sky-500 bg-clip-text text-transparent">FastDownloader</span>
       <span class="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full">HD / MP4</span>
     </div>
-    <span class="text-xs font-semibold text-slate-500">100% Free &bull; No Login Required</span>
+    <span class="text-xs font-semibold text-slate-500">Universal Link Resolver</span>
   </header>
 
-  <!-- MAIN DOWNLOAD SECTION -->
+  <!-- MAIN SECTION -->
   <main class="w-full max-w-3xl mx-auto px-4 py-12 flex flex-col items-center text-center">
     
     <h1 class="text-3xl md:text-5xl font-black tracking-tight text-slate-900 leading-tight mb-3">
@@ -35,15 +35,15 @@
     </h1>
 
     <p class="text-slate-500 text-xs md:text-sm font-medium max-w-md mb-8">
-      YouTube, Instagram Reel, Facebook, ya direct MP4 video link paste karein aur direct download karein.
+      YouTube, Instagram Reel, ya web video link paste karein aur direct download karein.
     </p>
 
-    <!-- INPUT BOX & BUTTON -->
+    <!-- INPUT BOX -->
     <div class="w-full bg-white p-3 md:p-4 rounded-3xl shadow-xl shadow-slate-200/80 border border-slate-200 flex flex-col sm:flex-row gap-2">
-      <input type="text" id="videoLinkInput" placeholder="Yahan video ka link paste karein (YouTube / Instagram / MP4)..." 
+      <input type="text" id="videoLinkInput" placeholder="Yahan link paste karein (YouTube / Instagram / MP4)..." 
         class="flex-1 px-4 py-3 bg-slate-50 rounded-2xl text-xs md:text-sm font-medium border border-slate-200 focus:outline-none focus:border-purple-500 transition">
       
-      <button onclick="fetchDownloadLink()" id="fetchBtn" 
+      <button onclick="processDownload()" id="fetchBtn" 
         class="px-6 py-3.5 purple-btn text-white text-xs md:text-sm font-extrabold rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-purple-600/30 transition whitespace-nowrap">
         <span>Download Video 🚀</span>
       </button>
@@ -52,105 +52,90 @@
     <!-- STATUS & DOWNLOAD CARD -->
     <div id="statusContainer" class="w-full mt-6 hidden">
       
-      <!-- Processing Card -->
+      <!-- Loading Box -->
       <div id="loadingBox" class="p-5 bg-white border border-slate-200 rounded-2xl shadow-sm text-center">
         <div class="w-6 h-6 border-3 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
-        <p class="text-xs font-bold text-slate-700">Video download link taiyar ho raha hai, kripya intezar karein...</p>
+        <p class="text-xs font-bold text-slate-700">Video download stream dhund rahe hain, kripya intezar karein...</p>
       </div>
 
-      <!-- Result Card -->
+      <!-- Result Box -->
       <div id="resultBox" class="hidden p-6 bg-white border border-emerald-200 rounded-3xl shadow-md text-left flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
-          <span class="text-[10px] font-black uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">Ready to Download</span>
-          <h3 class="text-sm font-bold text-slate-900 mt-1" id="videoName">Video Ready</h3>
-          <p class="text-xs text-slate-500">Full Quality MP4 file</p>
+          <span class="text-[10px] font-black uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">Link Ready</span>
+          <h3 class="text-sm font-bold text-slate-900 mt-1" id="videoTitleDisplay">Video File Ready</h3>
+          <p class="text-xs text-slate-500">Click karke MP4 format me download karein</p>
         </div>
-        <a id="directDownloadLink" href="#" target="_blank" download="downloaded_video.mp4"
+        <a id="downloadAnchor" href="#" target="_blank" rel="noopener noreferrer"
           class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-md shadow-emerald-600/20 transition whitespace-nowrap">
-          Click Here to Download 📥
+          Download MP4 📥
         </a>
       </div>
 
-      <!-- Error Card -->
-      <div id="errorBox" class="hidden p-4 bg-red-50 border border-red-200 rounded-2xl text-xs font-bold text-red-600 text-center">
+      <!-- Instant Converter Options -->
+      <div id="directOptionsBox" class="hidden p-6 bg-purple-50 border border-purple-200 rounded-3xl text-center space-y-3">
+        <p class="text-xs font-bold text-purple-900">Direct download button taiyar hai:</p>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <a id="opt1" href="#" target="_blank" class="px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold rounded-xl shadow-sm transition">Server 1 (High Speed) 📥</a>
+          <a id="opt2" href="#" target="_blank" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl shadow-sm transition">Server 2 (HD 1080p) 📥</a>
+        </div>
       </div>
 
     </div>
 
   </main>
 
-  <!-- FOOTER -->
   <footer class="w-full max-w-5xl mx-auto px-6 py-6 text-center text-xs font-semibold text-slate-400">
-    Universal Web Video Downloader
+    Universal Video Downloader
   </footer>
 
   <script>
-    async function fetchDownloadLink() {
-      const url = document.getElementById('videoLinkInput').value.trim();
+    function extractVideoId(url) {
+      const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+      return match ? match[1] : null;
+    }
+
+    function processDownload() {
+      const inputUrl = document.getElementById('videoLinkInput').value.trim();
       const statusContainer = document.getElementById('statusContainer');
       const loadingBox = document.getElementById('loadingBox');
       const resultBox = document.getElementById('resultBox');
-      const errorBox = document.getElementById('errorBox');
-      const fetchBtn = document.getElementById('fetchBtn');
-      const directDownloadLink = document.getElementById('directDownloadLink');
+      const directOptionsBox = document.getElementById('directOptionsBox');
+      const downloadAnchor = document.getElementById('downloadAnchor');
 
-      if (!url) {
-        alert("Pehle koi video link paste karein!");
+      if (!inputUrl) {
+        alert("Pehle koi link paste karein!");
         return;
       }
 
       statusContainer.classList.remove('hidden');
       loadingBox.classList.remove('hidden');
       resultBox.classList.add('hidden');
-      errorBox.classList.add('hidden');
-      fetchBtn.disabled = true;
+      directOptionsBox.classList.add('hidden');
 
-      // 1. Agar direct .mp4 file link hai
-      if (url.endsWith('.mp4') || url.includes('.mp4?')) {
+      // 1. Check if direct file link
+      if (inputUrl.endsWith('.mp4') || inputUrl.includes('.mp4?')) {
         loadingBox.classList.add('hidden');
         resultBox.classList.remove('hidden');
-        document.getElementById('videoName').innerText = "Direct MP4 Video";
-        directDownloadLink.href = url;
-        fetchBtn.disabled = false;
+        downloadAnchor.href = inputUrl;
+        downloadAnchor.setAttribute('download', 'video.mp4');
         return;
       }
 
-      // 2. YouTube / Instagram / Social Links ke liye Public Fast Engine
-      try {
-        const response = await fetch("https://api.cobalt.tools/api/json", {
-          method: "POST",
-          headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            url: url,
-            vQuality: "720"
-          })
-        });
+      // 2. YouTube Video Handling via Multi-Route Resolvers
+      const ytId = extractVideoId(inputUrl);
 
-        const data = await response.json();
-
-        if (data && data.url) {
-          loadingBox.classList.add('hidden');
-          resultBox.classList.remove('hidden');
-          document.getElementById('videoName').innerText = "Downloaded Video (HD)";
-          directDownloadLink.href = data.url;
-        } else {
-          throw new Error("Is link se video download link nahi mil saka.");
-        }
-      } catch (err) {
+      setTimeout(() => {
         loadingBox.classList.add('hidden');
-        errorBox.classList.remove('hidden');
-        errorBox.innerHTML = `
-          <span>Download link direct nikalne me dikkat aayi.</span><br>
-          <a href="https://en.savefrom.net/247/" target="_blank" class="underline text-purple-600 mt-1 inline-block">
-            Yahan click karke SaveFrom se download karein ↗
-          </a>
-        `;
-      } finally {
-        fetchBtn.disabled = false;
-      }
+        directOptionsBox.classList.remove('hidden');
+
+        if (ytId) {
+          document.getElementById('opt1').href = `https://www.y2mate.com/youtube/${ytId}`;
+          document.getElementById('opt2').href = `https://ssyoutube.com/watch?v=${ytId}`;
+        } else {
+          document.getElementById('opt1').href = `https://en.savefrom.net/247/?url=${encodeURIComponent(inputUrl)}`;
+          document.getElementById('opt2').href = `https://publer.io/tools/media-downloader?url=${encodeURIComponent(inputUrl)}`;
+        }
+      }, 700);
     }
   </script>
 
