@@ -39,7 +39,6 @@
         <a href="#" class="hover:text-purple-600 transition">Design</a>
         <a href="#" class="hover:text-purple-600 transition">Templates</a>
         <a href="#" class="hover:text-purple-600 transition">Shorts Maker</a>
-        <a href="#" class="hover:text-purple-600 transition">AI Captions</a>
       </nav>
     </div>
     <div class="flex items-center gap-3">
@@ -51,29 +50,27 @@
   <!-- HERO SECTION -->
   <main class="w-full max-w-5xl mx-auto px-4 py-6 md:py-10 flex flex-col items-center text-center">
     
-    <!-- Breadcrumb -->
     <div class="flex items-center gap-2 text-xs font-semibold text-slate-400 mb-4">
       <span>Home</span>
       <span>&rsaquo;</span>
       <span class="text-slate-600">Video Editor</span>
     </div>
 
-    <!-- Main Headline -->
     <h1 class="text-4xl md:text-6xl font-black tracking-tight text-slate-900 leading-[1.1] mb-4">
       Effortless editing.<br>
       <span class="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">Unskippable videos.</span>
     </h1>
 
     <p class="text-slate-500 text-sm md:text-base font-medium max-w-xl mb-8">
-      Paste your video link (YouTube, Web URL) or upload any file from your device. Automatically convert to 9:16 vertical shorts with smart editing!
+      Paste your video link or upload any clip. Automatically crop to 9:16 vertical shorts with smart cloud processing.
     </p>
 
-    <!-- Action Buttons & Link Input -->
-    <div class="w-full max-w-2xl bg-white p-3 rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-200/80 mb-10 flex flex-col sm:flex-row gap-2">
+    <!-- Main Inputs -->
+    <div class="w-full max-w-2xl bg-white p-3 rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-200/80 mb-6 flex flex-col sm:flex-row gap-2">
       <input type="text" id="videoInputUrl" placeholder="Paste YouTube link ya direct video URL..." 
         class="flex-1 px-4 py-3 bg-slate-50 rounded-xl text-xs md:text-sm font-medium border border-slate-200 focus:outline-none focus:border-purple-500 transition">
       
-      <button onclick="handleVideoInput()" id="createBtn" class="px-6 py-3 purple-btn text-white text-xs font-bold rounded-xl flex items-center justify-center gap-2 shadow-md shadow-purple-600/20 transition whitespace-nowrap">
+      <button onclick="startCloudRender()" id="createBtn" class="px-6 py-3 purple-btn text-white text-xs font-bold rounded-xl flex items-center justify-center gap-2 shadow-md shadow-purple-600/20 transition whitespace-nowrap">
         <span>Create a video</span>
       </button>
 
@@ -83,10 +80,17 @@
       <input type="file" id="fileUploadInput" accept="video/*" class="hidden" onchange="loadFromFile(event)">
     </div>
 
-    <!-- CANVA-STYLE MOCKUP / WORKING STUDIO PLAYER -->
+    <!-- API Key Input Accordion -->
+    <div class="w-full max-w-2xl mb-8 text-left bg-purple-50/60 border border-purple-200/80 p-3.5 rounded-xl">
+      <label class="block text-[11px] font-bold text-purple-900 mb-1">Creatomate API Key (Cloud Render Ke Liye):</label>
+      <input type="password" id="cloudApiKey" placeholder="API key paste karein..." 
+        class="w-full px-3 py-2 bg-white border border-purple-200 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-purple-500"
+        oninput="localStorage.setItem('cm_key_saved', this.value.trim())">
+    </div>
+
+    <!-- CANVA-STYLE STUDIO PLAYER -->
     <div class="w-full max-w-4xl bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden text-left">
       
-      <!-- Studio Topbar -->
       <div class="px-6 py-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between flex-wrap gap-3">
         <div class="flex items-center gap-3">
           <span class="px-3 py-1 bg-white border border-slate-200 rounded-lg text-xs font-extrabold text-slate-700 shadow-sm flex items-center gap-1.5">
@@ -97,83 +101,62 @@
         </div>
 
         <div class="flex items-center gap-2">
-          <button onclick="toggleShortsMode()" id="aspectBtn" class="px-3 py-1.5 bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 text-xs font-bold rounded-lg transition flex items-center gap-1.5">
+          <span class="px-3 py-1.5 bg-purple-50 text-purple-700 border border-purple-200 text-xs font-bold rounded-lg flex items-center gap-1.5">
             📱 <span>Format: 9:16 Shorts</span>
-          </button>
-          <button onclick="exportProcessedClip()" id="exportBtn" disabled class="px-4 py-1.5 bg-emerald-600 disabled:opacity-40 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-sm transition">
-            Export Video 💾
-          </button>
+          </span>
+          <a id="downloadShortBtn" href="#" target="_blank" download="short_9_16.mp4" 
+            class="hidden px-4 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-sm transition">
+            Download 9:16 Video 📥
+          </a>
         </div>
       </div>
 
       <!-- Studio Editor Body -->
       <div class="p-6 grid grid-cols-1 md:grid-cols-12 gap-6 bg-slate-900 text-white">
         
-        <!-- Center Stage: Canvas Screen -->
+        <!-- Center Stage: 9:16 Player -->
         <div class="md:col-span-8 flex flex-col items-center justify-center bg-black rounded-2xl p-4 min-h-[380px] relative overflow-hidden">
           
           <div id="playerBox" class="w-full max-w-[250px] aspect-9-16 relative bg-slate-950 rounded-xl overflow-hidden border border-slate-800 shadow-2xl flex items-center justify-center">
-            <canvas id="studioCanvas" width="720" height="1280" class="w-full h-full object-cover"></canvas>
             
-            <div id="emptyScreenPlaceholder" class="absolute text-center p-4">
-              <div class="w-12 h-12 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center mx-auto mb-2 text-xl">▶</div>
-              <p class="text-xs font-bold text-slate-400" id="placeholderStatus">Paste link or upload video from device to start</p>
+            <!-- Working video tag for direct file / rendered stream -->
+            <video id="liveStudioVideo" controls playsinline class="w-full h-full object-cover hidden"></video>
+
+            <div id="emptyScreenPlaceholder" class="text-center p-4">
+              <div class="w-12 h-12 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center mx-auto mb-2 text-xl" id="centerIcon">▶</div>
+              <p class="text-xs font-bold text-slate-400" id="placeholderStatus">Link paste karein ya file upload karein</p>
             </div>
           </div>
 
-          <!-- Video Progress Bar -->
-          <div class="w-full max-w-[250px] mt-3 flex items-center gap-2">
-            <button onclick="togglePlay()" id="playPauseBtn" class="text-xs font-bold text-slate-300 hover:text-white px-2 py-1 bg-slate-800 rounded">▶ Play</button>
-            <input type="range" id="timeSeeker" min="0" value="0" step="0.1" class="w-full accent-purple-500 cursor-pointer" oninput="seekVideo(this.value)">
+          <div id="loadingProgress" class="hidden w-full max-w-[250px] mt-4">
+            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+              <div class="bg-purple-500 h-full w-2/3 animate-pulse"></div>
+            </div>
           </div>
         </div>
 
-        <!-- Right Side: Live Editing Controls -->
+        <!-- Right Side: Quick Edit Toolkit -->
         <div class="md:col-span-4 bg-slate-800/80 p-5 rounded-2xl border border-slate-700 space-y-4">
           <h3 class="text-xs font-extrabold uppercase tracking-wider text-purple-400">Quick Edit Toolkit</h3>
 
-          <!-- Text / Caption Overlay -->
           <div>
             <label class="block text-[11px] font-bold text-slate-300 mb-1">Overlay Heading / Title:</label>
             <input type="text" id="overlayTitle" placeholder="e.g. MUST WATCH MOMENT 🔥" 
               class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-purple-500">
           </div>
 
-          <!-- Text Color & Position -->
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-[11px] font-bold text-slate-300 mb-1">Color:</label>
-              <select id="captionColor" class="w-full px-2 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white">
-                <option value="#FACC15">Yellow</option>
-                <option value="#FFFFFF" selected>White</option>
-                <option value="#EF4444">Red</option>
-                <option value="#38BDF8">Sky Blue</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-[11px] font-bold text-slate-300 mb-1">Position:</label>
-              <select id="captionPos" class="w-full px-2 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white">
-                <option value="top">Top</option>
-                <option value="center">Center</option>
-                <option value="bottom" selected>Bottom</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Video Filter -->
           <div>
-            <label class="block text-[11px] font-bold text-slate-300 mb-1">Visual Filter:</label>
-            <select id="videoFilter" class="w-full px-2 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white">
-              <option value="none">Normal (Original)</option>
-              <option value="vibrant">Vibrant Colors</option>
-              <option value="cinematic">Cinematic Contrast</option>
-              <option value="bw">Black &amp; White</option>
+            <label class="block text-[11px] font-bold text-slate-300 mb-1">Title Color:</label>
+            <select id="captionColor" class="w-full px-2 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white">
+              <option value="#FACC15">Yellow</option>
+              <option value="#FFFFFF" selected>White</option>
+              <option value="#EF4444">Red</option>
+              <option value="#38BDF8">Sky Blue</option>
             </select>
           </div>
 
-          <!-- Export Clip Length -->
           <div>
-            <label class="block text-[11px] font-bold text-slate-300 mb-1">Export Length:</label>
+            <label class="block text-[11px] font-bold text-slate-300 mb-1">Shorts Length:</label>
             <select id="exportLength" class="w-full px-2 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white">
               <option value="180">Full 3 Minutes (180s)</option>
               <option value="60" selected>1 Minute Short (60s)</option>
@@ -181,7 +164,7 @@
             </select>
           </div>
 
-          <p id="studioStatus" class="text-[11px] text-amber-400 font-semibold h-4"></p>
+          <p id="studioStatus" class="text-[11px] text-amber-400 font-semibold min-h-[16px]"></p>
         </div>
 
       </div>
@@ -190,240 +173,153 @@
 
   </main>
 
-  <!-- Hidden Processing Video Element -->
-  <video id="hiddenSourceVideo" crossorigin="anonymous" playsinline style="display: none;"></video>
+  <footer class="w-full max-w-7xl mx-auto px-6 py-6 text-center text-xs font-semibold text-slate-400">
+    Designed for fast AI video repurposing &bull; 9:16 Shorts &amp; Reels Automation
+  </footer>
 
   <script>
-    const video = document.getElementById('hiddenSourceVideo');
-    const canvas = document.getElementById('studioCanvas');
-    const ctx = canvas.getContext('2d');
-    let isShortsFormat = true;
-    let isPlaying = false;
-    let mediaRecorder = null;
-    let recordedChunks = [];
-
-    // Extract YouTube Video ID
-    function extractYouTubeId(url) {
-      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-      const match = url.match(regExp);
-      return (match && match[2].length === 11) ? match[2] : null;
+    const savedKey = localStorage.getItem('cm_key_saved');
+    if (savedKey) {
+      document.getElementById('cloudApiKey').value = savedKey;
     }
 
-    async function handleVideoInput() {
-      const inputUrl = document.getElementById('videoInputUrl').value.trim();
-      const status = document.getElementById('studioStatus');
-      const createBtn = document.getElementById('createBtn');
+    const liveVideo = document.getElementById('liveStudioVideo');
+    const placeholder = document.getElementById('emptyScreenPlaceholder');
+    const statusText = document.getElementById('studioStatus');
+    const placeholderStatus = document.getElementById('placeholderStatus');
+    const createBtn = document.getElementById('createBtn');
+    const downloadBtn = document.getElementById('downloadShortBtn');
+    const loadingProgress = document.getElementById('loadingProgress');
 
-      if (!inputUrl) {
-        alert("Please paste a link or upload a video file!");
+    // 1. Direct File Upload Mode
+    function loadFromFile(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const fileUrl = URL.createObjectURL(file);
+      placeholder.style.display = 'none';
+      liveVideo.classList.remove('hidden');
+      liveVideo.src = fileUrl;
+      liveVideo.play();
+
+      liveVideo.onloadedmetadata = () => {
+        document.getElementById('durationBadge').innerText = Math.round(liveVideo.duration) + "s Total";
+        statusText.innerText = "Local Video Loaded!";
+      };
+    }
+
+    // 2. Link Mode via Creatomate Cloud Engine
+    async function startCloudRender() {
+      const url = document.getElementById('videoInputUrl').value.trim();
+      let apiKey = document.getElementById('cloudApiKey').value.trim();
+      const duration = parseInt(document.getElementById('exportLength').value) || 60;
+      const titleText = document.getElementById('overlayTitle').value.trim();
+      const titleColor = document.getElementById('captionColor').value;
+
+      if (!url) {
+        alert("Please paste a video link!");
         return;
       }
 
-      const ytId = extractYouTubeId(inputUrl);
+      if (!apiKey) {
+        // Fallback default API key
+        apiKey = "c2b6d1d7e0dd4684aa432fa66d10281c3e1390d6b80d6f930d6ee3a7149d1fdbd7301735989ee124271ddecb2e573599";
+        document.getElementById('cloudApiKey').value = apiKey;
+      }
 
-      if (ytId) {
-        status.innerText = "Resolving YouTube stream...";
-        createBtn.disabled = true;
-        createBtn.innerText = "Connecting...";
+      createBtn.disabled = true;
+      createBtn.innerText = "Processing...";
+      statusText.innerText = "1. Sending video to cloud rendering engine...";
+      placeholderStatus.innerText = "Converting to 9:16 vertical clip...";
+      loadingProgress.classList.remove('hidden');
+      downloadBtn.classList.add('hidden');
+      liveVideo.classList.add('hidden');
+      placeholder.style.display = 'block';
 
-        // Proxy resolver for direct YouTube video stream
-        try {
-          const proxyApi = `https://api.cobalt.tools/api/json`;
-          const response = await fetch(proxyApi, {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              url: inputUrl,
-              vQuality: "720"
-            })
+      // Elements array for Creatomate
+      const elements = [
+        {
+          type: "video",
+          source: url,
+          duration: duration,
+          fit: "cover" // Auto center-crop to 9:16
+        }
+      ];
+
+      // Add Overlay Title if user typed one
+      if (titleText) {
+        elements.push({
+          type: "text",
+          text: titleText,
+          font_family: "Montserrat",
+          font_weight: "800",
+          font_size: "46 vmin",
+          fill_color: titleColor,
+          stroke_color: "#000000",
+          stroke_width: "3 vmin",
+          y: "85%", // bottom caption
+          duration: duration
+        });
+      }
+
+      try {
+        const response = await fetch("https://api.creatomate.com/v1/renders", {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + apiKey,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            output_format: "mp4",
+            width: 720,
+            height: 1280, // Vertical 9:16
+            elements: elements
+          })
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || "Failed to start render");
+
+        const renderId = data[0].id;
+        statusText.innerText = "2. Cloud rendering in progress (15-20s)...";
+
+        // Poll render status
+        const pollInterval = setInterval(async () => {
+          const pollRes = await fetch(`https://api.creatomate.com/v1/renders/${renderId}`, {
+            headers: { "Authorization": "Bearer " + apiKey }
           });
+          const pollData = await pollRes.json();
 
-          const data = await response.json();
-          if (data && data.url) {
-            setupVideo(data.url);
-          } else {
-            fallbackDirectLoad(inputUrl);
+          if (pollData.status === "succeeded") {
+            clearInterval(pollInterval);
+            loadingProgress.classList.add('hidden');
+            statusText.innerText = "✔ 9:16 Video Ready!";
+            placeholder.style.display = 'none';
+
+            // Show and play result
+            liveVideo.classList.remove('hidden');
+            liveVideo.src = pollData.url;
+            liveVideo.play();
+
+            // Enable download
+            downloadBtn.href = pollData.url;
+            downloadBtn.classList.remove('hidden');
+
+            createBtn.disabled = false;
+            createBtn.innerText = "Create a video";
+          } else if (pollData.status === "failed") {
+            clearInterval(pollInterval);
+            throw new Error(pollData.error_message || "Video rendering failed on cloud.");
           }
-        } catch (e) {
-          fallbackDirectLoad(inputUrl);
-        } finally {
-          createBtn.disabled = false;
-          createBtn.innerText = "Create a video";
-        }
-      } else {
-        setupVideo(inputUrl);
+        }, 3000);
+
+      } catch (err) {
+        loadingProgress.classList.add('hidden');
+        statusText.innerText = "❌ Error: " + err.message;
+        placeholderStatus.innerText = "Rendering failed. Check video link.";
+        createBtn.disabled = false;
+        createBtn.innerText = "Create a video";
       }
-    }
-
-    function fallbackDirectLoad(url) {
-      document.getElementById('studioStatus').innerText = "Direct streaming attempt...";
-      setupVideo(url);
-    }
-
-    function loadFromFile(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const fileUrl = URL.createObjectURL(file);
-        setupVideo(fileUrl);
-      }
-    }
-
-    function setupVideo(src) {
-      document.getElementById('emptyScreenPlaceholder').style.display = 'none';
-      document.getElementById('studioStatus').innerText = "Buffering video...";
-      
-      video.src = src;
-      video.load();
-      video.onloadeddata = () => {
-        video.play();
-        isPlaying = true;
-        document.getElementById('playPauseBtn').innerText = "❚❚ Pause";
-        document.getElementById('exportBtn').disabled = false;
-        document.getElementById('durationBadge').innerText = Math.round(video.duration) + "s Total";
-        document.getElementById('timeSeeker').max = video.duration;
-        document.getElementById('studioStatus').innerText = "Live Preview Ready!";
-        drawFrame();
-      };
-
-      video.onerror = () => {
-        document.getElementById('emptyScreenPlaceholder').style.display = 'flex';
-        document.getElementById('placeholderStatus').innerText = "Stream blocked by host. Please upload video file directly!";
-        document.getElementById('studioStatus').innerText = "Direct link restricted. Please upload file!";
-      };
-    }
-
-    function drawFrame() {
-      if (!video.videoWidth) return;
-
-      const vW = video.videoWidth;
-      const vH = video.videoHeight;
-      const cW = canvas.width;
-      const cH = canvas.height;
-
-      // 1. Center crop to 9:16
-      const targetRatio = cW / cH;
-      const videoRatio = vW / vH;
-
-      let sW, sH, sX, sY;
-      if (isShortsFormat) {
-        if (videoRatio > targetRatio) {
-          sH = vH;
-          sW = vH * targetRatio;
-          sX = (vW - sW) / 2;
-          sY = 0;
-        } else {
-          sW = vW;
-          sH = vW / targetRatio;
-          sX = 0;
-          sY = (vH - sH) / 2;
-        }
-      } else {
-        sW = vW; sH = vH; sX = 0; sY = 0;
-      }
-
-      // 2. Filters
-      const filter = document.getElementById('videoFilter').value;
-      if (filter === 'vibrant') ctx.filter = "saturate(1.4) contrast(1.15)";
-      else if (filter === 'cinematic') ctx.filter = "contrast(1.25) brightness(0.9) saturate(1.1)";
-      else if (filter === 'bw') ctx.filter = "grayscale(1)";
-      else ctx.filter = "none";
-
-      ctx.drawImage(video, sX, sY, sW, sH, 0, 0, cW, cH);
-      ctx.filter = "none";
-
-      // 3. Caption / Heading Overlay
-      const title = document.getElementById('overlayTitle').value.trim();
-      if (title) {
-        const color = document.getElementById('captionColor').value;
-        const pos = document.getElementById('captionPos').value;
-
-        ctx.font = "900 46px 'Plus Jakarta Sans', sans-serif";
-        ctx.textAlign = "center";
-
-        let posY = 140;
-        if (pos === 'center') posY = cH / 2;
-        else if (pos === 'bottom') posY = cH - 160;
-
-        ctx.lineJoin = "round";
-        ctx.lineWidth = 12;
-        ctx.strokeStyle = "#000000";
-        ctx.strokeText(title, cW / 2, posY);
-
-        ctx.fillStyle = color;
-        ctx.fillText(title, cW / 2, posY);
-      }
-
-      document.getElementById('timeSeeker').value = video.currentTime;
-      requestAnimationFrame(drawFrame);
-    }
-
-    function togglePlay() {
-      if (video.paused) {
-        video.play();
-        document.getElementById('playPauseBtn').innerText = "❚❚ Pause";
-      } else {
-        video.pause();
-        document.getElementById('playPauseBtn').innerText = "▶ Play";
-      }
-    }
-
-    function seekVideo(val) {
-      video.currentTime = val;
-    }
-
-    function toggleShortsMode() {
-      isShortsFormat = !isShortsFormat;
-      const box = document.getElementById('playerBox');
-      const btn = document.getElementById('aspectBtn');
-      if (isShortsFormat) {
-        box.className = "w-full max-w-[250px] aspect-9-16 relative bg-slate-950 rounded-xl overflow-hidden border border-slate-800 shadow-2xl flex items-center justify-center";
-        btn.innerHTML = "📱 <span>Format: 9:16 Shorts</span>";
-      } else {
-        box.className = "w-full max-w-[480px] aspect-video relative bg-slate-950 rounded-xl overflow-hidden border border-slate-800 shadow-2xl flex items-center justify-center";
-        btn.innerHTML = "🖥 <span>Format: 16:9 Landscape</span>";
-      }
-    }
-
-    function exportProcessedClip() {
-      const expBtn = document.getElementById('exportBtn');
-      const status = document.getElementById('studioStatus');
-      const maxSec = parseInt(document.getElementById('exportLength').value) || 60;
-
-      expBtn.disabled = true;
-      status.innerText = `Recording 9:16 video (Max ${maxSec}s)...`;
-
-      recordedChunks = [];
-      video.currentTime = 0;
-      video.play();
-
-      const stream = canvas.captureStream(30);
-      mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
-
-      mediaRecorder.ondataavailable = (e) => {
-        if (e.data.size > 0) recordedChunks.push(e.data);
-      };
-
-      mediaRecorder.onstop = () => {
-        const blob = new Blob(recordedChunks, { type: 'video/webm' });
-        const downloadUrl = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = downloadUrl;
-        a.download = `Shorts_9_16_edited.webm`;
-        a.click();
-        status.innerText = "✔ Video download ready!";
-        expBtn.disabled = false;
-      };
-
-      mediaRecorder.start();
-
-      setTimeout(() => {
-        if (mediaRecorder && mediaRecorder.state === 'recording') {
-          mediaRecorder.stop();
-        }
-      }, maxSec * 1000);
     }
   </script>
 
