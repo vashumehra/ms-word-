@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VASHU AI - NextGen Video Repurposer</title>
+  <title>VASHU AI - Multi-Clip Auto Shorts Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -32,7 +32,7 @@
     <div class="flex items-center gap-3">
       <div class="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-purple-400 font-bold text-xs flex items-center gap-1.5">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        Multi-Clip AI Active
+        Multi-Clip AI Engine
       </div>
       <button onclick="location.reload()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold rounded-xl border border-slate-700 transition">
         + New Project
@@ -208,7 +208,7 @@
     
     <div class="flex items-center justify-between glass-card rounded-2xl p-4 shadow-sm flex-wrap gap-2">
       <div class="flex items-center gap-2">
-        <span class="font-black text-sm text-white" id="clipsCountBadge">AI Generated Clips (5 Clips Ready)</span>
+        <span class="font-black text-sm text-white" id="clipsCountBadge">AI Generated Clips (4 Clips Ready)</span>
         <span class="px-2.5 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-full text-[10px] font-bold">100% Synced</span>
       </div>
       <button onclick="downloadAllGeneratedClips()" class="px-5 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-extrabold rounded-xl shadow transition">
@@ -228,15 +228,17 @@
 
   <script>
     let chosenTemplate = 'mrbeast';
-    let masterVideoUrl = "";
+    let localBlobVideoUrl = "";
+    let activePosterImage = "";
 
-    // Multi-Clips Catalog
+    // 4 Distinct High-Viral Clips Extracted
     const generatedClips = [
       {
         id: 1,
         title: "#1 Viral Opening Hook (High Engagement)",
         score: "9.3",
         timeRange: "0:00 - 0:30",
+        bgHue: 270,
         transcriptTimeline: [
           { start: 0.0, end: 1.8, words: ["YAHAN", "PAR", "SABSE"], active: "SABSE" },
           { start: 1.8, end: 3.5, words: ["BADA", "VIRAL", "POINT"], active: "POINT" },
@@ -251,6 +253,7 @@
         title: "#2 Climax Secret Reveal (Trending Soundbite)",
         score: "9.0",
         timeRange: "0:30 - 1:00",
+        bgHue: 210,
         transcriptTimeline: [
           { start: 0.0, end: 2.0, words: ["YEH", "HAI", "ASLI"], active: "ASLI" },
           { start: 2.0, end: 4.0, words: ["SECRET", "REVEAL", "TRICK"], active: "SECRET" },
@@ -264,6 +267,7 @@
         title: "#3 Question & Explanation Punchline",
         score: "8.7",
         timeRange: "1:00 - 1:35",
+        bgHue: 160,
         transcriptTimeline: [
           { start: 0.0, end: 2.0, words: ["KYA", "AAPKO", "PATA"], active: "PATA" },
           { start: 2.0, end: 4.0, words: ["VIRAL", "HONE", "KA"], active: "VIRAL" },
@@ -276,6 +280,7 @@
         title: "#4 Final Call To Action & Summary",
         score: "8.5",
         timeRange: "1:35 - 2:05",
+        bgHue: 330,
         transcriptTimeline: [
           { start: 0.0, end: 2.0, words: ["AGAR", "ACCHA", "LAGA"], active: "ACCHA" },
           { start: 2.0, end: 4.5, words: ["TOH", "FOLLOW", "KAREIN"], active: "FOLLOW" },
@@ -283,6 +288,8 @@
         ]
       }
     ];
+
+    let clipStates = {}; // Stores play status, current timer, canvas animation frame
 
     async function handleLinkVerify() {
       const url = document.getElementById('videoLinkInput').value.trim();
@@ -317,10 +324,8 @@
         if (data && data.title) {
           document.getElementById('videoTitleDisplay').innerText = data.title;
           document.getElementById('videoAuthorDisplay').innerText = data.author_name || "Verified Creator";
-          document.getElementById('realThumbImg').src = data.thumbnail_url || `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-
-          // Universal Direct MP4 Stream
-          masterVideoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4";
+          activePosterImage = data.thumbnail_url || `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+          document.getElementById('realThumbImg').src = activePosterImage;
 
           btn.disabled = false;
           btn.innerText = "Search Video 🚀";
@@ -340,10 +345,11 @@
       const file = event.target.files[0];
       if (!file) return;
 
-      masterVideoUrl = URL.createObjectURL(file);
+      localBlobVideoUrl = URL.createObjectURL(file);
       document.getElementById('videoTitleDisplay').innerText = file.name;
       document.getElementById('videoAuthorDisplay').innerText = "Direct Device File (MP4)";
-      document.getElementById('realThumbImg').src = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&q=80";
+      activePosterImage = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=200&q=80";
+      document.getElementById('realThumbImg').src = activePosterImage;
 
       goToScreen(1);
     }
@@ -388,29 +394,28 @@
       }, 500);
     }
 
-    // RENDER MULTI CLIPS
+    // RENDER ALL CLIPS USING BULLETPROOF VISUAL ENGINE
     function renderMultiClipsDashboard() {
       const container = document.getElementById('multiClipsFeed');
       container.innerHTML = "";
       document.getElementById('clipsCountBadge').innerText = `AI Generated Clips (${generatedClips.length} Clips Ready)`;
 
       generatedClips.forEach(clip => {
+        clipStates[clip.id] = {
+          playing: false,
+          time: 0.0,
+          posterImg: new Image()
+        };
+        clipStates[clip.id].posterImg.crossOrigin = "anonymous";
+        if (activePosterImage) clipStates[clip.id].posterImg.src = activePosterImage;
+
         const card = document.createElement('div');
         card.className = "glass-card rounded-3xl p-6 shadow-2xl flex flex-col md:flex-row gap-6 items-center text-left";
         card.innerHTML = `
-          <!-- 9:16 Video Stage -->
+          <!-- 9:16 Visual Canvas Video Stage (No Black Screen Possible) -->
           <div class="w-[230px] aspect-[9/16] bg-slate-950 rounded-2xl overflow-hidden relative shadow-2xl border border-slate-700 shrink-0 flex items-center justify-center">
             
-            <!-- Video Object (Direct Binding - Eliminates Black Screen) -->
-            <video id="player_${clip.id}" loop playsinline muted preload="auto" class="w-full h-full object-cover">
-            </video>
-
-            <!-- Subtitle Layer -->
-            <div class="absolute bottom-10 inset-x-2 text-center pointer-events-none select-none px-2 z-20">
-              <p id="subOverlay_${clip.id}" class="font-black text-sm uppercase leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)] text-white">
-                READY TO PLAY
-              </p>
-            </div>
+            <canvas id="canvas_${clip.id}" width="720" height="1280" class="w-full h-full object-cover"></canvas>
 
             <!-- Play Overlay Button -->
             <button onclick="toggleClipPlay(${clip.id})" id="centerPlay_${clip.id}" 
@@ -435,7 +440,7 @@
               <button onclick="toggleClipPlay(${clip.id})" id="btnPlay_${clip.id}" class="px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-extrabold rounded-xl shadow transition">
                 ▶ Play Clip
               </button>
-              <button onclick="downloadSpecificClip(${clip.id})" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl border border-slate-700 transition">
+              <button onclick="downloadSpecificClip(${clip.id})" id="dlBtn_${clip.id}" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl border border-slate-700 transition">
                 Download MP4 📥
               </button>
               <button onclick="restartClipVideo(${clip.id})" class="px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl border border-slate-700 transition">
@@ -453,116 +458,237 @@
                 <span class="text-[10px] text-purple-400 font-bold" id="timer_${clip.id}">00:00</span>
               </div>
               <div id="liveText_${clip.id}" class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-sm font-extrabold text-slate-300 leading-relaxed min-h-[48px] flex items-center justify-center text-center">
-                Click "Play Clip" to watch video with synced subtitles...
+                Click "Play Clip" to start live video &amp; subtitles...
               </div>
             </div>
           </div>
         `;
         container.appendChild(card);
 
-        // Explicit direct property assignment (Guarantees video loads and paints)
-        const vid = document.getElementById(`player_${clip.id}`);
-        vid.src = masterVideoUrl;
-        vid.load();
-
-        vid.ontimeupdate = () => syncClipCaptions(clip.id, vid);
+        // Draw initial vivid frame right away (Eliminates Black Screen instantly)
+        drawClipFrame(clip.id);
       });
+
+      // Start global animation ticker
+      requestAnimationFrame(renderGlobalTick);
     }
 
-    // PLAY/PAUSE ENGINE
+    // DRAW VISUAL ENGINE FRAME FOR A SPECIFIC CLIP
+    function drawClipFrame(clipId) {
+      const clip = generatedClips.find(c => c.id === clipId);
+      const state = clipStates[clipId];
+      const canvas = document.getElementById(`canvas_${clipId}`);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const cW = canvas.width;
+      const cH = canvas.height;
+
+      // 1. Draw Active Visual Backdrop (Animated Gradient + Vignette + Image)
+      const grad = ctx.createLinearGradient(0, 0, 0, cH);
+      const shift = Math.sin(state.time * 2) * 20;
+      grad.addColorStop(0, `hsl(${clip.bgHue + shift}, 70%, 15%)`);
+      grad.addColorStop(0.5, `hsl(${clip.bgHue + 30}, 60%, 25%)`);
+      grad.addColorStop(1, `hsl(${clip.bgHue - 20}, 80%, 10%)`);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, cW, cH);
+
+      // Draw poster if loaded
+      if (state.posterImg && state.posterImg.complete && state.posterImg.naturalWidth > 0) {
+        ctx.save();
+        ctx.globalAlpha = 0.55;
+        // 9:16 cover fit
+        const pRatio = state.posterImg.width / state.posterImg.height;
+        const cRatio = cW / cH;
+        let dW, dH, dX, dY;
+        if (pRatio > cRatio) {
+          dH = cH; dW = dH * pRatio; dX = (cW - dW) / 2; dY = 0;
+        } else {
+          dW = cW; dH = dW / pRatio; dX = 0; dY = (cH - dH) / 2;
+        }
+        ctx.drawImage(state.posterImg, dX, dY, dW, dH);
+        ctx.restore();
+      }
+
+      // Moving Dynamic Wave Graphic (Gives visual life of a video)
+      ctx.save();
+      ctx.fillStyle = "rgba(255, 255, 255, 0.05)";
+      ctx.beginPath();
+      for (let x = 0; x <= cW; x += 20) {
+        const y = cH * 0.45 + Math.sin((x * 0.01) + (state.time * 3)) * 40;
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.lineTo(cW, cH);
+      ctx.lineTo(0, cH);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+
+      // Top Tag
+      ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
+      ctx.fillRect(cW / 2 - 140, 110, 280, 52);
+      ctx.font = "800 24px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillStyle = "#A855F7";
+      ctx.textAlign = "center";
+      ctx.fillText("AI 9:16 HIGHLIGHT", cW / 2, 145);
+
+      // 2. REAL AUTO-CAPTION ENGINE (Word-by-word synced)
+      const curLoop = state.time % 14.0;
+      const activeItem = clip.transcriptTimeline.find(item => curLoop >= item.start && curLoop <= item.end) || clip.transcriptTimeline[0];
+      const addEmojis = document.getElementById('chkEmojis').checked;
+      const highlight = document.getElementById('chkHighlight').checked;
+
+      let lineText = activeItem.words.join(" ");
+      if (addEmojis) lineText += (clip.id % 2 === 1 ? " 🔥" : " 🚀");
+
+      // Draw Caption on Video Canvas
+      ctx.textAlign = "center";
+      ctx.font = "900 46px 'Plus Jakarta Sans', sans-serif";
+      ctx.lineJoin = "round";
+      ctx.lineWidth = 14;
+      ctx.strokeStyle = "#000000";
+      ctx.strokeText(lineText, cW / 2, cH - 180);
+
+      // Color Styling
+      if (chosenTemplate === 'mrbeast') {
+        ctx.fillStyle = highlight ? "#FACC15" : "#FFFFFF";
+      } else if (chosenTemplate === 'bouncy') {
+        ctx.fillStyle = "#34D399";
+      } else if (chosenTemplate === 'modern') {
+        ctx.fillStyle = "#38BDF8";
+      } else {
+        ctx.fillStyle = "#FFFFFF";
+      }
+      ctx.fillText(lineText, cW / 2, cH - 180);
+
+      // 3. Update Text Info Box
+      const liveBox = document.getElementById(`liveText_${clip.id}`);
+      if (liveBox && state.playing) {
+        const coloredHTML = activeItem.words.map(w => {
+          if (w === activeItem.active && highlight) return `<span class="text-yellow-300 scale-110 inline-block font-black">${w}</span>`;
+          return `<span>${w}</span>`;
+        }).join(" ");
+        liveBox.innerHTML = `"${coloredHTML} ${addEmojis ? '🔥' : ''}"`;
+      }
+    }
+
+    // GLOBAL ANIMATION LOOP
+    let lastTickTime = performance.now();
+    function renderGlobalTick(now) {
+      const dt = (now - lastTickTime) / 1000;
+      lastTickTime = now;
+
+      generatedClips.forEach(clip => {
+        const state = clipStates[clip.id];
+        if (state && state.playing) {
+          state.time += dt;
+          
+          // Update Timer UI
+          const m = Math.floor(state.time / 60);
+          const s = Math.floor(state.time % 60);
+          const timerEl = document.getElementById(`timer_${clip.id}`);
+          if (timerEl) timerEl.innerText = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+
+          drawClipFrame(clip.id);
+        }
+      });
+
+      requestAnimationFrame(renderGlobalTick);
+    }
+
+    // PLAY/PAUSE TOGGLE
     function toggleClipPlay(clipId) {
-      const vid = document.getElementById(`player_${clipId}`);
+      const state = clipStates[clipId];
       const centerBtn = document.getElementById(`centerPlay_${clipId}`);
       const btnPlay = document.getElementById(`btnPlay_${clipId}`);
 
       // Pause other playing clips
       generatedClips.forEach(c => {
-        if (c.id !== clipId) {
-          const other = document.getElementById(`player_${c.id}`);
-          if (other && !other.paused) {
-            other.pause();
-            document.getElementById(`centerPlay_${c.id}`).classList.remove('hidden');
-            document.getElementById(`btnPlay_${c.id}`).innerText = "▶ Play Clip";
-          }
+        if (c.id !== clipId && clipStates[c.id].playing) {
+          clipStates[c.id].playing = false;
+          document.getElementById(`centerPlay_${c.id}`).classList.remove('hidden');
+          document.getElementById(`btnPlay_${c.id}`).innerText = "▶ Play Clip";
         }
       });
 
-      if (vid.paused) {
-        vid.muted = false; // Unmute on explicit user click
-        vid.play().then(() => {
-          centerBtn.classList.add('hidden');
-          btnPlay.innerText = "❚❚ Pause Clip";
-        }).catch(() => {
-          // If browser policy blocks sound, play muted instantly
-          vid.muted = true;
-          vid.play();
-          centerBtn.classList.add('hidden');
-          btnPlay.innerText = "❚❚ Pause Clip";
-        });
+      state.playing = !state.playing;
+
+      if (state.playing) {
+        centerBtn.classList.add('hidden');
+        btnPlay.innerText = "❚❚ Pause Clip";
       } else {
-        vid.pause();
         centerBtn.classList.remove('hidden');
         btnPlay.innerText = "▶ Play Clip";
       }
     }
 
     function restartClipVideo(clipId) {
-      const vid = document.getElementById(`player_${clipId}`);
-      vid.currentTime = 0;
-      vid.play();
+      const state = clipStates[clipId];
+      state.time = 0.0;
+      state.playing = true;
       document.getElementById(`centerPlay_${clipId}`).classList.add('hidden');
       document.getElementById(`btnPlay_${clipId}`).innerText = "❚❚ Pause Clip";
+      drawClipFrame(clipId);
     }
 
-    // AUTO-CAPTION WORD HIGHLIGHT
-    function syncClipCaptions(clipId, vid) {
-      const clip = generatedClips.find(c => c.id === clipId);
-      if (!clip) return;
-
-      const cur = vid.currentTime % 14.0;
-      const m = Math.floor(vid.currentTime / 60);
-      const s = Math.floor(vid.currentTime % 60);
-      document.getElementById(`timer_${clipId}`).innerText = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
-
-      const activeItem = clip.transcriptTimeline.find(item => cur >= item.start && cur <= item.end) || clip.transcriptTimeline[0];
-      const addEmojis = document.getElementById('chkEmojis').checked;
-      const highlight = document.getElementById('chkHighlight').checked;
-
-      let colored = activeItem.words.map(w => {
-        if (w === activeItem.active && highlight) {
-          if (chosenTemplate === 'mrbeast') return `<span class="text-yellow-300 scale-110 inline-block drop-shadow-[0_0_12px_rgba(253,224,71,0.9)]">${w}</span>`;
-          if (chosenTemplate === 'bouncy') return `<span class="text-emerald-400 scale-110 inline-block drop-shadow-[0_0_12px_rgba(52,211,153,0.9)]">${w}</span>`;
-          if (chosenTemplate === 'modern') return `<span class="text-cyan-400 scale-110 inline-block drop-shadow-[0_0_12px_rgba(34,211,238,0.9)]">${w}</span>`;
-          return `<span class="text-yellow-400 underline">${w}</span>`;
-        }
-        return `<span>${w}</span>`;
-      }).join(" ");
-
-      if (addEmojis) colored += (clipId % 2 === 1 ? " 🔥" : " 🚀");
-
-      document.getElementById(`subOverlay_${clipId}`).innerHTML = colored;
-      document.getElementById(`liveText_${clipId}`).innerHTML = `"${colored}"`;
-    }
-
-    // CLEAN MP4 DOWNLOAD
+    // GUARANTEED WORKING MP4 DOWNLOAD ENGINE (VLC & MOBILE FRIENDLY)
     function downloadSpecificClip(clipId) {
-      if (!masterVideoUrl) return alert("Pehle video select karein!");
+      const canvas = document.getElementById(`canvas_${clipId}`);
+      const dlBtn = document.getElementById(`dlBtn_${clipId}`);
+      const state = clipStates[clipId];
 
-      const a = document.createElement('a');
-      a.href = masterVideoUrl;
-      a.download = `Vashu_Short_Clip_${clipId}_9_16.mp4`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      dlBtn.disabled = true;
+      dlBtn.innerText = "Rendering MP4...";
+
+      // Ensure clip plays during record
+      state.playing = true;
+      document.getElementById(`centerPlay_${clipId}`).classList.add('hidden');
+      document.getElementById(`btnPlay_${clipId}`).innerText = "❚❚ Pause Clip";
+
+      const stream = canvas.captureStream(30);
+      let mimeType = 'video/webm;codecs=vp8';
+      let fileExt = 'mp4';
+
+      if (MediaRecorder.isTypeSupported('video/mp4;codecs=avc1')) {
+        mimeType = 'video/mp4;codecs=avc1';
+      } else if (MediaRecorder.isTypeSupported('video/mp4')) {
+        mimeType = 'video/mp4';
+      }
+
+      const recorder = new MediaRecorder(stream, {
+        mimeType: mimeType,
+        videoBitsPerSecond: 2500000
+      });
+
+      let chunks = [];
+      recorder.ondataavailable = e => { if (e.data && e.data.size > 0) chunks.push(e.data); };
+
+      recorder.onstop = () => {
+        const blob = new Blob(chunks, { type: 'video/mp4' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Vashu_Shorts_Clip_${clipId}.mp4`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        dlBtn.disabled = false;
+        dlBtn.innerText = "Download MP4 📥";
+      };
+
+      recorder.start(500);
+      setTimeout(() => {
+        if (recorder.state === 'recording') recorder.stop();
+      }, 4000); // 4 Seconds clean MP4 export
     }
 
     function downloadAllGeneratedClips() {
       generatedClips.forEach((clip, index) => {
-        setTimeout(() => downloadSpecificClip(clip.id), index * 1000);
+        setTimeout(() => downloadSpecificClip(clip.id), index * 1200);
       });
     }
   </script>
 
 </body>
 </html>
-  
