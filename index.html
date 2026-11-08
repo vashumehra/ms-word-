@@ -65,15 +65,15 @@
     </h1>
 
     <p class="text-slate-500 text-sm md:text-base font-medium max-w-xl mb-8">
-      Paste your video link or upload any clip. Automatically crop to 9:16 vertical shorts with smart editing and subtitles.
+      Paste your video link (YouTube, Web URL) or upload any file from your device. Automatically convert to 9:16 vertical shorts with smart editing!
     </p>
 
     <!-- Action Buttons & Link Input -->
     <div class="w-full max-w-2xl bg-white p-3 rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-200/80 mb-10 flex flex-col sm:flex-row gap-2">
-      <input type="text" id="videoInputUrl" placeholder="Paste direct video URL (e.g. .mp4 web link)..." 
+      <input type="text" id="videoInputUrl" placeholder="Paste YouTube link ya direct video URL..." 
         class="flex-1 px-4 py-3 bg-slate-50 rounded-xl text-xs md:text-sm font-medium border border-slate-200 focus:outline-none focus:border-purple-500 transition">
       
-      <button onclick="loadFromUrl()" class="px-6 py-3 purple-btn text-white text-xs font-bold rounded-xl flex items-center justify-center gap-2 shadow-md shadow-purple-600/20 transition whitespace-nowrap">
+      <button onclick="handleVideoInput()" id="createBtn" class="px-6 py-3 purple-btn text-white text-xs font-bold rounded-xl flex items-center justify-center gap-2 shadow-md shadow-purple-600/20 transition whitespace-nowrap">
         <span>Create a video</span>
       </button>
 
@@ -117,7 +117,7 @@
             
             <div id="emptyScreenPlaceholder" class="absolute text-center p-4">
               <div class="w-12 h-12 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center mx-auto mb-2 text-xl">▶</div>
-              <p class="text-xs font-bold text-slate-400">Load a video above to start editing</p>
+              <p class="text-xs font-bold text-slate-400" id="placeholderStatus">Paste link or upload video from device to start</p>
             </div>
           </div>
 
@@ -190,11 +190,6 @@
 
   </main>
 
-  <!-- FOOTER -->
-  <footer class="w-full max-w-7xl mx-auto px-6 py-6 text-center text-xs font-semibold text-slate-400">
-    Designed for fast AI video repurposing &bull; 9:16 Shorts &amp; Reels Automation
-  </footer>
-
   <!-- Hidden Processing Video Element -->
   <video id="hiddenSourceVideo" crossorigin="anonymous" playsinline style="display: none;"></video>
 
@@ -207,12 +202,64 @@
     let mediaRecorder = null;
     let recordedChunks = [];
 
-    function loadFromUrl() {
-      const url = document.getElementById('videoInputUrl').value.trim();
-      if (!url) {
-        alert("Please paste a direct video link (.mp4) first!");
+    // Extract YouTube Video ID
+    function extractYouTubeId(url) {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11) ? match[2] : null;
+    }
+
+    async function handleVideoInput() {
+      const inputUrl = document.getElementById('videoInputUrl').value.trim();
+      const status = document.getElementById('studioStatus');
+      const createBtn = document.getElementById('createBtn');
+
+      if (!inputUrl) {
+        alert("Please paste a link or upload a video file!");
         return;
       }
+
+      const ytId = extractYouTubeId(inputUrl);
+
+      if (ytId) {
+        status.innerText = "Resolving YouTube stream...";
+        createBtn.disabled = true;
+        createBtn.innerText = "Connecting...";
+
+        // Proxy resolver for direct YouTube video stream
+        try {
+          const proxyApi = `https://api.cobalt.tools/api/json`;
+          const response = await fetch(proxyApi, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              url: inputUrl,
+              vQuality: "720"
+            })
+          });
+
+          const data = await response.json();
+          if (data && data.url) {
+            setupVideo(data.url);
+          } else {
+            fallbackDirectLoad(inputUrl);
+          }
+        } catch (e) {
+          fallbackDirectLoad(inputUrl);
+        } finally {
+          createBtn.disabled = false;
+          createBtn.innerText = "Create a video";
+        }
+      } else {
+        setupVideo(inputUrl);
+      }
+    }
+
+    function fallbackDirectLoad(url) {
+      document.getElementById('studioStatus').innerText = "Direct streaming attempt...";
       setupVideo(url);
     }
 
@@ -226,7 +273,7 @@
 
     function setupVideo(src) {
       document.getElementById('emptyScreenPlaceholder').style.display = 'none';
-      document.getElementById('studioStatus').innerText = "Loading video...";
+      document.getElementById('studioStatus').innerText = "Buffering video...";
       
       video.src = src;
       video.load();
@@ -242,8 +289,9 @@
       };
 
       video.onerror = () => {
-        alert("Unable to stream this video link directly. Please upload from device or use a direct .mp4 URL!");
-        document.getElementById('studioStatus').innerText = "Error loading video";
+        document.getElementById('emptyScreenPlaceholder').style.display = 'flex';
+        document.getElementById('placeholderStatus').innerText = "Stream blocked by host. Please upload video file directly!";
+        document.getElementById('studioStatus').innerText = "Direct link restricted. Please upload file!";
       };
     }
 
@@ -363,7 +411,7 @@
         const downloadUrl = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = downloadUrl;
-        a.download = `Canva_Edited_Short_9_16.webm`;
+        a.download = `Shorts_9_16_edited.webm`;
         a.click();
         status.innerText = "✔ Video download ready!";
         expBtn.disabled = false;
