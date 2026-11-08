@@ -3,141 +3,120 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fast Video Downloader</title>
+  <title>CapCut Web Studio - Video Editor &amp; Auto Captions</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    * { font-family: 'Plus Jakarta Sans', sans-serif; }
-    .hero-gradient { background: linear-gradient(180deg, #F0F4FF 0%, #FFFFFF 100%); }
-    .purple-btn { background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%); }
-    .purple-btn:hover { background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%); }
+    * { font-family: 'Plus Jakarta Sans', sans-serif; user-select: none; }
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+    .capcut-bg { background-color: #121214; }
+    .capcut-panel { background-color: #1a1a1e; }
+    .capcut-darker { background-color: #141416; }
+    .capcut-border { border-color: #27272a; }
   </style>
 </head>
-<body class="hero-gradient min-h-screen text-slate-800 flex flex-col justify-between">
+<body class="capcut-bg text-slate-200 h-screen w-screen overflow-hidden flex flex-col text-xs">
 
-  <!-- TOP HEADER -->
-  <header class="w-full max-w-5xl mx-auto px-6 py-6 flex items-center justify-between">
-    <div class="flex items-center gap-2">
-      <span class="text-3xl font-black bg-gradient-to-r from-purple-600 via-indigo-600 to-sky-500 bg-clip-text text-transparent">FastDownloader</span>
-      <span class="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full">HD / MP4</span>
+  <!-- 1. TOP HEADER NAVIGATION -->
+  <header class="h-11 border-b capcut-border capcut-panel px-4 flex items-center justify-between shrink-0">
+    <div class="flex items-center gap-3">
+      <!-- CapCut Logo Icon -->
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 bg-gradient-to-tr from-cyan-400 to-blue-500 rounded flex items-center justify-center font-black text-black text-sm">C</div>
+        <span class="font-bold text-sm text-white tracking-wide">CapCut <span class="text-slate-400 font-normal text-xs">Web Studio</span></span>
+      </div>
+      <div class="h-4 w-[1px] bg-zinc-700 mx-1"></div>
+      <span class="text-zinc-400 hover:text-white cursor-pointer transition">Untitled Project</span>
     </div>
-    <span class="text-xs font-semibold text-slate-500">Universal Link Resolver</span>
+
+    <!-- Center Mode Switch -->
+    <div class="flex items-center bg-zinc-900 border capcut-border rounded-lg p-0.5">
+      <button onclick="setRatio('9:16')" id="btn916" class="px-3 py-1 bg-zinc-800 text-white rounded font-bold text-[11px] shadow">9:16 TikTok/Shorts</button>
+      <button onclick="setRatio('16:9')" id="btn169" class="px-3 py-1 text-zinc-400 hover:text-white rounded text-[11px] font-medium">16:9 Landscape</button>
+      <button onclick="setRatio('1:1')" id="btn11" class="px-3 py-1 text-zinc-400 hover:text-white rounded text-[11px] font-medium">1:1 Square</button>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex items-center gap-2">
+      <button onclick="document.getElementById('fileInput').click()" class="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg font-semibold flex items-center gap-1.5 transition">
+        <span>+ Import Media</span>
+      </button>
+      <button onclick="exportCurrentProject()" id="exportBtn" class="px-4 py-1.5 bg-gradient-to-r from-teal-400 to-cyan-500 hover:from-teal-500 hover:to-cyan-600 text-black font-extrabold rounded-lg shadow-md transition">
+        Export 🚀
+      </button>
+      <input type="file" id="fileInput" accept="video/*" class="hidden" onchange="handleImportVideo(event)">
+    </div>
   </header>
 
-  <!-- MAIN SECTION -->
-  <main class="w-full max-w-3xl mx-auto px-4 py-12 flex flex-col items-center text-center">
+  <!-- 2. MAIN WORKSPACE (SIDEBAR + ASSETS PANEL + PREVIEW CANVAS + PROPERTIES) -->
+  <div class="flex-1 flex overflow-hidden">
     
-    <h1 class="text-3xl md:text-5xl font-black tracking-tight text-slate-900 leading-tight mb-3">
-      Paste link.<br>
-      <span class="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">Download video instantly.</span>
-    </h1>
-
-    <p class="text-slate-500 text-xs md:text-sm font-medium max-w-md mb-8">
-      YouTube, Instagram Reel, ya web video link paste karein aur direct download karein.
-    </p>
-
-    <!-- INPUT BOX -->
-    <div class="w-full bg-white p-3 md:p-4 rounded-3xl shadow-xl shadow-slate-200/80 border border-slate-200 flex flex-col sm:flex-row gap-2">
-      <input type="text" id="videoLinkInput" placeholder="Yahan link paste karein (YouTube / Instagram / MP4)..." 
-        class="flex-1 px-4 py-3 bg-slate-50 rounded-2xl text-xs md:text-sm font-medium border border-slate-200 focus:outline-none focus:border-purple-500 transition">
-      
-      <button onclick="processDownload()" id="fetchBtn" 
-        class="px-6 py-3.5 purple-btn text-white text-xs md:text-sm font-extrabold rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-purple-600/30 transition whitespace-nowrap">
-        <span>Download Video 🚀</span>
+    <!-- LEFT TOOL SELECTOR BAR (CapCut Tools) -->
+    <div class="w-16 capcut-darker border-r capcut-border flex flex-col items-center py-3 gap-5 shrink-0 text-[10px] text-zinc-400">
+      <button onclick="switchTab('media')" id="tab-media" class="flex flex-col items-center gap-1 text-teal-400 hover:text-white transition">
+        <span class="text-base">📁</span><span>Media</span>
+      </button>
+      <button onclick="switchTab('captions')" id="tab-captions" class="flex flex-col items-center gap-1 hover:text-white transition">
+        <span class="text-base">💬</span><span>Captions</span>
+      </button>
+      <button onclick="switchTab('text')" id="tab-text" class="flex flex-col items-center gap-1 hover:text-white transition">
+        <span class="text-base">🔤</span><span>Text</span>
+      </button>
+      <button onclick="switchTab('filters')" id="tab-filters" class="flex flex-col items-center gap-1 hover:text-white transition">
+        <span class="text-base">🎨</span><span>Filters</span>
+      </button>
+      <button onclick="switchTab('audio')" id="tab-audio" class="flex flex-col items-center gap-1 hover:text-white transition">
+        <span class="text-base">🎵</span><span>Audio</span>
       </button>
     </div>
 
-    <!-- STATUS & DOWNLOAD CARD -->
-    <div id="statusContainer" class="w-full mt-6 hidden">
+    <!-- SECONDARY ASSET / TOOL PANEL -->
+    <div class="w-64 capcut-panel border-r capcut-border p-4 flex flex-col shrink-0 overflow-y-auto">
       
-      <!-- Loading Box -->
-      <div id="loadingBox" class="p-5 bg-white border border-slate-200 rounded-2xl shadow-sm text-center">
-        <div class="w-6 h-6 border-3 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
-        <p class="text-xs font-bold text-slate-700">Video download stream dhund rahe hain, kripya intezar karein...</p>
-      </div>
-
-      <!-- Result Box -->
-      <div id="resultBox" class="hidden p-6 bg-white border border-emerald-200 rounded-3xl shadow-md text-left flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <span class="text-[10px] font-black uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">Link Ready</span>
-          <h3 class="text-sm font-bold text-slate-900 mt-1" id="videoTitleDisplay">Video File Ready</h3>
-          <p class="text-xs text-slate-500">Click karke MP4 format me download karein</p>
+      <!-- Panel 1: Media Library -->
+      <div id="panel-media" class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="font-bold text-white text-xs uppercase tracking-wider">Project Media</h3>
+          <span class="text-[10px] text-zinc-500">Local Storage</span>
         </div>
-        <a id="downloadAnchor" href="#" target="_blank" rel="noopener noreferrer"
-          class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-md shadow-emerald-600/20 transition whitespace-nowrap">
-          Download MP4 📥
-        </a>
-      </div>
 
-      <!-- Instant Converter Options -->
-      <div id="directOptionsBox" class="hidden p-6 bg-purple-50 border border-purple-200 rounded-3xl text-center space-y-3">
-        <p class="text-xs font-bold text-purple-900">Direct download button taiyar hai:</p>
-        <div class="flex flex-wrap items-center justify-center gap-3">
-          <a id="opt1" href="#" target="_blank" class="px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold rounded-xl shadow-sm transition">Server 1 (High Speed) 📥</a>
-          <a id="opt2" href="#" target="_blank" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl shadow-sm transition">Server 2 (HD 1080p) 📥</a>
+        <div onclick="document.getElementById('fileInput').click()" 
+          class="border border-dashed capcut-border hover:border-teal-500 rounded-xl p-6 text-center cursor-pointer transition bg-zinc-900/40">
+          <div class="text-2xl mb-1">☁️</div>
+          <p class="font-bold text-white text-xs">Drop or Click to Upload</p>
+          <p class="text-[10px] text-zinc-500 mt-1">MP4, MOV, WebM clips</p>
+        </div>
+
+        <div class="border-t capcut-border pt-3">
+          <label class="block text-[11px] font-bold text-zinc-400 mb-1.5">Paste Video URL:</label>
+          <div class="flex gap-1.5">
+            <input type="text" id="urlInput" placeholder="Direct MP4 web link..." 
+              class="w-full px-2.5 py-1.5 bg-zinc-900 border capcut-border rounded text-[11px] text-white focus:outline-none focus:border-teal-400">
+            <button onclick="importFromUrl()" class="px-2.5 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-white rounded font-bold text-[10px]">Add</button>
+          </div>
+        </div>
+
+        <div id="mediaThumbnailList" class="space-y-2 mt-4">
+          <!-- Imported media card preview -->
         </div>
       </div>
 
-    </div>
+      <!-- Panel 2: CapCut Auto Captions -->
+      <div id="panel-captions" class="hidden space-y-4">
+        <h3 class="font-bold text-white text-xs uppercase tracking-wider">Auto Captions AI</h3>
+        <p class="text-[11px] text-zinc-400">Speech-to-text subtitle generator for viral Shorts &amp; Reels.</p>
+        
+        <div class="bg-zinc-900 border capcut-border p-3 rounded-xl space-y-3">
+          <div>
+            <label class="block text-[10px] font-bold text-zinc-400 mb-1">Spoken Language:</label>
+            <select class="w-full bg-zinc-800 border capcut-border rounded px-2 py-1 text-white">
+              <option>Bilingual / Hinglish</option>
+              <option>Hindi (हिंदी)</option>
+              <option>English (US)</option>
+            </select>
+          </div>
 
-  </main>
-
-  <footer class="w-full max-w-5xl mx-auto px-6 py-6 text-center text-xs font-semibold text-slate-400">
-    Universal Video Downloader
-  </footer>
-
-  <script>
-    function extractVideoId(url) {
-      const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
-      return match ? match[1] : null;
-    }
-
-    function processDownload() {
-      const inputUrl = document.getElementById('videoLinkInput').value.trim();
-      const statusContainer = document.getElementById('statusContainer');
-      const loadingBox = document.getElementById('loadingBox');
-      const resultBox = document.getElementById('resultBox');
-      const directOptionsBox = document.getElementById('directOptionsBox');
-      const downloadAnchor = document.getElementById('downloadAnchor');
-
-      if (!inputUrl) {
-        alert("Pehle koi link paste karein!");
-        return;
-      }
-
-      statusContainer.classList.remove('hidden');
-      loadingBox.classList.remove('hidden');
-      resultBox.classList.add('hidden');
-      directOptionsBox.classList.add('hidden');
-
-      // 1. Check if direct file link
-      if (inputUrl.endsWith('.mp4') || inputUrl.includes('.mp4?')) {
-        loadingBox.classList.add('hidden');
-        resultBox.classList.remove('hidden');
-        downloadAnchor.href = inputUrl;
-        downloadAnchor.setAttribute('download', 'video.mp4');
-        return;
-      }
-
-      // 2. YouTube Video Handling via Multi-Route Resolvers
-      const ytId = extractVideoId(inputUrl);
-
-      setTimeout(() => {
-        loadingBox.classList.add('hidden');
-        directOptionsBox.classList.remove('hidden');
-
-        if (ytId) {
-          document.getElementById('opt1').href = `https://www.y2mate.com/youtube/${ytId}`;
-          document.getElementById('opt2').href = `https://ssyoutube.com/watch?v=${ytId}`;
-        } else {
-          document.getElementById('opt1').href = `https://en.savefrom.net/247/?url=${encodeURIComponent(inputUrl)}`;
-          document.getElementById('opt2').href = `https://publer.io/tools/media-downloader?url=${encodeURIComponent(inputUrl)}`;
-        }
-      }, 700);
-    }
-  </script>
-
-</body>
-</html>
+          <button onclick="generateAutoCaptions()" id="genCapBtn" class="w-full py-2 bg-teal-500 hover:
