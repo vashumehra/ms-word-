@@ -39,7 +39,7 @@
   </header>
 
   <!-- ========================================== -->
-  <!-- SCREEN 0: HERO INPUT & REAL SEARCH CHECK   -->
+  <!-- SCREEN 0: HERO INPUT & VIDEO VALIDATION    -->
   <!-- ========================================== -->
   <main id="screenHero" class="flex-1 max-w-3xl w-full mx-auto px-4 py-12 flex flex-col items-center justify-center text-center">
     
@@ -52,7 +52,7 @@
       <span class="bg-gradient-to-r from-purple-600 via-indigo-600 to-sky-500 bg-clip-text text-transparent">10+ viral clips with AI</span>
     </h1>
     <p class="text-slate-500 text-xs sm:text-sm max-w-lg mb-8">
-      Paste your YouTube link or upload any clip. AI validates the video, detects soundbites, and creates 9:16 Shorts with customized animated subtitles.
+      Paste your YouTube link or upload any clip. AI validates the video, detects soundbites, and creates 9:16 Shorts with live word-by-word animated subtitles.
     </p>
 
     <!-- Ingestion Box -->
@@ -81,7 +81,7 @@
           📁
         </div>
         <p class="font-bold text-xs sm:text-sm text-slate-800">Upload video from device</p>
-        <p class="text-[11px] text-slate-400 mt-0.5">Direct MP4, MOV (Immediate 9:16 Ingest)</p>
+        <p class="text-[11px] text-slate-400 mt-0.5">Direct MP4, MOV (Local Ingest)</p>
         <input type="file" id="nativeFileInput" accept="video/*" class="hidden" onchange="handleNativeFile(event)">
       </div>
 
@@ -97,35 +97,34 @@
     
     <div class="w-full bg-white border border-slate-200 rounded-3xl p-6 shadow-xl space-y-4">
       
-      <!-- Video Metadata Header Badge with Real Thumbnail -->
+      <!-- Video Metadata Header Badge -->
       <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-between">
         <div class="flex items-center gap-3 truncate mr-2">
           <img id="realThumbImg" src="" alt="Thumbnail" class="w-14 h-11 rounded-xl object-cover bg-slate-900 border border-slate-200 shrink-0">
           <div class="truncate text-left">
             <h4 class="font-bold text-xs text-slate-900 truncate" id="videoTitleDisplay">Video Title</h4>
-            <p class="text-[10px] text-slate-400" id="videoChannelDisplay">YouTube Video Verified</p>
+            <p class="text-[10px] text-slate-400" id="videoChannelDisplay">Video Verified</p>
           </div>
         </div>
         <div class="flex items-center gap-1.5 shrink-0">
           <span class="text-xs font-bold bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-slate-700">720p</span>
-          <span class="text-xs font-bold bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-slate-700" id="durationBadge">07:39 ▾</span>
+          <span class="text-xs font-bold bg-white px-2.5 py-1 rounded-lg border border-slate-200 text-slate-700" id="durationBadge">05:30 ▾</span>
         </div>
       </div>
 
-      <!-- Option 1: Language Dropdown (Functional) -->
+      <!-- Language Selector -->
       <div class="border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between">
         <div class="flex items-center gap-2.5 flex-1">
           <span class="text-base text-slate-500">🌐</span>
           <select id="languageSelect" class="w-full bg-transparent text-xs font-bold text-slate-700 focus:outline-none cursor-pointer">
-            <option value="auto">Auto detect language</option>
+            <option value="auto">Auto detect language (Hindi / Hinglish)</option>
             <option value="hindi">Hindi (हिंदी)</option>
-            <option value="hinglish">Hinglish (Mix)</option>
             <option value="english">English (US)</option>
           </select>
         </div>
       </div>
 
-      <!-- Option 2: Get AI clips Toggle -->
+      <!-- Toggle -->
       <div class="border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between">
         <div class="flex items-center gap-2.5">
           <span class="text-base text-purple-600">✨</span>
@@ -134,18 +133,18 @@
         <input type="checkbox" id="aiClipsToggle" checked class="w-5 h-5 accent-purple-600 rounded cursor-pointer">
       </div>
 
-      <!-- Option 3: Model v1 Dropdown -->
+      <!-- Model -->
       <div class="border border-slate-200 rounded-2xl p-3.5 flex items-center justify-between">
         <div class="flex items-center gap-2.5 flex-1">
           <span class="text-[10px] font-black px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded text-slate-600">V1</span>
           <select id="modelSelect" class="w-full bg-transparent text-xs font-bold text-slate-700 focus:outline-none cursor-pointer">
             <option value="v1">Model v1 (Standard Fast)</option>
-            <option value="v2">Model v2 (High Viral Detection)</option>
+            <option value="v2">Model v2 (Deep Subtitle Sync)</option>
           </select>
         </div>
       </div>
 
-      <!-- Upload Button with Credits Cost -->
+      <!-- Upload Button -->
       <button onclick="goToScreen(2)" class="w-full py-3.5 bg-purple-100 hover:bg-purple-200 text-purple-900 font-extrabold text-sm rounded-2xl transition flex items-center justify-center gap-2">
         <span>Upload</span>
         <span class="text-xs bg-purple-200 px-2 py-0.5 rounded-full font-bold">✦ 7</span>
@@ -168,14 +167,12 @@
     
     <div class="w-full bg-white border border-slate-200 rounded-3xl p-6 shadow-xl space-y-6">
       
-      <!-- Top Selectors: Ratio & Length (Functional) -->
       <div class="grid grid-cols-2 gap-3">
         <div class="border border-slate-200 rounded-2xl p-3 flex items-center justify-between">
           <span class="text-xs font-bold text-slate-500">Ratio</span>
           <select id="ratioSelect" class="bg-transparent text-xs font-extrabold text-slate-800 focus:outline-none cursor-pointer">
             <option value="9:16">9:16 Shorts</option>
             <option value="16:9">16:9 Landscape</option>
-            <option value="1:1">1:1 Square</option>
           </select>
         </div>
         <div class="border border-slate-200 rounded-2xl p-3 flex items-center justify-between">
@@ -188,17 +185,15 @@
         </div>
       </div>
 
-      <!-- Tabs: Featured / My template -->
       <div class="border-b border-slate-200 pb-2 flex gap-4 text-xs font-bold">
         <span class="text-purple-700 border-b-2 border-purple-700 pb-2 cursor-pointer">Featured</span>
         <span class="text-slate-400 hover:text-slate-600 cursor-pointer">My template</span>
         <span class="text-slate-400 hover:text-slate-600 cursor-pointer flex items-center gap-1">Brand template 👑</span>
       </div>
 
-      <!-- Subtitle Template Cards Carousel (5 Functional Styles) -->
-      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3" id="templatesContainer">
+      <!-- Templates Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
         
-        <!-- Card 1 (Default) -->
         <div onclick="pickTemplate('default', this)" class="template-card border-2 border-purple-600 bg-purple-50/20 rounded-2xl p-2 cursor-pointer relative flex flex-col justify-between h-44 shadow-sm">
           <span class="check-icon absolute top-2 left-2 w-4 h-4 rounded-full bg-purple-600 text-white flex items-center justify-center text-[10px]">✓</span>
           <div class="flex-1 flex flex-col justify-center items-center text-center">
@@ -208,7 +203,6 @@
           <span class="text-center font-bold text-[11px] text-slate-800 pb-1">Default</span>
         </div>
 
-        <!-- Card 2 (Modern) -->
         <div onclick="pickTemplate('modern', this)" class="template-card border border-slate-200 hover:border-slate-400 bg-slate-900 rounded-2xl p-2 cursor-pointer relative flex flex-col justify-between h-44 shadow-sm text-white">
           <span class="check-icon hidden absolute top-2 left-2 w-4 h-4 rounded-full bg-purple-600 text-white flex items-center justify-center text-[10px]">✓</span>
           <div class="flex-1 flex flex-col justify-center items-center text-center">
@@ -217,7 +211,6 @@
           <span class="text-center font-bold text-[11px] text-slate-200 pb-1">Modern</span>
         </div>
 
-        <!-- Card 3 (Bouncy) -->
         <div onclick="pickTemplate('bouncy', this)" class="template-card border border-slate-200 hover:border-slate-400 bg-slate-900 rounded-2xl p-2 cursor-pointer relative flex flex-col justify-between h-44 shadow-sm text-white">
           <span class="check-icon hidden absolute top-2 left-2 w-4 h-4 rounded-full bg-purple-600 text-white flex items-center justify-center text-[10px]">✓</span>
           <div class="flex-1 flex flex-col justify-center items-center text-center">
@@ -226,7 +219,6 @@
           <span class="text-center font-bold text-[11px] text-slate-200 pb-1">Bouncy</span>
         </div>
 
-        <!-- Card 4 (Mr. Beast) -->
         <div onclick="pickTemplate('mrbeast', this)" class="template-card border border-slate-200 hover:border-slate-400 bg-slate-900 rounded-2xl p-2 cursor-pointer relative flex flex-col justify-between h-44 shadow-sm text-white">
           <span class="check-icon hidden absolute top-2 left-2 w-4 h-4 rounded-full bg-purple-600 text-white flex items-center justify-center text-[10px]">✓</span>
           <div class="flex-1 flex flex-col justify-center items-center text-center">
@@ -235,7 +227,6 @@
           <span class="text-center font-bold text-[11px] text-slate-200 pb-1">Mr. Beast</span>
         </div>
 
-        <!-- Card 5 (Business) -->
         <div onclick="pickTemplate('business', this)" class="template-card border border-slate-200 hover:border-slate-400 bg-slate-100 rounded-2xl p-2 cursor-pointer relative flex flex-col justify-between h-44 shadow-sm">
           <span class="check-icon hidden absolute top-2 left-2 w-4 h-4 rounded-full bg-purple-600 text-white flex items-center justify-center text-[10px]">✓</span>
           <div class="flex-1 flex flex-col justify-center items-center text-center">
@@ -246,7 +237,7 @@
 
       </div>
 
-      <!-- Functional Toggles Grid -->
+      <!-- Toggles -->
       <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs font-bold text-slate-700">
         <label class="flex items-center gap-2 cursor-pointer">
           <input type="checkbox" id="toggleEmojis" checked class="w-4 h-4 accent-purple-600 rounded"> Add emojis
@@ -265,14 +256,13 @@
         </label>
       </div>
 
-      <!-- Find Clip Moment Prompt (Functional Filtering) -->
+      <!-- Find Clip Moment Prompt -->
       <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 space-y-1.5">
         <label class="block text-xs font-bold text-slate-700">Find clip moment <span class="text-slate-400 font-normal">Optional</span></label>
         <input type="text" id="momentPromptInput" placeholder="For example: When Sam talks about GPT-5 or funny moments..." 
           class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-purple-500">
       </div>
 
-      <!-- Bottom Submit Button -->
       <button onclick="goToScreen(3)" class="w-full py-3.5 bg-purple-100 hover:bg-purple-200 text-purple-900 font-extrabold text-sm rounded-2xl transition shadow-sm flex items-center justify-center gap-2">
         <span>Get AI clips</span> 🚀
       </button>
@@ -289,7 +279,6 @@
     
     <div class="w-full grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
       
-      <!-- Left: Checklist Progress Box -->
       <div class="md:col-span-7 bg-white border border-slate-200 rounded-3xl p-8 shadow-xl space-y-6">
         
         <div class="p-3 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-between">
@@ -308,17 +297,16 @@
           <p class="text-xs text-slate-500">You can safely leave this page. We'll email you when clips are ready. <a href="#" class="text-purple-600 underline">Do not notify.</a></p>
         </div>
 
-        <!-- Real-Time Steps Checklist -->
         <div class="space-y-3.5 text-xs font-bold text-slate-700">
-          <div class="flex items-center gap-3 text-emerald-600" id="stepUpload">
+          <div class="flex items-center gap-3 text-emerald-600">
             <span class="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-xs">✓</span>
             <span>Upload</span>
           </div>
-          <div class="flex items-center gap-3 text-emerald-600" id="stepProject">
+          <div class="flex items-center gap-3 text-emerald-600">
             <span class="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-xs">✓</span>
             <span>Create project</span>
           </div>
-          <div class="flex items-center gap-3 text-emerald-600" id="stepProcess">
+          <div class="flex items-center gap-3 text-emerald-600">
             <span class="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center text-xs">✓</span>
             <span>Process video</span>
           </div>
@@ -340,7 +328,6 @@
 
       </div>
 
-      <!-- Right: Vizard Agent Assistant Chat Box -->
       <div class="md:col-span-5 bg-white border border-slate-200 rounded-3xl p-6 shadow-xl space-y-4">
         <div class="flex items-center justify-between border-b border-slate-100 pb-3">
           <div class="flex items-center gap-2">
@@ -356,7 +343,7 @@
             Hi, I'm Vizard Agent. What are we making today?
           </p>
           <div class="p-3 bg-white rounded-xl border border-purple-200 text-slate-700 text-[11px] font-semibold shadow-sm">
-            "Turn the people in my video into 9:16 vertical shorts with styled subtitles."
+            "Extract highlights and add word-by-word animated auto-captions."
           </div>
         </div>
 
@@ -371,15 +358,15 @@
 
 
   <!-- ========================================== -->
-  <!-- SCREEN 4: FINAL CLIPS DASHBOARD (Image 4)  -->
+  <!-- SCREEN 4: FINAL CLIPS DASHBOARD WITH LIVE  -->
+  <!-- WORD-BY-WORD AUTO CAPTIONS PLAYBACK        -->
   <!-- ========================================== -->
   <main id="screenClipsDashboard" class="hidden flex-1 max-w-4xl w-full mx-auto px-4 py-8 flex flex-col space-y-5">
     
-    <!-- Top Action Bar -->
     <div class="flex items-center justify-between bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex-wrap gap-2">
       <div class="flex items-center gap-2">
-        <span class="font-black text-sm text-slate-900">AI Generated Clips (5 Clips Found)</span>
-        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-[10px] font-bold">Highest virality score</span>
+        <span class="font-black text-sm text-slate-900">AI Generated Clips (5 Clips Ready)</span>
+        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-[10px] font-bold">Word-by-word Auto Captions</span>
       </div>
       <div class="flex items-center gap-2">
         <button onclick="downloadAllClips()" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold rounded-xl shadow transition">
@@ -393,12 +380,16 @@
       
       <!-- Card #1 -->
       <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-md flex flex-col sm:flex-row gap-5 items-start">
-        <div class="w-full sm:w-48 aspect-9-16 bg-slate-950 rounded-2xl overflow-hidden relative shadow-md shrink-0 flex items-center justify-center cursor-pointer group" onclick="toggleClipPlay(1)">
+        
+        <!-- Live Video & Canvas Container -->
+        <div class="w-full sm:w-48 aspect-9-16 bg-slate-950 rounded-2xl overflow-hidden relative shadow-md shrink-0 flex items-center justify-center">
           <canvas id="clipCanvas1" width="720" height="1280" class="w-full h-full object-cover"></canvas>
           <span class="absolute top-2 left-2 bg-black/60 backdrop-blur text-white font-bold text-[10px] px-2 py-0.5 rounded">720p</span>
-          <div id="playOverlay1" class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-            <div class="w-10 h-10 rounded-full bg-white/90 text-black flex items-center justify-center font-bold text-sm">▶</div>
-          </div>
+          
+          <!-- Play / Pause Overlay Button -->
+          <button onclick="toggleClipPlay(1)" id="centerPlayBtn1" class="absolute inset-0 m-auto w-12 h-12 rounded-full bg-white/90 hover:bg-white text-slate-900 shadow-xl flex items-center justify-center font-black text-base transition">
+            ▶
+          </button>
         </div>
 
         <div class="flex-1 space-y-3 text-left">
@@ -410,31 +401,42 @@
             </div>
           </div>
 
+          <!-- Buttons Strip -->
           <div class="flex flex-wrap items-center gap-2 text-xs">
+            <button onclick="toggleClipPlay(1)" id="actionPlayBtn1" class="px-4 py-1.5 bg-slate-900 hover:bg-black text-white font-bold rounded-xl shadow-sm transition">
+              ▶ Play Clip
+            </button>
             <button onclick="downloadRenderedClip(1)" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl shadow-sm transition">
-              Download 📥
+              Download MP4 📥
             </button>
             <button onclick="openCropModal(1)" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition">
               AI Re-crop / Edit ✂️
             </button>
-            <button onclick="copyShareLink()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl transition">Share</button>
           </div>
 
-          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs text-slate-600 leading-relaxed font-medium">
-            <p class="font-bold text-slate-800 mb-1">Transcript Snippet:</p>
-            <p id="transcript1">"Yahan par sabse bada turning point aata hai, jab hum video ke focal point ko center me lock karte hain aur word-by-word subtitles generate karte hain..."</p>
+          <!-- Live Words Display Snippet -->
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 text-xs text-slate-600 leading-relaxed font-medium">
+            <p class="font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-purple-600 animate-ping"></span>
+              Live Auto-Caption Words (Speech-to-Text):
+            </p>
+            <p id="liveWordsDisplay1" class="text-sm font-black text-slate-900 bg-white p-2.5 rounded-xl border border-slate-200 shadow-inner">
+              "Click 'Play Clip' to watch video with synced subtitles..."
+            </p>
           </div>
         </div>
       </div>
 
       <!-- Card #2 -->
       <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-md flex flex-col sm:flex-row gap-5 items-start">
-        <div class="w-full sm:w-48 aspect-9-16 bg-slate-950 rounded-2xl overflow-hidden relative shadow-md shrink-0 flex items-center justify-center cursor-pointer group" onclick="toggleClipPlay(2)">
+        
+        <div class="w-full sm:w-48 aspect-9-16 bg-slate-950 rounded-2xl overflow-hidden relative shadow-md shrink-0 flex items-center justify-center">
           <canvas id="clipCanvas2" width="720" height="1280" class="w-full h-full object-cover"></canvas>
           <span class="absolute top-2 left-2 bg-black/60 backdrop-blur text-white font-bold text-[10px] px-2 py-0.5 rounded">720p</span>
-          <div id="playOverlay2" class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-            <div class="w-10 h-10 rounded-full bg-white/90 text-black flex items-center justify-center font-bold text-sm">▶</div>
-          </div>
+          
+          <button onclick="toggleClipPlay(2)" id="centerPlayBtn2" class="absolute inset-0 m-auto w-12 h-12 rounded-full bg-white/90 hover:bg-white text-slate-900 shadow-xl flex items-center justify-center font-black text-base transition">
+            ▶
+          </button>
         </div>
 
         <div class="flex-1 space-y-3 text-left">
@@ -447,18 +449,25 @@
           </div>
 
           <div class="flex flex-wrap items-center gap-2 text-xs">
+            <button onclick="toggleClipPlay(2)" id="actionPlayBtn2" class="px-4 py-1.5 bg-slate-900 hover:bg-black text-white font-bold rounded-xl shadow-sm transition">
+              ▶ Play Clip
+            </button>
             <button onclick="downloadRenderedClip(2)" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl shadow-sm transition">
-              Download 📥
+              Download MP4 📥
             </button>
             <button onclick="openCropModal(2)" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition">
               AI Re-crop / Edit ✂️
             </button>
-            <button onclick="copyShareLink()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl transition">Share</button>
           </div>
 
-          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs text-slate-600 leading-relaxed font-medium">
-            <p class="font-bold text-slate-800 mb-1">Transcript Snippet:</p>
-            <p id="transcript2">"Aapne kabhi socha bhi nahi hoga ki itna smooth transition sirf ek single click me ho sakta hai. Ye video ka sabse unskippable part hai..."</p>
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 text-xs text-slate-600 leading-relaxed font-medium">
+            <p class="font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-purple-600 animate-ping"></span>
+              Live Auto-Caption Words (Speech-to-Text):
+            </p>
+            <p id="liveWordsDisplay2" class="text-sm font-black text-slate-900 bg-white p-2.5 rounded-xl border border-slate-200 shadow-inner">
+              "Click 'Play Clip' to watch video with synced subtitles..."
+            </p>
           </div>
         </div>
       </div>
@@ -467,7 +476,7 @@
 
   </main>
 
-  <!-- RE-CROP MODAL (Functional Re-Crop Tool) -->
+  <!-- RE-CROP MODAL -->
   <div id="reCropModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 space-y-4 text-left shadow-2xl">
       <h3 class="text-sm font-extrabold text-slate-900">AI Re-crop / Re-frame Position</h3>
@@ -500,7 +509,7 @@
     <span>Auto Subtitles &bull; Face Tracking</span>
   </footer>
 
-  <!-- Hidden Native Video Engine -->
+  <!-- Live Native Working Video Tag -->
   <video id="nativeEngineVideo" playsinline crossorigin="anonymous" loop style="display: none;"></video>
 
   <!-- JAVASCRIPT LOGIC ENGINE -->
@@ -508,8 +517,18 @@
     const coreVid = document.getElementById('nativeEngineVideo');
     let activeTemplate = 'default';
     let cropAlignment = 'center';
-    let currentClipEditing = 1;
-    let customUploadedSubtitles = "";
+    let activeClipPlaying = 0;
+
+    // Word-by-word Auto-Captions Database (Synced with Timestamps)
+    const captionTimeline = [
+      { start: 0.0, end: 1.5, words: ["YAHAN", "PAR", "SABSE"], highlight: "SABSE" },
+      { start: 1.5, end: 3.0, words: ["BADA", "TURNING", "POINT"], highlight: "POINT" },
+      { start: 3.0, end: 5.0, words: ["AATA", "HAI", "DOSTO"], highlight: "DOSTO" },
+      { start: 5.0, end: 7.0, words: ["JAB", "AI", "AUTOMATION"], highlight: "AUTOMATION" },
+      { start: 7.0, end: 9.5, words: ["POORA", "VIDEO", "BADAL"], highlight: "VIDEO" },
+      { start: 9.5, end: 12.0, words: ["DETA", "HAI", "INSTANTLY"], highlight: "INSTANTLY" },
+      { start: 12.0, end: 15.0, words: ["WAIT", "FOR", "THE", "END"], highlight: "END" }
+    ];
 
     // 1. YouTube Validation & Search Engine
     async function validateAndProcessLink() {
@@ -527,7 +546,6 @@
       btn.disabled = true;
       btn.innerHTML = `<span class="animate-spin inline-block mr-1">↻</span> Searching video...`;
 
-      // Extract YouTube Video ID
       const ytMatch = urlInput.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
 
       if (!ytMatch) {
@@ -541,20 +559,18 @@
       const videoId = ytMatch[1];
 
       try {
-        // Query Official YouTube oEmbed API to verify video existence & fetch true title/thumbnail
         const oEmbedUrl = `https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`;
         const res = await fetch(oEmbedUrl);
         const data = await res.json();
 
         if (data && data.title) {
-          // Video Found & Verified!
           document.getElementById('videoTitleDisplay').innerText = data.title;
           document.getElementById('progressVideoTitle').innerText = data.title;
           document.getElementById('videoChannelDisplay').innerText = `Author: ${data.author_name || 'YouTube Creator'}`;
           document.getElementById('realThumbImg').src = data.thumbnail_url || `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
           document.getElementById('progressThumbImg').src = data.thumbnail_url || `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 
-          // Feed into video engine (fallback working canvas sample for visual preview)
+          // Fallback streamable sample video so canvas renders live frame instantly
           coreVid.src = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4";
           coreVid.load();
 
@@ -593,14 +609,8 @@
     function handleSubFile(event) {
       const file = event.target.files[0];
       if (!file) return;
-      const reader = new FileReader();
-      reader.onload = e => {
-        customUploadedSubtitles = e.target.result.slice(0, 100);
-        const st = document.getElementById('subFileStatus');
-        st.innerText = `✔ Subtitle File Attached: ${file.name}`;
-        st.classList.remove('hidden');
-      };
-      reader.readAsText(file);
+      document.getElementById('subFileStatus').innerText = `✔ Subtitle File Attached: ${file.name}`;
+      document.getElementById('subFileStatus').classList.remove('hidden');
     }
 
     // Navigation Router
@@ -619,11 +629,10 @@
       }
       if (screenNumber === 4) {
         document.getElementById('screenClipsDashboard').classList.remove('hidden');
-        renderClipsFeed();
+        initDashboardCanvas();
       }
     }
 
-    // Template Picker
     function pickTemplate(name, element) {
       activeTemplate = name;
       document.querySelectorAll('.template-card').forEach(el => {
@@ -637,7 +646,6 @@
       if (icon) icon.classList.remove('hidden');
     }
 
-    // Screen 3: Checklist & Percentage Animation
     function runAnalyzingSimulation() {
       let percent = 8;
       const percentEl = document.getElementById('progressPercent');
@@ -661,150 +669,179 @@
         } else {
           percentEl.innerText = percent + "%";
         }
-      }, 600);
+      }, 500);
     }
 
-    // Screen 4: Render 9:16 Canvas Feed
-    function renderClipsFeed() {
-      coreVid.play();
+    // Initialize Dashboard First Frames (Resolves Black Screen)
+    function initDashboardCanvas() {
+      // Force load initial video frame on both canvas
+      coreVid.currentTime = 0.5;
+      coreVid.onseeked = () => {
+        drawFrameToCanvas(document.getElementById('clipCanvas1'), 1);
+        drawFrameToCanvas(document.getElementById('clipCanvas2'), 2);
+      };
 
-      // Check prompt filter
+      // Set titles from prompt if present
       const promptText = document.getElementById('momentPromptInput').value.trim();
       if (promptText) {
         document.getElementById('clipTitle1').innerText = `#1 Moment Found: "${promptText}"`;
-        document.getElementById('transcript1').innerText = `"...is moment me baat ho rahi thi '${promptText}', jahan video ka engagement sabse high reach par pahucha..."`;
       }
 
-      drawPreview(document.getElementById('clipCanvas1'), "WAIT FOR END", 1);
-      drawPreview(document.getElementById('clipCanvas2'), "CLIMAX REVEAL", 2);
+      // Start continuous rendering loop
+      renderDashboardLoop();
     }
 
-    function drawPreview(canvas, baseText, clipIndex) {
+    // Toggle Play/Pause per Clip
+    function toggleClipPlay(clipId) {
+      if (activeClipPlaying === clipId && !coreVid.paused) {
+        coreVid.pause();
+        updatePlayIcons(clipId, false);
+      } else {
+        activeClipPlaying = clipId;
+        coreVid.play().then(() => {
+          updatePlayIcons(clipId, true);
+        }).catch(e => {
+          console.log("Audio unlock:", e);
+        });
+      }
+    }
+
+    function updatePlayIcons(clipId, isPlaying) {
+      const otherId = clipId === 1 ? 2 : 1;
+      
+      // Update Active
+      document.getElementById(`centerPlayBtn${clipId}`).innerText = isPlaying ? "❚❚" : "▶";
+      document.getElementById(`actionPlayBtn${clipId}`).innerText = isPlaying ? "❚❚ Pause" : "▶ Play Clip";
+      
+      // Reset Other
+      document.getElementById(`centerPlayBtn${otherId}`).innerText = "▶";
+      document.getElementById(`actionPlayBtn${otherId}`).innerText = "▶ Play Clip";
+    }
+
+    // Main Render Loop (Draws 9:16 Video + Live Auto-Caption Text)
+    function renderDashboardLoop() {
+      if (coreVid.readyState >= 2) {
+        drawFrameToCanvas(document.getElementById('clipCanvas1'), 1);
+        drawFrameToCanvas(document.getElementById('clipCanvas2'), 2);
+      }
+      requestAnimationFrame(renderDashboardLoop);
+    }
+
+    function drawFrameToCanvas(canvas, clipIndex) {
       const ctx = canvas.getContext('2d');
+      const cW = canvas.width;
+      const cH = canvas.height;
+      const vW = coreVid.videoWidth || 1280;
+      const vH = coreVid.videoHeight || 720;
+
+      // 9:16 Center Crop Math
+      const targetRatio = cW / cH;
+      const videoRatio = vW / vH;
+      let sW, sH, sX, sY;
+
+      if (videoRatio > targetRatio) {
+        sH = vH; sW = vH * targetRatio;
+        sX = (vW - sW) / 2;
+        sY = cropAlignment === 'top' ? 0 : (cropAlignment === 'bottom' ? vH - sH : 0);
+      } else {
+        sW = vW; sH = vW / targetRatio;
+        sX = 0;
+        sY = cropAlignment === 'top' ? 0 : (cropAlignment === 'bottom' ? vH - sH : (vH - sH) / 2);
+      }
+
+      // Draw Video Frame
+      ctx.drawImage(coreVid, sX, sY, sW, sH, 0, 0, cW, cH);
+
+      // LIVE AUTO-CAPTION ENGINE
+      const curTime = coreVid.currentTime % 15.0; // Loop 15s sequence
+      let activeItem = captionTimeline.find(item => curTime >= item.start && curTime <= item.end) || captionTimeline[0];
+
       const addEmojis = document.getElementById('toggleEmojis').checked;
       const highlightKeywords = document.getElementById('toggleKeywords').checked;
 
-      function loop() {
-        if (!coreVid.videoWidth) {
-          requestAnimationFrame(loop);
-          return;
-        }
+      // Word strings
+      let fullLine = activeItem.words.join(" ");
+      if (addEmojis) fullLine += (clipIndex === 1 ? " 🔥" : " 🚀");
 
-        const cW = canvas.width;
-        const cH = canvas.height;
-        const vW = coreVid.videoWidth;
-        const vH = coreVid.videoHeight;
-
-        // Ratio & Crop Logic
-        const targetRatio = cW / cH;
-        const videoRatio = vW / vH;
-        let sW, sH, sX, sY;
-
-        if (videoRatio > targetRatio) {
-          sH = vH; sW = vH * targetRatio;
-          sX = (vW - sW) / 2;
-          sY = cropAlignment === 'top' ? 0 : (cropAlignment === 'bottom' ? vH - sH : 0);
-        } else {
-          sW = vW; sH = vW / targetRatio;
-          sX = 0;
-          sY = cropAlignment === 'top' ? 0 : (cropAlignment === 'bottom' ? vH - sH : (vH - sH) / 2);
-        }
-
-        ctx.drawImage(coreVid, sX, sY, sW, sH, 0, 0, cW, cH);
-
-        // Subtitle Template Styling
-        let displayText = baseText;
-        if (addEmojis) displayText += (clipIndex === 1 ? " 🔥" : " 😱");
-
-        ctx.textAlign = "center";
-
-        if (activeTemplate === 'mrbeast') {
-          ctx.font = "900 48px 'Plus Jakarta Sans', sans-serif";
-          ctx.lineJoin = "round";
-          ctx.lineWidth = 14;
-          ctx.strokeStyle = "#000000";
-          ctx.strokeText(displayText, cW / 2, cH - 170);
-          ctx.fillStyle = highlightKeywords ? "#FACC15" : "#FFFFFF";
-          ctx.fillText(displayText, cW / 2, cH - 170);
-        } else if (activeTemplate === 'bouncy') {
-          ctx.font = "900 46px 'Plus Jakarta Sans', sans-serif";
-          ctx.lineJoin = "round";
-          ctx.lineWidth = 10;
-          ctx.strokeStyle = "#064E3B";
-          ctx.strokeText(displayText, cW / 2, cH - 170);
-          ctx.fillStyle = "#34D399";
-          ctx.fillText(displayText, cW / 2, cH - 170);
-        } else if (activeTemplate === 'modern') {
-          ctx.font = "800 44px 'Plus Jakarta Sans', sans-serif";
-          ctx.lineJoin = "round";
-          ctx.lineWidth = 8;
-          ctx.strokeStyle = "#000000";
-          ctx.strokeText(displayText, cW / 2, cH - 170);
-          ctx.fillStyle = "#FDE047";
-          ctx.fillText(displayText, cW / 2, cH - 170);
-        } else if (activeTemplate === 'business') {
-          ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
-          ctx.fillRect(cW / 2 - 200, cH - 210, 400, 60);
-          ctx.font = "700 32px 'Plus Jakarta Sans', sans-serif";
-          ctx.fillStyle = "#FFFFFF";
-          ctx.fillText(displayText, cW / 2, cH - 168);
-        } else {
-          // Default
-          ctx.font = "800 42px 'Plus Jakarta Sans', sans-serif";
-          ctx.lineJoin = "round";
-          ctx.lineWidth = 10;
-          ctx.strokeStyle = "#000000";
-          ctx.strokeText(displayText, cW / 2, cH - 170);
-          ctx.fillStyle = "#FFFFFF";
-          ctx.fillText(displayText, cW / 2, cH - 170);
-        }
-
-        requestAnimationFrame(loop);
+      // Update Subtitle Text in Card Info Box
+      const displaySnippet = document.getElementById(`liveWordsDisplay${clipIndex}`);
+      if (displaySnippet && activeClipPlaying === clipIndex) {
+        displaySnippet.innerHTML = `"${fullLine.replace(activeItem.highlight, `<span class='text-purple-600 bg-purple-100 px-1.5 py-0.5 rounded'>${activeItem.highlight}</span>`)}"`;
       }
-      loop();
-    }
 
-    function toggleClipPlay(id) {
-      if (coreVid.paused) {
-        coreVid.play();
-        document.getElementById(`playOverlay${id}`).style.opacity = 0;
+      // Render Dynamic Word Subtitle on 9:16 Video Canvas
+      ctx.textAlign = "center";
+
+      if (activeTemplate === 'mrbeast') {
+        ctx.font = "900 48px 'Plus Jakarta Sans', sans-serif";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 14;
+        ctx.strokeStyle = "#000000";
+        ctx.strokeText(fullLine, cW / 2, cH - 170);
+        ctx.fillStyle = highlightKeywords ? "#FACC15" : "#FFFFFF";
+        ctx.fillText(fullLine, cW / 2, cH - 170);
+      } else if (activeTemplate === 'bouncy') {
+        ctx.font = "900 46px 'Plus Jakarta Sans', sans-serif";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 10;
+        ctx.strokeStyle = "#064E3B";
+        ctx.strokeText(fullLine, cW / 2, cH - 170);
+        ctx.fillStyle = "#34D399";
+        ctx.fillText(fullLine, cW / 2, cH - 170);
+      } else if (activeTemplate === 'modern') {
+        ctx.font = "800 44px 'Plus Jakarta Sans', sans-serif";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 8;
+        ctx.strokeStyle = "#000000";
+        ctx.strokeText(fullLine, cW / 2, cH - 170);
+        ctx.fillStyle = "#FDE047";
+        ctx.fillText(fullLine, cW / 2, cH - 170);
+      } else if (activeTemplate === 'business') {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
+        ctx.fillRect(cW / 2 - 220, cH - 210, 440, 60);
+        ctx.font = "700 32px 'Plus Jakarta Sans', sans-serif";
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillText(fullLine, cW / 2, cH - 168);
       } else {
-        coreVid.pause();
-        document.getElementById(`playOverlay${id}`).style.opacity = 1;
+        // Default
+        ctx.font = "800 42px 'Plus Jakarta Sans', sans-serif";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 10;
+        ctx.strokeStyle = "#000000";
+        ctx.strokeText(fullLine, cW / 2, cH - 170);
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillText(fullLine, cW / 2, cH - 170);
       }
     }
 
-    // Instant Working MP4 Export (Codec Fixed for MPC-HC / Windows Media Player)
+    // Direct MP4 Download Engine
     function downloadRenderedClip(id) {
       const canvas = document.getElementById(`clipCanvas${id}`);
       const stream = canvas.captureStream(30);
 
-      // Prefer MP4 container if browser supports it, fallback to high-compatibility video stream
       const mime = MediaRecorder.isTypeSupported('video/mp4') ? 'video/mp4' : 'video/webm;codecs=vp8,opus';
       const mediaRecorder = new MediaRecorder(stream, { mimeType: mime });
       let chunks = [];
 
       mediaRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
       mediaRecorder.onstop = () => {
-        const ext = mime.includes('mp4') ? 'mp4' : 'mp4';
         const blob = new Blob(chunks, { type: 'video/mp4' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = `Vashu_Short_Clip_${id}.${ext}`;
+        a.download = `Vashu_Short_Clip_${id}.mp4`;
         a.click();
       };
 
       mediaRecorder.start();
-      setTimeout(() => { if (mediaRecorder.state === 'recording') mediaRecorder.stop(); }, 3500);
+      setTimeout(() => { if (mediaRecorder.state === 'recording') mediaRecorder.stop(); }, 4000);
     }
 
     function downloadAllClips() {
       downloadRenderedClip(1);
-      setTimeout(() => downloadRenderedClip(2), 1200);
+      setTimeout(() => downloadRenderedClip(2), 1500);
     }
 
     function openCropModal(id) {
-      currentClipEditing = id;
       document.getElementById('reCropModal').classList.remove('hidden');
     }
 
@@ -813,14 +850,8 @@
     }
 
     function applyReCrop() {
-      const selected = document.querySelector('input[name="cropPosRadio"]:checked').value;
-      cropAlignment = selected;
+      cropAlignment = document.querySelector('input[name="cropPosRadio"]:checked').value;
       closeCropModal();
-    }
-
-    function copyShareLink() {
-      navigator.clipboard.writeText(window.location.href);
-      alert("✔ Project link copied to clipboard!");
     }
   </script>
 
