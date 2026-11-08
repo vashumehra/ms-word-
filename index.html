@@ -3,64 +3,162 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Video to Shorts Generator</title>
+  <title>AI Video to 9:16 Shorts Generator</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4">
 
-  <div class="max-w-lg w-full bg-slate-800 p-8 rounded-2xl shadow-2xl border border-slate-700 text-center">
+  <div class="max-w-md w-full bg-slate-800 p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700 text-center">
     
-    <div class="inline-block p-3 bg-indigo-600/20 text-indigo-400 rounded-full mb-3 text-2xl">
-      🎬
+    <div class="inline-block p-3 bg-red-600/20 text-red-500 rounded-full mb-3 text-2xl">
+      📱
     </div>
     
-    <h1 class="text-2xl font-bold mb-2">Video to AI Shorts</h1>
-    <p class="text-slate-400 text-sm mb-6">Kisi bhi video ka link daalein, AI automatically main clips aur subtitles ke sath Shorts bana dega.</p>
+    <h1 class="text-2xl font-black mb-1">AI Shorts Maker (9:16)</h1>
+    <p class="text-slate-400 text-xs mb-6">Video URL daalein, auto crop hokar 9:16 vertical shorts aur captions generate honge.</p>
 
-    <!-- Input Form -->
+    <!-- Form Inputs -->
     <div class="space-y-4 text-left">
       <div>
-        <label class="block text-xs font-semibold text-slate-300 mb-1">Video Link (YouTube / URL):</label>
-        <input type="url" id="videoUrl" placeholder="https://www.youtube.com/watch?v=..." 
-          class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:outline-none focus:border-indigo-500">
+        <label class="block text-xs font-bold text-slate-300 mb-1">Video Link (Direct MP4 / Web URL):</label>
+        <input type="url" id="videoUrl" placeholder="https://example.com/video.mp4" 
+          class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:outline-none focus:border-red-500">
       </div>
 
       <div>
-        <label class="block text-xs font-semibold text-slate-300 mb-1">Shorts Length:</label>
-        <select id="clipLength" class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:outline-none focus:border-indigo-500">
-          <option value="30">Auto (30 to 60 Seconds)</option>
-          <option value="15">Short (15 to 30 Seconds)</option>
-        </select>
+        <label class="block text-xs font-bold text-slate-300 mb-1">Creatomate API Key:</label>
+        <input type="password" id="apiKey" placeholder="Creatomate Project API Key" 
+          class="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-red-500"
+          oninput="localStorage.setItem('creatomate_key', this.value.trim())">
       </div>
 
-      <button onclick="startProcessing()" id="genBtn" 
-        class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 font-bold rounded-lg text-sm tracking-wide uppercase transition shadow-lg shadow-indigo-600/30">
-        Generate AI Shorts 🚀
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Aspect Ratio:</label>
+          <div class="w-full py-2 px-3 bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold text-amber-400 text-center">
+            9:16 (Shorts / Reels)
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Trim Length:</label>
+          <select id="clipDuration" class="w-full py-2 px-3 bg-slate-900 border border-slate-700 rounded-lg text-xs text-white">
+            <option value="30">First 30s</option>
+            <option value="60">First 60s</option>
+          </select>
+        </div>
+      </div>
+
+      <button onclick="generateShortVideo()" id="genBtn" 
+        class="w-full py-3.5 bg-red-600 hover:bg-red-700 font-bold rounded-lg text-sm tracking-wide uppercase transition shadow-lg shadow-red-600/30">
+        Generate 9:16 Short 🚀
       </button>
     </div>
 
-    <!-- Status Output -->
-    <div id="statusBox" class="mt-6 hidden p-4 bg-slate-900 rounded-lg border border-slate-700 text-xs text-slate-300 space-y-2">
-      <div id="statusText">⏳ Video process ho rahi hai...</div>
-      <div class="w-full bg-slate-700 h-1.5 rounded-full overflow-hidden">
-        <div id="progressBar" class="bg-indigo-500 h-full w-1/4 animate-pulse"></div>
+    <!-- Status & Output Box -->
+    <div id="statusBox" class="mt-6 hidden p-4 bg-slate-900 rounded-lg border border-slate-700 text-xs text-left space-y-3">
+      <div id="statusText" class="text-amber-400 font-semibold">⏳ Video rendering shuru ho rahi hai...</div>
+      
+      <!-- Video Player Preview -->
+      <div id="resultPreview" class="hidden text-center">
+        <video id="outVideo" controls class="w-full max-h-72 rounded-lg border border-slate-700 mx-auto mb-3" style="aspect-ratio: 9/16; object-fit: cover;"></video>
+        <a id="downloadBtn" href="#" target="_blank" download="short.mp4" 
+          class="inline-block px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 font-bold text-xs rounded-lg uppercase tracking-wider text-white">
+          Download 9:16 Video 📥
+        </a>
       </div>
     </div>
 
   </div>
 
   <script>
-    function startProcessing() {
-      const url = document.getElementById('videoUrl').value.trim();
-      if (!url) {
-        alert("Kripya pehle video ka link daalein!");
+    // Saved key restore
+    const savedKey = localStorage.getItem('creatomate_key');
+    if (savedKey) document.getElementById('apiKey').value = savedKey;
+
+    async function generateShortVideo() {
+      const videoUrl = document.getElementById('videoUrl').value.trim();
+      const apiKey = document.getElementById('apiKey').value.trim();
+      const duration = parseInt(document.getElementById('clipDuration').value);
+      const btn = document.getElementById('genBtn');
+      const statusBox = document.getElementById('statusBox');
+      const statusText = document.getElementById('statusText');
+      const resultPreview = document.getElementById('resultPreview');
+
+      if (!videoUrl) {
+        alert("Kripya pehle video ka link dalein!");
         return;
       }
-      document.getElementById('statusBox').classList.remove('hidden');
-      document.getElementById('genBtn').disabled = true;
-      document.getElementById('statusText').innerText = "1. Audio extract aur transcribe ho raha hai...";
-      
-      // Yahan backend API call trigger hogi
+      if (!apiKey) {
+        alert("Creatomate API Key zaroori hai cloud rendering ke liye!");
+        return;
+      }
+
+      statusBox.classList.remove('hidden');
+      resultPreview.classList.add('hidden');
+      btn.disabled = true;
+      btn.innerText = "Processing 9:16...";
+
+      try {
+        statusText.innerText = "1. Cloud server par 9:16 crop aur formatting command bheji ja rahi hai...";
+
+        // Creatomate API request for 9:16 vertical short
+        const response = await fetch('https://api.creatomate.com/v1/renders', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + apiKey,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            output_format: 'mp4',
+            width: 720,
+            height: 1280, // 9:16 Aspect Ratio
+            elements: [
+              {
+                type: 'video',
+                source: videoUrl,
+                duration: duration,
+                fit: 'cover' // Crops to fill 9:16 vertical full screen
+              }
+            ]
+          })
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || "Rendering shuru nahi ho saki.");
+
+        const renderId = data[0].id;
+        statusText.innerText = "2. 9:16 Short render ho raha hai, kripya 15-20 second intezar karein...";
+
+        // Polling check jab tak video render complete na ho
+        const checkStatus = setInterval(async () => {
+          const resCheck = await fetch(`https://api.creatomate.com/v1/renders/${renderId}`, {
+            headers: { 'Authorization': 'Bearer ' + apiKey }
+          });
+          const renderData = await resCheck.json();
+
+          if (renderData.status === 'succeeded') {
+            clearInterval(checkStatus);
+            statusText.innerText = "✔ 9:16 Short video successfully ban gayi!";
+            resultPreview.classList.remove('hidden');
+            
+            const outVideo = document.getElementById('outVideo');
+            const downloadBtn = document.getElementById('downloadBtn');
+            outVideo.src = renderData.url;
+            downloadBtn.href = renderData.url;
+
+            btn.disabled = false;
+            btn.innerText = "Generate 9:16 Short 🚀";
+          } else if (renderData.status === 'failed') {
+            clearInterval(checkStatus);
+            throw new Error("Render fail ho gaya: " + (renderData.error_message || "Unknown error"));
+          }
+        }, 3000);
+
+      } catch (err) {
+        statusText.innerText = "❌ Error: " + err.message;
+        btn.disabled = false;
+        btn.innerText = "Generate 9:16 Short 🚀";
+      }
     }
   </script>
 </body>
