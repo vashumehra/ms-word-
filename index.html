@@ -1,117 +1,381 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auto Viral Shorts Generator</title>
+  <title>Canva-Style AI Video &amp; 9:16 Shorts Studio</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .hero-gradient {
+      background: linear-gradient(180deg, #F0F4FF 0%, #FFFFFF 100%);
+    }
+    .purple-btn {
+      background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+    }
+    .purple-btn:hover {
+      background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%);
+    }
+    .aspect-9-16 {
+      aspect-ratio: 9 / 16;
+    }
+  </style>
 </head>
-<body class="bg-slate-950 text-white min-h-screen flex items-center justify-center p-4">
+<body class="hero-gradient min-h-screen text-slate-800 flex flex-col justify-between">
 
-  <div class="max-w-lg w-full bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl">
-    
-    <div class="flex items-center gap-3 mb-6">
-      <div class="text-3xl p-3 bg-red-600/20 rounded-2xl text-red-500">✨</div>
-      <div>
-        <h1 class="text-xl font-black">All-in-One Viral Shorts AI</h1>
-        <p class="text-xs text-slate-400">YouTube, Insta Link ya Video File daalein — AI best part chun kar 9:16 short bana dega.</p>
+  <!-- TOP NAVIGATION BAR -->
+  <header class="w-full max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-8">
+      <div class="flex items-center gap-2 cursor-pointer">
+        <span class="text-3xl font-black bg-gradient-to-r from-purple-600 via-indigo-600 to-sky-500 bg-clip-text text-transparent">Studio</span>
+        <span class="text-[11px] font-bold uppercase tracking-widest px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full">AI 9:16</span>
       </div>
+      <nav class="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-600">
+        <a href="#" class="hover:text-purple-600 transition">Design</a>
+        <a href="#" class="hover:text-purple-600 transition">Templates</a>
+        <a href="#" class="hover:text-purple-600 transition">Shorts Maker</a>
+        <a href="#" class="hover:text-purple-600 transition">AI Captions</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-3">
+      <button class="px-4 py-2 text-xs font-bold text-slate-700 hover:text-purple-600 transition">Log in</button>
+      <button class="px-4 py-2 purple-btn text-white text-xs font-bold rounded-lg shadow-md shadow-purple-600/20 transition">Sign up</button>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <main class="w-full max-w-5xl mx-auto px-4 py-6 md:py-10 flex flex-col items-center text-center">
+    
+    <!-- Breadcrumb -->
+    <div class="flex items-center gap-2 text-xs font-semibold text-slate-400 mb-4">
+      <span>Home</span>
+      <span>&rsaquo;</span>
+      <span class="text-slate-600">Video Editor</span>
     </div>
 
-    <!-- Inputs -->
-    <div class="space-y-4">
+    <!-- Main Headline -->
+    <h1 class="text-4xl md:text-6xl font-black tracking-tight text-slate-900 leading-[1.1] mb-4">
+      Effortless editing.<br>
+      <span class="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">Unskippable videos.</span>
+    </h1>
+
+    <p class="text-slate-500 text-sm md:text-base font-medium max-w-xl mb-8">
+      Paste your video link or upload any clip. Automatically crop to 9:16 vertical shorts with smart editing and subtitles.
+    </p>
+
+    <!-- Action Buttons & Link Input -->
+    <div class="w-full max-w-2xl bg-white p-3 rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-200/80 mb-10 flex flex-col sm:flex-row gap-2">
+      <input type="text" id="videoInputUrl" placeholder="Paste direct video URL (e.g. .mp4 web link)..." 
+        class="flex-1 px-4 py-3 bg-slate-50 rounded-xl text-xs md:text-sm font-medium border border-slate-200 focus:outline-none focus:border-purple-500 transition">
       
-      <!-- Video Link -->
-      <div>
-        <label class="block text-xs font-bold text-slate-300 mb-1">Video Link (YouTube, Instagram, Facebook):</label>
-        <input type="url" id="videoLink" placeholder="https://www.youtube.com/... ya Instagram Reel link"
-          class="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-red-500">
-      </div>
-
-      <div class="text-center text-xs text-slate-500 font-bold">— YA DIRECT FILE UPLOAD KAREIN —</div>
-
-      <!-- File Drop -->
-      <div>
-        <input type="file" id="videoFile" accept="video/*" 
-          class="w-full text-xs text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-slate-800 file:text-white hover:file:bg-slate-700 cursor-pointer">
-      </div>
-
-      <!-- Gemini API Key -->
-      <div>
-        <label class="block text-xs font-bold text-slate-300 mb-1">Google Gemini API Key (Viral Detection Ke Liye):</label>
-        <input type="password" id="geminiKey" placeholder="Gemini API Key daalein"
-          class="w-full px-4 py-2 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-red-500"
-          oninput="localStorage.setItem('gemini_video_key', this.value.trim())">
-      </div>
-
-      <button onclick="submitJob()" id="genBtn"
-        class="w-full py-3.5 bg-red-600 hover:bg-red-700 font-extrabold text-xs uppercase tracking-wider rounded-xl transition shadow-lg shadow-red-600/30">
-        Auto Detect Best Clip &amp; Make 9:16 Short 🚀
+      <button onclick="loadFromUrl()" class="px-6 py-3 purple-btn text-white text-xs font-bold rounded-xl flex items-center justify-center gap-2 shadow-md shadow-purple-600/20 transition whitespace-nowrap">
+        <span>Create a video</span>
       </button>
 
+      <button onclick="document.getElementById('fileUploadInput').click()" class="px-5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl flex items-center justify-center gap-2 transition whitespace-nowrap">
+        <span>Upload from device</span>
+      </button>
+      <input type="file" id="fileUploadInput" accept="video/*" class="hidden" onchange="loadFromFile(event)">
     </div>
 
-    <!-- Status Box -->
-    <div id="statusBox" class="mt-6 hidden p-4 bg-slate-950 rounded-2xl border border-slate-800 text-xs space-y-2">
-      <div id="statusTitle" class="font-bold text-amber-400">⏳ AI video ko analyze kar raha hai...</div>
-      <p id="statusDesc" class="text-slate-400 text-[11px]">Audio transcription aur best moment detection chal raha hai.</p>
+    <!-- CANVA-STYLE MOCKUP / WORKING STUDIO PLAYER -->
+    <div class="w-full max-w-4xl bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden text-left">
+      
+      <!-- Studio Topbar -->
+      <div class="px-6 py-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between flex-wrap gap-3">
+        <div class="flex items-center gap-3">
+          <span class="px-3 py-1 bg-white border border-slate-200 rounded-lg text-xs font-extrabold text-slate-700 shadow-sm flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Highlights
+          </span>
+          <span class="text-xs font-bold text-slate-500 bg-slate-200/60 px-2 py-0.5 rounded-md" id="durationBadge">0.0s</span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="toggleShortsMode()" id="aspectBtn" class="px-3 py-1.5 bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 text-xs font-bold rounded-lg transition flex items-center gap-1.5">
+            📱 <span>Format: 9:16 Shorts</span>
+          </button>
+          <button onclick="exportProcessedClip()" id="exportBtn" disabled class="px-4 py-1.5 bg-emerald-600 disabled:opacity-40 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-sm transition">
+            Export Video 💾
+          </button>
+        </div>
+      </div>
+
+      <!-- Studio Editor Body -->
+      <div class="p-6 grid grid-cols-1 md:grid-cols-12 gap-6 bg-slate-900 text-white">
+        
+        <!-- Center Stage: Canvas Screen -->
+        <div class="md:col-span-8 flex flex-col items-center justify-center bg-black rounded-2xl p-4 min-h-[380px] relative overflow-hidden">
+          
+          <div id="playerBox" class="w-full max-w-[250px] aspect-9-16 relative bg-slate-950 rounded-xl overflow-hidden border border-slate-800 shadow-2xl flex items-center justify-center">
+            <canvas id="studioCanvas" width="720" height="1280" class="w-full h-full object-cover"></canvas>
+            
+            <div id="emptyScreenPlaceholder" class="absolute text-center p-4">
+              <div class="w-12 h-12 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center mx-auto mb-2 text-xl">▶</div>
+              <p class="text-xs font-bold text-slate-400">Load a video above to start editing</p>
+            </div>
+          </div>
+
+          <!-- Video Progress Bar -->
+          <div class="w-full max-w-[250px] mt-3 flex items-center gap-2">
+            <button onclick="togglePlay()" id="playPauseBtn" class="text-xs font-bold text-slate-300 hover:text-white px-2 py-1 bg-slate-800 rounded">▶ Play</button>
+            <input type="range" id="timeSeeker" min="0" value="0" step="0.1" class="w-full accent-purple-500 cursor-pointer" oninput="seekVideo(this.value)">
+          </div>
+        </div>
+
+        <!-- Right Side: Live Editing Controls -->
+        <div class="md:col-span-4 bg-slate-800/80 p-5 rounded-2xl border border-slate-700 space-y-4">
+          <h3 class="text-xs font-extrabold uppercase tracking-wider text-purple-400">Quick Edit Toolkit</h3>
+
+          <!-- Text / Caption Overlay -->
+          <div>
+            <label class="block text-[11px] font-bold text-slate-300 mb-1">Overlay Heading / Title:</label>
+            <input type="text" id="overlayTitle" placeholder="e.g. MUST WATCH MOMENT 🔥" 
+              class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-purple-500">
+          </div>
+
+          <!-- Text Color & Position -->
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[11px] font-bold text-slate-300 mb-1">Color:</label>
+              <select id="captionColor" class="w-full px-2 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white">
+                <option value="#FACC15">Yellow</option>
+                <option value="#FFFFFF" selected>White</option>
+                <option value="#EF4444">Red</option>
+                <option value="#38BDF8">Sky Blue</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-300 mb-1">Position:</label>
+              <select id="captionPos" class="w-full px-2 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white">
+                <option value="top">Top</option>
+                <option value="center">Center</option>
+                <option value="bottom" selected>Bottom</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Video Filter -->
+          <div>
+            <label class="block text-[11px] font-bold text-slate-300 mb-1">Visual Filter:</label>
+            <select id="videoFilter" class="w-full px-2 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white">
+              <option value="none">Normal (Original)</option>
+              <option value="vibrant">Vibrant Colors</option>
+              <option value="cinematic">Cinematic Contrast</option>
+              <option value="bw">Black &amp; White</option>
+            </select>
+          </div>
+
+          <!-- Export Clip Length -->
+          <div>
+            <label class="block text-[11px] font-bold text-slate-300 mb-1">Export Length:</label>
+            <select id="exportLength" class="w-full px-2 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white">
+              <option value="180">Full 3 Minutes (180s)</option>
+              <option value="60" selected>1 Minute Short (60s)</option>
+              <option value="30">30 Seconds Reel (30s)</option>
+            </select>
+          </div>
+
+          <p id="studioStatus" class="text-[11px] text-amber-400 font-semibold h-4"></p>
+        </div>
+
+      </div>
+
     </div>
 
-  </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="w-full max-w-7xl mx-auto px-6 py-6 text-center text-xs font-semibold text-slate-400">
+    Designed for fast AI video repurposing &bull; 9:16 Shorts &amp; Reels Automation
+  </footer>
+
+  <!-- Hidden Processing Video Element -->
+  <video id="hiddenSourceVideo" crossorigin="anonymous" playsinline style="display: none;"></video>
 
   <script>
-    const savedKey = localStorage.getItem('gemini_video_key');
-    if (savedKey) document.getElementById('geminiKey').value = savedKey;
+    const video = document.getElementById('hiddenSourceVideo');
+    const canvas = document.getElementById('studioCanvas');
+    const ctx = canvas.getContext('2d');
+    let isShortsFormat = true;
+    let isPlaying = false;
+    let mediaRecorder = null;
+    let recordedChunks = [];
 
-    async function submitJob() {
-      const link = document.getElementById('videoLink').value.trim();
-      const fileInput = document.getElementById('videoFile');
-      const key = document.getElementById('geminiKey').value.trim();
-      const btn = document.getElementById('genBtn');
-      const statusBox = document.getElementById('statusBox');
-
-      if (!link && !fileInput.files.length) {
-        alert("Kripya koi link dalein ya video file upload karein!");
+    function loadFromUrl() {
+      const url = document.getElementById('videoInputUrl').value.trim();
+      if (!url) {
+        alert("Please paste a direct video link (.mp4) first!");
         return;
       }
-      if (!key) {
-        alert("Gemini API Key zaroori hai!");
-        return;
+      setupVideo(url);
+    }
+
+    function loadFromFile(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const fileUrl = URL.createObjectURL(file);
+        setupVideo(fileUrl);
       }
+    }
 
-      statusBox.classList.remove('hidden');
-      btn.disabled = true;
-      btn.innerText = "Processing AI Shorts...";
+    function setupVideo(src) {
+      document.getElementById('emptyScreenPlaceholder').style.display = 'none';
+      document.getElementById('studioStatus').innerText = "Loading video...";
+      
+      video.src = src;
+      video.load();
+      video.onloadeddata = () => {
+        video.play();
+        isPlaying = true;
+        document.getElementById('playPauseBtn').innerText = "❚❚ Pause";
+        document.getElementById('exportBtn').disabled = false;
+        document.getElementById('durationBadge').innerText = Math.round(video.duration) + "s Total";
+        document.getElementById('timeSeeker').max = video.duration;
+        document.getElementById('studioStatus').innerText = "Live Preview Ready!";
+        drawFrame();
+      };
 
-      const formData = new FormData();
-      formData.append("gemini_key", key);
-      if (link) formData.append("video_url", link);
-      if (fileInput.files.length) formData.append("file", fileInput.files[0]);
+      video.onerror = () => {
+        alert("Unable to stream this video link directly. Please upload from device or use a direct .mp4 URL!");
+        document.getElementById('studioStatus').innerText = "Error loading video";
+      };
+    }
 
-      try {
-        // Aapke Python Backend Server ka Endpoint (jaise http://localhost:8000/process-auto-short)
-        const res = await fetch("http://localhost:8000/process-auto-short", {
-          method: "POST",
-          body: formData
-        });
-        const data = await res.json();
+    function drawFrame() {
+      if (!video.videoWidth) return;
 
-        if (data.status === "success") {
-          document.getElementById('statusTitle').innerText = "✔ Best Viral Short Taiyar Hai!";
-          document.getElementById('statusDesc').innerHTML = `
-            Title: <b>${data.clip_title}</b><br>
-            Timestamps: ${data.start}s se ${data.end}s<br>
-            <a href="http://localhost:8000/download-short" class="inline-block mt-2 px-4 py-2 bg-emerald-600 text-white rounded-lg font-bold">Download 9:16 Video 📥</a>
-          `;
+      const vW = video.videoWidth;
+      const vH = video.videoHeight;
+      const cW = canvas.width;
+      const cH = canvas.height;
+
+      // 1. Center crop to 9:16
+      const targetRatio = cW / cH;
+      const videoRatio = vW / vH;
+
+      let sW, sH, sX, sY;
+      if (isShortsFormat) {
+        if (videoRatio > targetRatio) {
+          sH = vH;
+          sW = vH * targetRatio;
+          sX = (vW - sW) / 2;
+          sY = 0;
         } else {
-          throw new Error(data.error || "Process fail ho gaya");
+          sW = vW;
+          sH = vW / targetRatio;
+          sX = 0;
+          sY = (vH - sH) / 2;
         }
-      } catch (err) {
-        document.getElementById('statusTitle').innerText = "❌ Error: " + err.message;
-      } finally {
-        btn.disabled = false;
-        btn.innerText = "Auto Detect Best Clip & Make 9:16 Short 🚀";
+      } else {
+        sW = vW; sH = vH; sX = 0; sY = 0;
       }
+
+      // 2. Filters
+      const filter = document.getElementById('videoFilter').value;
+      if (filter === 'vibrant') ctx.filter = "saturate(1.4) contrast(1.15)";
+      else if (filter === 'cinematic') ctx.filter = "contrast(1.25) brightness(0.9) saturate(1.1)";
+      else if (filter === 'bw') ctx.filter = "grayscale(1)";
+      else ctx.filter = "none";
+
+      ctx.drawImage(video, sX, sY, sW, sH, 0, 0, cW, cH);
+      ctx.filter = "none";
+
+      // 3. Caption / Heading Overlay
+      const title = document.getElementById('overlayTitle').value.trim();
+      if (title) {
+        const color = document.getElementById('captionColor').value;
+        const pos = document.getElementById('captionPos').value;
+
+        ctx.font = "900 46px 'Plus Jakarta Sans', sans-serif";
+        ctx.textAlign = "center";
+
+        let posY = 140;
+        if (pos === 'center') posY = cH / 2;
+        else if (pos === 'bottom') posY = cH - 160;
+
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 12;
+        ctx.strokeStyle = "#000000";
+        ctx.strokeText(title, cW / 2, posY);
+
+        ctx.fillStyle = color;
+        ctx.fillText(title, cW / 2, posY);
+      }
+
+      document.getElementById('timeSeeker').value = video.currentTime;
+      requestAnimationFrame(drawFrame);
+    }
+
+    function togglePlay() {
+      if (video.paused) {
+        video.play();
+        document.getElementById('playPauseBtn').innerText = "❚❚ Pause";
+      } else {
+        video.pause();
+        document.getElementById('playPauseBtn').innerText = "▶ Play";
+      }
+    }
+
+    function seekVideo(val) {
+      video.currentTime = val;
+    }
+
+    function toggleShortsMode() {
+      isShortsFormat = !isShortsFormat;
+      const box = document.getElementById('playerBox');
+      const btn = document.getElementById('aspectBtn');
+      if (isShortsFormat) {
+        box.className = "w-full max-w-[250px] aspect-9-16 relative bg-slate-950 rounded-xl overflow-hidden border border-slate-800 shadow-2xl flex items-center justify-center";
+        btn.innerHTML = "📱 <span>Format: 9:16 Shorts</span>";
+      } else {
+        box.className = "w-full max-w-[480px] aspect-video relative bg-slate-950 rounded-xl overflow-hidden border border-slate-800 shadow-2xl flex items-center justify-center";
+        btn.innerHTML = "🖥 <span>Format: 16:9 Landscape</span>";
+      }
+    }
+
+    function exportProcessedClip() {
+      const expBtn = document.getElementById('exportBtn');
+      const status = document.getElementById('studioStatus');
+      const maxSec = parseInt(document.getElementById('exportLength').value) || 60;
+
+      expBtn.disabled = true;
+      status.innerText = `Recording 9:16 video (Max ${maxSec}s)...`;
+
+      recordedChunks = [];
+      video.currentTime = 0;
+      video.play();
+
+      const stream = canvas.captureStream(30);
+      mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+
+      mediaRecorder.ondataavailable = (e) => {
+        if (e.data.size > 0) recordedChunks.push(e.data);
+      };
+
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        const downloadUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = `Canva_Edited_Short_9_16.webm`;
+        a.click();
+        status.innerText = "✔ Video download ready!";
+        expBtn.disabled = false;
+      };
+
+      mediaRecorder.start();
+
+      setTimeout(() => {
+        if (mediaRecorder && mediaRecorder.state === 'recording') {
+          mediaRecorder.stop();
+        }
+      }, maxSec * 1000);
     }
   </script>
 
