@@ -57,7 +57,7 @@
 
     <div class="w-full max-w-2xl glass-card p-6 rounded-3xl shadow-2xl space-y-4">
       <div class="flex flex-col sm:flex-row gap-2.5">
-        <input type="text" id="videoLinkInput" placeholder="Paste YouTube link (https://youtu.be/...)" 
+        <input type="text" id="videoLinkInput" placeholder="Paste YouTube / Shorts link (https://youtu.be/...)" 
           class="flex-1 px-4 py-3.5 bg-slate-900 border border-slate-700 rounded-2xl text-xs sm:text-sm text-white focus:outline-none focus:border-purple-500 transition">
         <button onclick="handleLinkVerify()" id="verifyBtn" class="px-7 py-3.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-extrabold rounded-2xl shadow-lg transition whitespace-nowrap">
           Search Video 🚀
@@ -226,16 +226,16 @@
   </footer>
 
   <script>
-    // AAPKA VERIFIED ADSTERRA EARNING LINK
     const myAdsterraLink = "https://auctionr.org/4/70f11106665f7713ab7a16db030b626b";
 
     let chosenTemplate = 'mrbeast';
     let activePosterImage = "";
+    let detectedVideoTitle = "Viral Video Highlight";
 
     const generatedClips = [
       {
         id: 1,
-        title: "#1 Viral Opening Hook (High Engagement)",
+        hookName: "Opening Hook",
         score: "9.3",
         timeRange: "0:00 - 0:30",
         bgHue: 270,
@@ -250,7 +250,7 @@
       },
       {
         id: 2,
-        title: "#2 Climax Secret Reveal (Trending Soundbite)",
+        hookName: "Core Concept & Reveal",
         score: "9.0",
         timeRange: "0:30 - 1:00",
         bgHue: 210,
@@ -264,7 +264,7 @@
       },
       {
         id: 3,
-        title: "#3 Question & Explanation Punchline",
+        hookName: "Top Punchline Moment",
         score: "8.7",
         timeRange: "1:00 - 1:35",
         bgHue: 160,
@@ -277,7 +277,7 @@
       },
       {
         id: 4,
-        title: "#4 Final Call To Action & Summary",
+        hookName: "Action & Outro Climax",
         score: "8.5",
         timeRange: "1:35 - 2:05",
         bgHue: 330,
@@ -290,6 +290,15 @@
     ];
 
     let clipStates = {};
+
+    // ACCURATE YOUTUBE URL EXTRACTOR (Handles Shorts, Desktop, and Mobile Links)
+    function extractYouTubeID(url) {
+      if (!url) return null;
+      // Matches standard, shorts, embed, and mobile youtu.be links
+      const reg = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=|shorts\/)|youtu\.be\/)([^"&?\/\s]{11})/;
+      const match = url.match(reg);
+      return match ? match[1] : null;
+    }
 
     async function handleLinkVerify() {
       const url = document.getElementById('videoLinkInput').value.trim();
@@ -304,40 +313,63 @@
       }
 
       btn.disabled = true;
-      btn.innerText = "Searching...";
+      btn.innerText = "Searching Real Video...";
 
-      const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+      const videoId = extractYouTubeID(url);
 
-      if (!ytMatch) {
-        err.innerText = "❌ Valid YouTube link nahi mila. Niche se MP4 file chunein.";
+      if (!videoId) {
+        err.innerText = "❌ Galat link: Yeh valid YouTube link nahi hai. Kripya sahi video link dalein.";
         err.classList.remove('hidden');
         btn.disabled = false;
         btn.innerText = "Search Video 🚀";
         return;
       }
 
-      const videoId = ytMatch[1];
       try {
-        const res = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`);
+        // Direct official YouTube OEMBED check
+        const ytTarget = `https://www.youtube.com/watch?v=${videoId}`;
+        const res = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(ytTarget)}&format=json`);
+        
+        if (!res.ok) {
+          throw new Error("Video not reachable");
+        }
+
         const data = await res.json();
 
-        if (data && data.title) {
-          document.getElementById('videoTitleDisplay').innerText = data.title;
-          document.getElementById('videoAuthorDisplay').innerText = data.author_name || "Verified Creator";
-          activePosterImage = data.thumbnail_url || `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+        detectedVideoTitle = data.title || "YouTube Video";
+        document.getElementById('videoTitleDisplay').innerText = detectedVideoTitle;
+        document.getElementById('videoAuthorDisplay').innerText = data.author_name || "Verified Creator";
+
+        // Accurate High-Res YouTube Thumbnail
+        activePosterImage = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+        document.getElementById('realThumbImg').src = activePosterImage;
+
+        btn.disabled = false;
+        btn.innerText = "Search Video 🚀";
+        goToScreen(1);
+
+      } catch (e) {
+        // Fallback fetch via public CORS gateway if direct oembed fails
+        try {
+          const fb = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=' + videoId + '&format=json')}`);
+          const fbJson = await fb.json();
+          const pData = JSON.parse(fbJson.contents);
+
+          detectedVideoTitle = pData.title || "YouTube Video";
+          document.getElementById('videoTitleDisplay').innerText = detectedVideoTitle;
+          document.getElementById('videoAuthorDisplay').innerText = pData.author_name || "Verified Creator";
+          activePosterImage = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
           document.getElementById('realThumbImg').src = activePosterImage;
 
           btn.disabled = false;
           btn.innerText = "Search Video 🚀";
           goToScreen(1);
-        } else {
-          throw new Error();
+        } catch (errFallback) {
+          err.innerText = "❌ Video nahi mili: Yeh video YouTube par private hai ya maujood nahi hai.";
+          err.classList.remove('hidden');
+          btn.disabled = false;
+          btn.innerText = "Search Video 🚀";
         }
-      } catch (e) {
-        err.innerText = "❌ Video search failed. Niche diye button se file select karein.";
-        err.classList.remove('hidden');
-        btn.disabled = false;
-        btn.innerText = "Search Video 🚀";
       }
     }
 
@@ -345,7 +377,8 @@
       const file = event.target.files[0];
       if (!file) return;
 
-      document.getElementById('videoTitleDisplay').innerText = file.name;
+      detectedVideoTitle = file.name.replace(/\.[^/.]+$/, "");
+      document.getElementById('videoTitleDisplay').innerText = detectedVideoTitle;
       document.getElementById('videoAuthorDisplay').innerText = "Direct Device File (MP4)";
       activePosterImage = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=200&q=80";
       document.getElementById('realThumbImg').src = activePosterImage;
@@ -407,6 +440,9 @@
         clipStates[clip.id].posterImg.crossOrigin = "anonymous";
         if (activePosterImage) clipStates[clip.id].posterImg.src = activePosterImage;
 
+        // Accurate Clip Title dynamically reflecting actual video searched
+        const clipDynamicTitle = `#${clip.id} ${clip.hookName} — ${detectedVideoTitle.slice(0, 32)}...`;
+
         const card = document.createElement('div');
         card.className = "glass-card rounded-3xl p-6 shadow-2xl flex flex-col md:flex-row gap-6 items-center text-left";
         card.innerHTML = `
@@ -422,7 +458,7 @@
           <div class="flex-1 space-y-4 w-full">
             <div class="flex items-center justify-between">
               <div>
-                <h3 class="font-extrabold text-base text-white">${clip.title}</h3>
+                <h3 class="font-extrabold text-base text-white">${clipDynamicTitle}</h3>
                 <p class="text-xs text-purple-400">Virality Rating: ${clip.score}/10 &bull; 9:16 Vertical Center</p>
               </div>
               <span class="text-xl font-black text-purple-400 bg-purple-950/60 border border-purple-500/40 px-3 py-1 rounded-xl">${clip.score}</span>
@@ -603,7 +639,6 @@
       drawClipFrame(clipId);
     }
 
-    // DIRECT ADSTERRA MONETIZATION + MP4 DOWNLOAD
     function downloadSpecificClip(clipId) {
       const canvas = document.getElementById(`canvas_${clipId}`);
       const dlBtn = document.getElementById(`dlBtn_${clipId}`);
@@ -612,12 +647,10 @@
       dlBtn.disabled = true;
       dlBtn.innerText = "Starting Download...";
 
-      // 1. OPEN ADSTERRA LINK IN NEW TAB FOR DIRECT MONETIZATION
       if (myAdsterraLink) {
         window.open(myAdsterraLink, '_blank');
       }
 
-      // 2. RENDER AND EXPORT MP4 FILE TO USER
       state.playing = true;
       document.getElementById(`centerPlay_${clipId}`).classList.add('hidden');
       document.getElementById(`btnPlay_${clipId}`).innerText = "❚❚ Pause Clip";
@@ -660,7 +693,6 @@
     }
 
     function downloadAllGeneratedClips() {
-      // Open Adsterra once for batch download
       if (myAdsterraLink) {
         window.open(myAdsterraLink, '_blank');
       }
