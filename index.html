@@ -3,207 +3,250 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vashu Digital Store - Instant UPI Assets</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <title>Academic Text to MS Word (.docx) Converter</title>
+  <!-- docx library for generating genuine .docx files in browser -->
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.min.js"></script>
   <style>
-    * { font-family: 'Plus Jakarta Sans', sans-serif; }
-    ::-webkit-scrollbar { width: 0px; }
-    .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(14px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #f4f6f9;
+      color: #333;
+      padding: 24px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+    h1 {
+      font-size: 24px;
+      color: #1a365d;
+      margin-bottom: 8px;
+    }
+    p.sub {
+      font-size: 14px;
+      color: #64748b;
+      margin-bottom: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 380px;
+      padding: 14px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 6px;
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 13px;
+      line-height: 1.5;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    textarea:focus {
+      border-color: #2563eb;
+    }
+    .options {
+      margin: 15px 0 20px 0;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .options label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #1d4ed8;
+    }
+    .footer-note {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #94a3b8;
+    }
   </style>
 </head>
-<body class="bg-[#0B0F19] text-slate-100 min-h-screen flex flex-col justify-between selection:bg-purple-600 selection:text-white">
+<body>
 
-  <!-- TOP HEADER -->
-  <header class="h-16 bg-slate-900/90 border-b border-slate-800 px-4 sm:px-8 flex items-center justify-between sticky top-0 z-40 backdrop-blur">
-    <div class="flex items-center gap-3">
-      <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-purple-600 via-indigo-600 to-cyan-400 flex items-center justify-center font-black text-white text-lg shadow-lg shadow-purple-500/30">V</div>
-      <span class="font-black text-sm tracking-wide text-white">VASHU <span class="text-purple-400 font-extrabold">DIGITAL</span></span>
-    </div>
-    <div class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold flex items-center gap-1.5">
-      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-      Instant Download Active
-    </div>
-  </header>
+<div class="container">
+  <h1>Academic Paper to MS Word (.docx)</h1>
+  <p class="sub">Yahan text paste karein. Yeh references ke numbers aur clean headings auto-format karke clean Word doc dega.</p>
 
-  <!-- STORE HERO -->
-  <main class="max-w-4xl w-full mx-auto px-4 py-8 space-y-8 flex-1">
-    
-    <div class="text-center space-y-3">
-      <span class="px-3 py-1 rounded-full bg-purple-950/60 border border-purple-500/40 text-purple-300 text-xs font-black">
-        ⚡ DIRECT UPI SCAN &bull; 0% COMMISSION
-      </span>
-      <h1 class="text-3xl sm:text-5xl font-black text-white leading-tight">
-        Trending Creator Assets &amp; <br>
-        <span class="bg-gradient-to-r from-purple-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent">Business Spreadsheets</span>
-      </h1>
-      <p class="text-slate-400 text-xs sm:text-sm max-w-lg mx-auto">
-        PhonePe, Google Pay ya Paytm se scan karke download karein. Instant Drive access bina kisi third-party registration ke.
-      </p>
-    </div>
+  <textarea id="rawText" placeholder="Paste your complete paper content here..."></textarea>
 
-    <!-- DIGITAL PRODUCTS GRID -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
-      
-      <!-- Product 1 -->
-      <div class="glass-card rounded-3xl p-4 flex flex-col justify-between space-y-4 border border-slate-800 hover:border-purple-500/50 transition">
-        <div class="space-y-3">
-          <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=500&q=80" alt="Viral Subtitle Pack" class="w-full h-36 object-cover rounded-2xl border border-slate-700/60">
-          <div>
-            <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-purple-500/20 text-purple-300">CapCut / Premiere</span>
-            <h3 class="font-extrabold text-sm text-white mt-1.5">50+ Viral Subtitle Presets Pack</h3>
-            <p class="text-xs text-slate-400 mt-1">MrBeast &amp; Hormozi style animated caption presets + sound effects.</p>
-          </div>
-        </div>
-        <div class="pt-2 border-t border-slate-800 flex items-center justify-between">
-          <div>
-            <span class="text-xs text-slate-500 line-through">₹299</span>
-            <p class="text-lg font-black text-emerald-400">₹49</p>
-          </div>
-          <button onclick="openPayment('50+ Viral Subtitle Presets Pack', '49', 'https://drive.google.com')" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-extrabold text-xs rounded-xl shadow-lg transition">
-            Buy Now ⚡
-          </button>
-        </div>
-      </div>
-
-      <!-- Product 2 -->
-      <div class="glass-card rounded-3xl p-4 flex flex-col justify-between space-y-4 border border-slate-800 hover:border-indigo-500/50 transition">
-        <div class="space-y-3">
-          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80" alt="Fonts Bundle" class="w-full h-36 object-cover rounded-2xl border border-slate-700/60">
-          <div>
-            <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300">Thumbnail Design</span>
-            <h3 class="font-extrabold text-sm text-white mt-1.5">120+ High CTR Viral Fonts Bundle</h3>
-            <p class="text-xs text-slate-400 mt-1">Hindi + English bold fonts jo YouTube thumbnails par sabse zyada click late hain.</p>
-          </div>
-        </div>
-        <div class="pt-2 border-t border-slate-800 flex items-center justify-between">
-          <div>
-            <span class="text-xs text-slate-500 line-through">₹199</span>
-            <p class="text-lg font-black text-emerald-400">₹49</p>
-          </div>
-          <button onclick="openPayment('120+ High CTR Fonts Bundle', '49', 'https://drive.google.com')" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-extrabold text-xs rounded-xl shadow-lg transition">
-            Buy Now ⚡
-          </button>
-        </div>
-      </div>
-
-      <!-- Product 3 -->
-      <div class="glass-card rounded-3xl p-4 flex flex-col justify-between space-y-4 border border-slate-800 hover:border-cyan-500/50 transition">
-        <div class="space-y-3">
-          <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=500&q=80" alt="Excel Ledger Sheet" class="w-full h-36 object-cover rounded-2xl border border-slate-700/60">
-          <div>
-            <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300">Shop / Business</span>
-            <h3 class="font-extrabold text-sm text-white mt-1.5">Auto Business Income-Expense Tracker</h3>
-            <p class="text-xs text-slate-400 mt-1">Ready-to-use Excel / Sheets model daily sale, stock aur profit calculation ke liye.</p>
-          </div>
-        </div>
-        <div class="pt-2 border-t border-slate-800 flex items-center justify-between">
-          <div>
-            <span class="text-xs text-slate-500 line-through">₹499</span>
-            <p class="text-lg font-black text-emerald-400">₹99</p>
-          </div>
-          <button onclick="openPayment('Auto Business Ledger Model', '99', 'https://drive.google.com')" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-extrabold text-xs rounded-xl shadow-lg transition">
-            Buy Now ⚡
-          </button>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- TRUST / HOW IT WORKS BANNER -->
-    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-      <div class="space-y-1">
-        <span class="text-xl">📲</span>
-        <h4 class="font-black text-xs text-white">1. Scan QR Code</h4>
-        <p class="text-[11px] text-slate-400">Any UPI app (PhonePe, GPay, Paytm)</p>
-      </div>
-      <div class="space-y-1">
-        <span class="text-xl">⚡</span>
-        <h4 class="font-black text-xs text-white">2. Automatic Download</h4>
-        <p class="text-[11px] text-slate-400">Direct Google Drive ZIP file link</p>
-      </div>
-      <div class="space-y-1">
-        <span class="text-xl">🔒</span>
-        <h4 class="font-black text-xs text-white">3. Lifetime Access</h4>
-        <p class="text-[11px] text-slate-400">Use on mobile or computer anytime</p>
-      </div>
-    </div>
-
-  </main>
-
-  <!-- UPI PAYMENT MODAL (POPUP) -->
-  <div id="paymentModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="glass-card rounded-3xl max-w-sm w-full p-6 space-y-4 text-center border border-slate-700 shadow-2xl relative">
-      <button onclick="closePayment()" class="absolute top-4 right-4 text-slate-400 hover:text-white font-bold text-sm">✕</button>
-
-      <div>
-        <span class="text-[10px] font-black tracking-widest text-purple-400 uppercase">Scan &bull; Pay &bull; Download</span>
-        <h3 class="font-black text-sm text-white mt-1" id="payTitle">Asset Pack</h3>
-        <p class="text-3xl font-black text-emerald-400 mt-0.5" id="payAmount">₹49</p>
-      </div>
-
-      <!-- LIVE DYNAMIC UPI QR CODE -->
-      <div class="flex justify-center bg-white p-3.5 rounded-2xl shadow-inner max-w-[200px] mx-auto">
-        <img id="qrDisplay" src="" alt="UPI QR Code" class="w-44 h-44">
-      </div>
-
-      <div class="text-[11px] text-slate-300 space-y-1 bg-slate-900/80 p-2.5 rounded-xl border border-slate-800">
-        <p>UPI ID: <span class="font-bold text-purple-300" id="displayUpiId">vashumehra@upi</span></p>
-        <p class="text-slate-400 text-[10px]">Payment confirm hote hi niche diya button dabayein:</p>
-      </div>
-
-      <div class="space-y-2">
-        <button onclick="triggerFileDownload()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-2">
-          <span>Payment Ho Gaya &bull; Download File</span> 📥
-        </button>
-        <button onclick="closePayment()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-400 font-bold text-xs rounded-xl">
-          Cancel
-        </button>
-      </div>
-    </div>
+  <div class="options">
+    <label>
+      <input type="checkbox" id="cleanRefHeading" checked> 
+      References heading ka number hatayein (e.g., '12. References' -> 'References')
+    </label>
+    <label>
+      <input type="checkbox" id="cleanRefEntries" checked> 
+      Reference list ke numbers hatayein (e.g., '1. Altieri...' -> 'Altieri...')
+    </label>
   </div>
 
-  <footer class="h-12 border-t border-slate-800 px-6 flex items-center justify-between text-xs text-slate-500 bg-slate-900">
-    <span>Vashu Digital Store &bull; Direct Creator Assets</span>
-    <span>UPI Powered &bull; 0% Platform Fees</span>
-  </footer>
+  <button onclick="generateWordDocument()">Convert & Download DOCX</button>
+  <p class="footer-note">Standard Academic Layout: Times New Roman, 12pt body, bold numbered section headers, unnumbered references.</p>
+</div>
 
-  <script>
-    // ========================================================
-    // 1. APNA PHONEPE / GPAY UPI ID YAHAN DALEIN:
-    // ========================================================
-    const myUpiId = "vashumehra@okaxis"; // Apna real UPI ID daal dein (e.g. mobile@ybl)
-
-    let currentDownloadUrl = "https://drive.google.com";
-
-    function openPayment(title, price, driveUrl) {
-      currentDownloadUrl = driveUrl;
-      document.getElementById('payTitle').innerText = title;
-      document.getElementById('payAmount').innerText = `₹${price}`;
-      document.getElementById('displayUpiId').innerText = myUpiId;
-
-      // Real UPI Intent String for Indian UPI Apps
-      const upiPayload = `upi://pay?pa=${myUpiId}&pn=VashuDigitalStore&am=${price}&cu=INR&tn=${encodeURIComponent(title.slice(0, 20))}`;
-      
-      // Dynamic QR Generator via Standard API
-      const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiPayload)}`;
-      document.getElementById('qrDisplay').src = qrApiUrl;
-
-      document.getElementById('paymentModal').classList.remove('hidden');
+<script>
+  function generateWordDocument() {
+    const rawText = document.getElementById('rawText').value.trim();
+    if (!rawText) {
+      alert("Kripya pehle text paste karein!");
+      return;
     }
 
-    function closePayment() {
-      document.getElementById('paymentModal').classList.add('hidden');
+    const removeRefHeadingNum = document.getElementById('cleanRefHeading').checked;
+    const removeRefEntriesNum = document.getElementById('cleanRefEntries').checked;
+
+    const lines = rawText.split('\n');
+    const docParagraphs = [];
+    let isReferenceSection = false;
+
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i].trim();
+      if (!line) continue;
+
+      // 1. Reference heading detect karna aur number hatana
+      if (/^(\d+\.?\s*)?References\b/i.test(line)) {
+        isReferenceSection = true;
+        let headingText = line;
+        if (removeRefHeadingNum) {
+          headingText = line.replace(/^\d+[\.\)]?\s*/, ''); // '12. References' -> 'References'
+        }
+        docParagraphs.push(new docx.Paragraph({
+          children: [new docx.TextRun({ text: headingText, bold: true, size: 26, font: "Times New Roman" })],
+          spacing: { before: 240, after: 120 }
+        }));
+        continue;
+      }
+
+      // 2. Reference section ke andar unnumbered format banana
+      if (isReferenceSection) {
+        let entry = line;
+        if (removeRefEntriesNum) {
+          entry = line.replace(/^\d+[\.\)]?\s*/, ''); // '1. Altieri...' -> 'Altieri...'
+        }
+        // Web aggregator tags clean karna (jaise 'Wiley Online Library+1')
+        entry = entry.replace(/\s*(Wiley Online Library|Indian Journals|Knowledge4Policy|K4P)\+?\d*/gi, '');
+        
+        docParagraphs.push(new docx.Paragraph({
+          children: [new docx.TextRun({ text: entry, size: 22, font: "Times New Roman" })],
+          spacing: { after: 100 }
+        }));
+        continue;
+      }
+
+      // 3. Document Title (Pehli line)
+      if (i === 0 && !/^\d+\./.test(line)) {
+        docParagraphs.push(new docx.Paragraph({
+          children: [new docx.TextRun({ text: line, bold: true, size: 32, font: "Times New Roman" })],
+          alignment: docx.AlignmentType.CENTER,
+          spacing: { after: 180 }
+        }));
+        continue;
+      }
+
+      // 4. Main Headings (e.g., '1. Introduction', '2. Objectives of the Study')
+      if (/^\d+\.\s+[A-Z]/.test(line)) {
+        docParagraphs.push(new docx.Paragraph({
+          children: [new docx.TextRun({ text: line, bold: true, size: 26, font: "Times New Roman" })],
+          spacing: { before: 220, after: 100 }
+        }));
+        continue;
+      }
+
+      // 5. Sub-Headings (e.g., '2.1 To Examine...', '3.1 Integrated...')
+      if (/^\d+\.\d+\s+/.test(line)) {
+        docParagraphs.push(new docx.Paragraph({
+          children: [new docx.TextRun({ text: line, bold: true, size: 24, font: "Times New Roman" })],
+          spacing: { before: 160, after: 80 }
+        }));
+        continue;
+      }
+
+      // 6. Abstract, Keywords, Author Details block
+      if (/^(Abstract|Keywords:|Author Details|Designation|Department)/i.test(line)) {
+        docParagraphs.push(new docx.Paragraph({
+          children: [new docx.TextRun({ text: line, bold: true, size: 22, font: "Times New Roman" })],
+          spacing: { before: 100, after: 60 }
+        }));
+        continue;
+      }
+
+      // 7. Bullet Points
+      if (/^[\-\•\*]\s+/.test(line)) {
+        let cleanBullet = line.replace(/^[\-\•\*]\s+/, '');
+        docParagraphs.push(new docx.Paragraph({
+          text: cleanBullet,
+          bullet: { level: 0 },
+          spacing: { after: 60 }
+        }));
+        continue;
+      }
+
+      // 8. Normal Body Text (inline badges clean karte hue)
+      let cleanBody = line.replace(/\s*(Wiley Online Library|Indian Journals|Knowledge4Policy|K4P)\+?\d*/gi, '');
+      docParagraphs.push(new docx.Paragraph({
+        children: [new docx.TextRun({ text: cleanBody, size: 22, font: "Times New Roman" })],
+        spacing: { after: 140 },
+        alignment: docx.AlignmentType.JUSTIFIED
+      }));
     }
 
-    function triggerFileDownload() {
-      // Direct user to your product's Google Drive Link
-      window.open(currentDownloadUrl, '_blank');
-      closePayment();
-    }
-  </script>
+    // DOCX file generate and download
+    const doc = new docx.Document({
+      sections: [{
+        properties: {
+          page: {
+            margin: {
+              top: 1440,    // 1 inch
+              right: 1440,
+              bottom: 1440,
+              left: 1440
+            }
+          }
+        },
+        children: docParagraphs
+      }]
+    });
+
+    docx.Packer.toBlob(doc).then(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Research_Paper.docx';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  }
+</script>
 
 </body>
 </html>
