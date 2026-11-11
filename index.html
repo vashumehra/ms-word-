@@ -1,550 +1,274 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Academic Paper to Word (.docx) Converter</title>
-  
-  <!-- Tailwind CSS via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- docx.js for genuine browser-side .docx generation -->
+  <title>Academic Paper Formatter to DOCX</title>
+  <!-- docx library for direct browser-side docx generation -->
   <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.min.js"></script>
-
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap');
-    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     body {
-      font-family: 'Inter', sans-serif;
-    }
-    
-    .academic-preview {
-      font-family: 'Merriweather', 'Times New Roman', serif;
-    }
-    
-    /* Custom scrollbar for clean editor feel */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: #f1f5f9;
+      color: #1e293b;
+      padding: 24px;
     }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 9999px;
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 32px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
+    h1 {
+      font-size: 22px;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+    p.desc {
+      font-size: 14px;
+      color: #64748b;
+      margin-bottom: 18px;
+    }
+    textarea {
+      width: 100%;
+      height: 380px;
+      padding: 14px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 13px;
+      line-height: 1.5;
+      outline: none;
+      resize: vertical;
+    }
+    textarea:focus {
+      border-color: #2563eb;
+    }
+    .actions {
+      margin-top: 18px;
+      display: flex;
+      justify-content: flex-end;
+    }
+    button {
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #1d4ed8;
+    }
+    .rules-list {
+      margin-top: 20px;
+      padding: 14px 18px;
+      background: #f8fafc;
+      border-left: 4px solid #2563eb;
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.6;
     }
   </style>
 </head>
-<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
+<body>
 
-  <!-- Header -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xl shadow">
-          W
-        </div>
-        <div>
-          <h1 class="text-lg font-bold text-slate-900 leading-tight">Academic Paper to Word (.docx)</h1>
-          <p class="text-xs text-slate-500">Auto-clean references, aggregator tags & export formal format</p>
-        </div>
-      </div>
-      
-      <!-- Primary Action Button -->
-      <div class="flex items-center space-x-3">
-        <button 
-          id="btnDownload" 
-          onclick="generateDocx()"
-          class="bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-medium px-4 py-2 rounded-lg text-sm transition-all duration-150 flex items-center gap-2 shadow-sm hover:shadow"
-        >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-          </svg>
-          <span>Download Word (.docx)</span>
-        </button>
-      </div>
-    </div>
-  </header>
+<div class="container">
+  <h1>Academic Paper to Clean Word (.docx)</h1>
+  <p class="desc">Text paste karein. Yeh heading se number hatayega, references me numbering banaye rakhega, aur author details ko clean center format me convert karega.</p>
 
-  <!-- Notification Banner -->
-  <div id="statusToast" class="fixed bottom-6 right-6 z-50 transform transition-all duration-300 translate-y-24 opacity-0 pointer-events-none">
-    <div class="bg-slate-900 text-white px-5 py-3 rounded-xl shadow-xl flex items-center gap-3 text-sm">
-      <span id="toastIcon"></span>
-      <span id="toastMessage">File created successfully</span>
-    </div>
+  <textarea id="rawText" placeholder="Paste full paper text here..."></textarea>
+
+  <div class="actions">
+    <button onclick="convertAndDownload()">Convert & Download DOCX</button>
   </div>
 
-  <!-- Main Workspace -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full flex flex-col gap-6">
+  <div class="rules-list">
+    <strong>Auto Clean Rules:</strong>
+    <ul style="margin-left: 20px; margin-top: 6px;">
+      <li>Title aur Author Details center align rahenge bina labels aur brackets ke.</li>
+      <li>References heading ka number hataya jayega (e.g., <strong>References</strong>).</li>
+      <li>References ke har point par number barkarar rahega (e.g., <strong>1. Altieri...</strong>).</li>
+      <li>Online library tags (Wiley Online Library, Indian Journals aadi) auto-clean honge.</li>
+    </ul>
+  </div>
+</div>
 
-    <!-- Controls & Setting Bar -->
-    <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
-      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-        <div>
-          <h2 class="text-sm font-semibold text-slate-900 uppercase tracking-wider">Formatting & Cleanup Rules</h2>
-          <p class="text-xs text-slate-500 mt-0.5">Customise how references and text artifacts are restructured for Word</p>
-        </div>
-        
-        <div class="flex flex-wrap items-center gap-y-2 gap-x-5 text-sm">
-          <label class="inline-flex items-center cursor-pointer select-none">
-            <input type="checkbox" id="chkCleanRefHeading" checked onchange="updateLivePreview()" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500">
-            <span class="ml-2 text-slate-700 font-medium">Remove Ref Heading Number <span class="text-xs text-slate-400 font-normal">('12. References' &rarr; 'References')</span></span>
-          </label>
+<script>
+  function cleanLineArtifacts(str) {
+    return str
+      .replace(/\s*(Wiley Online Library|Indian Journals|Knowledge4Policy|K4P)\+?\d*/gi, '')
+      .trim();
+  }
 
-          <label class="inline-flex items-center cursor-pointer select-none">
-            <input type="checkbox" id="chkCleanRefEntries" checked onchange="updateLivePreview()" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500">
-            <span class="ml-2 text-slate-700 font-medium">Remove Ref Numbers <span class="text-xs text-slate-400 font-normal">('1. Altieri...' &rarr; 'Altieri...')</span></span>
-          </label>
+  function cleanAuthorLine(str) {
+    // Labels hatana (Author:, Designation:, Department:, Institution:, Country:)
+    let cleaned = str.replace(/^(Author|Designation|Department|Institution|Country)\s*:\s*/i, '');
+    // Brackets aur unke andar ka text hatana (e.g. (Fictional), (Illustrative))
+    cleaned = cleaned.replace(/\s*\([^)]*\)/g, '');
+    return cleaned.trim();
+  }
 
-          <label class="inline-flex items-center cursor-pointer select-none">
-            <input type="checkbox" id="chkCleanBadges" checked onchange="updateLivePreview()" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500">
-            <span class="ml-2 text-slate-700 font-medium">Strip Source Badges <span class="text-xs text-slate-400 font-normal">('Wiley Online+1', 'Indian Journals+1')</span></span>
-          </label>
+  function convertAndDownload() {
+    const raw = document.getElementById('rawText').value.trim();
+    if (!raw) {
+      alert("Pehle text paste karein!");
+      return;
+    }
 
-          <button 
-            type="button" 
-            onclick="loadSampleData()" 
-            class="text-xs text-blue-600 hover:text-blue-800 underline font-medium ml-auto"
-          >
-            Load Sample Academic Paper
-          </button>
-        </div>
-      </div>
-    </div>
+    const lines = raw.split('\n');
+    const docParagraphs = [];
+    let isReferences = false;
+    let authorBlockFinished = false;
 
-    <!-- Dual Column Interface: Raw Input & Academic Live Preview -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 items-stretch">
-      
-      <!-- Left Column: Raw Text Area -->
-      <div class="flex flex-col bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-        <div class="px-4 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-            <span class="text-xs font-semibold text-slate-700 uppercase tracking-wider">Paste Text Here</span>
-          </div>
-          <button 
-            onclick="clearInput()" 
-            class="text-xs text-slate-500 hover:text-red-600 transition-colors"
-          >
-            Clear Text
-          </button>
-        </div>
-        <div class="p-4 flex-1 flex flex-col">
-          <textarea 
-            id="inputText" 
-            oninput="updateLivePreview()"
-            placeholder="Paste your raw academic text here..."
-            class="w-full flex-1 min-h-[460px] p-3 border border-slate-200 rounded-lg font-mono text-xs text-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none leading-relaxed"
-          ></textarea>
-        </div>
-      </div>
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i].trim();
+      if (!line) continue;
 
-      <!-- Right Column: Document Preview -->
-      <div class="flex flex-col bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-        <div class="px-4 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-            <span class="text-xs font-semibold text-slate-700 uppercase tracking-wider">Formatted Document Preview</span>
-          </div>
-          <span class="text-xs text-slate-400">Times New Roman Layout Preview</span>
-        </div>
-        
-        <div class="p-6 flex-1 overflow-y-auto max-h-[580px] bg-slate-50/50">
-          <!-- Printable / Formal Page Canvas -->
-          <div id="previewArea" class="academic-preview bg-white shadow-sm border border-slate-200 rounded-md p-8 text-slate-900 text-sm leading-relaxed min-h-full">
-            <!-- Dynamic elements will be inserted here -->
-            <p class="text-slate-400 italic text-center py-20">Type or paste text in the left panel to preview formatted output.</p>
-          </div>
-        </div>
-      </div>
+      // 1. "Author Details" heading ko poori tarah chhod dena
+      if (/^Author Details\b/i.test(line)) {
+        continue;
+      }
 
-    </div>
-  </main>
+      // 2. References Heading Check (Heading se number hatana)
+      if (/^(\d+\.?\s*)?References\b/i.test(line)) {
+        isReferences = true;
+        authorBlockFinished = true;
+        docParagraphs.push(new docx.Paragraph({
+          children: [new docx.TextRun({ text: "References", bold: true, size: 26, font: "Times New Roman" })],
+          spacing: { before: 240, after: 120 }
+        }));
+        continue;
+      }
 
-  <footer class="bg-white border-t border-slate-200 py-4 mt-auto">
-    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
-      100% Client-Side DOCX Engine &bull; No documents or text are uploaded to any server.
-    </div>
-  </footer>
+      // 3. References List Section (Numbering barkarar rakhna)
+      if (isReferences) {
+        let cleanRef = cleanLineArtifacts(line);
+        docParagraphs.push(new docx.Paragraph({
+          children: [new docx.TextRun({ text: cleanRef, size: 22, font: "Times New Roman" })],
+          spacing: { after: 100 }
+        }));
+        continue;
+      }
 
-  <script>
-    // Sample pre-loaded academic paper matching user's structure
-    const samplePaper = `The Contribution of Integrated Farming Systems to Sustainable Rural Livelihoods
-Dr. Elena R. Fischer
-Research Associate
-European Centre for Sustainable Farming Studies
+      // 4. Abstract se pehle ka hissa (Title + Clean Author Block)
+      if (!authorBlockFinished) {
+        if (/^Abstract\b/i.test(line)) {
+          authorBlockFinished = true;
+          docParagraphs.push(new docx.Paragraph({
+            children: [new docx.TextRun({ text: "Abstract", bold: true, size: 24, font: "Times New Roman" })],
+            spacing: { before: 200, after: 80 }
+          }));
+          continue;
+        }
 
-Abstract
-Integrated farming systems (IFS) offer an approach to rural development by combining complementary agricultural activities within a coordinated production system. Crop cultivation, livestock rearing, horticulture, aquaculture, agroforestry, and other farm enterprises can be linked to improve resource use, diversify income, and strengthen household resilience. This paper examines the contribution of integrated farming systems to sustainable rural livelihoods, with particular attention to economic stability, food security, environmental management, and employment generation.
+        // Title (Pehli line)
+        if (docParagraphs.length === 0) {
+          docParagraphs.push(new docx.Paragraph({
+            children: [new docx.TextRun({ text: line, bold: true, size: 30, font: "Times New Roman" })],
+            alignment: docx.AlignmentType.CENTER,
+            spacing: { after: 200 }
+          }));
+          continue;
+        }
 
-Keywords: Integrated Farming Systems, Sustainable Rural Livelihoods, Agricultural Diversification, Farm Income, Resource Recycling, Rural Development, Food Security
+        // Author Details (Clean, center-aligned, bina label aur bina brackets ke)
+        let cleanedAuthor = cleanAuthorLine(line);
+        if (cleanedAuthor) {
+          docParagraphs.push(new docx.Paragraph({
+            children: [new docx.TextRun({ text: cleanedAuthor, size: 22, font: "Times New Roman" })],
+            alignment: docx.AlignmentType.CENTER,
+            spacing: { after: 60 }
+          }));
+        }
+        continue;
+      }
 
-1. Introduction
-Agriculture remains a major source of employment, income, and food security in rural communities. However, many farming households depend on a limited number of crops or agricultural activities, making their livelihoods vulnerable to changing weather conditions, fluctuating market prices, rising production costs, and declining natural resources. These challenges are particularly significant for small and marginal farmers, whose limited land, capital, and access to technology restrict their ability to absorb economic and environmental shocks.
+      // 5. Main Headings (e.g., 1. Introduction, 2. Objectives)
+      if (/^\d+\.\s+[A-Z]/.test(line)) {
+        docParagraphs.push(new docx.Paragraph({
+          children: [new docx.TextRun({ text: line, bold: true, size: 26, font: "Times New Roman" })],
+          spacing: { before: 220, after: 100 }
+        }));
+        continue;
+      }
 
-Crop residues can provide animal feed, livestock manure can contribute to soil fertility, and farm ponds can support fish production while supplying water for selected agricultural activities. Wiley Online Library+1
+      // 6. Sub Headings (e.g., 2.1, 3.1)
+      if (/^\d+\.\d+\s+/.test(line)) {
+        docParagraphs.push(new docx.Paragraph({
+          children: [new docx.TextRun({ text: line, bold: true, size: 24, font: "Times New Roman" })],
+          spacing: { before: 160, after: 80 }
+        }));
+        continue;
+      }
 
-2. Objectives of the Study
-This study examines the relationship between integrated farming systems and sustainable rural livelihoods. It focuses on how diversified farm enterprises contribute to household income, food availability, employment, and environmental management.
+      // 7. Keywords line
+      if (/^Keywords:/i.test(line)) {
+        docParagraphs.push(new docx.Paragraph({
+          children: [new docx.TextRun({ text: line, bold: true, size: 22, font: "Times New Roman" })],
+          spacing: { before: 100, after: 140 }
+        }));
+        continue;
+      }
 
-2.1 To Understand the Role in Food Security and Employment
-The second objective is to examine the contribution of integrated farming to household nutrition and rural employment:
-- Examine the contribution of diversified farm production to household food availability.
-- Identify employment opportunities created through complementary farm enterprises.
-- Consider the participation of women and rural youth in farm-based activities.
-- Assess the relationship between production diversity and household livelihood resilience.
+      // 8. Bullet points
+      if (/^[\-\•\*]\s+/.test(line)) {
+        let cleanBullet = line.replace(/^[\-\•\*]\s+/, '');
+        docParagraphs.push(new docx.Paragraph({
+          text: cleanLineArtifacts(cleanBullet),
+          bullet: { level: 0 },
+          spacing: { after: 60 }
+        }));
+        continue;
+      }
 
-12. References
-1. Altieri, M. A. (1999). The ecological role of biodiversity in agroecosystems. Agriculture, Ecosystems & Environment, 74(1–3), 19–31.
-2. Bhagat, R., Walia, S. S., Sharma, K., Singh, R., Singh, G., & Hossain, A. (2024). The integrated farming system is an environmentally friendly and cost-effective approach to the sustainability of agri-food systems in the modern era of the changing climate: A comprehensive review. Food and Energy Security, 13(1), e534. https://doi.org/10.1002/fes3.534
-3. Bonaudo, T., Bendahan, A. B., Sabatier, R., Ryschawy, J., Bellon, S., Leger, F., Magda, D., & Tichit, M. (2014). Agroecological principles for the redesign of integrated crop-livestock systems. European Journal of Agronomy, 57, 43–51.
-4. Meena, L. R., Kochewad, S. A., Kumar, D., Malik, S., Meena, S. R., & Anjali. (2024). Development of sustainable integrated farming systems for small and marginal farmers and ecosystem services: A comprehensive review. Agricultural Science Digest, 44(3), 391–397. Indian Journals+1`;
+      // 9. Normal Body Paragraphs
+      docParagraphs.push(new docx.Paragraph({
+        children: [new docx.TextRun({ text: cleanLineArtifacts(line), size: 22, font: "Times New Roman" })],
+        spacing: { after: 140 },
+        alignment: docx.AlignmentType.JUSTIFIED
+      }));
+    }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('inputText').value = samplePaper;
-      updateLivePreview();
+    // Build genuine .docx File
+    const doc = new docx.Document({
+      sections: [{
+        properties: {
+          page: {
+            margin: {
+              top: 1440,
+              right: 1440,
+              bottom: 1440,
+              left: 1440
+            }
+          }
+        },
+        children: docParagraphs
+      }]
     });
 
-    function loadSampleData() {
-      document.getElementById('inputText').value = samplePaper;
-      updateLivePreview();
-      showToast("Sample text loaded successfully!");
-    }
+    docx.Packer.toBlob(doc).then(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Formatted_Paper.docx';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  }
+</script>
 
-    function clearInput() {
-      document.getElementById('inputText').value = "";
-      updateLivePreview();
-    }
-
-    function showToast(message, isError = false) {
-      const toast = document.getElementById('statusToast');
-      const msg = document.getElementById('toastMessage');
-      const icon = document.getElementById('toastIcon');
-
-      msg.textContent = message;
-      icon.innerHTML = isError 
-        ? `<svg class="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>`
-        : `<svg class="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>`;
-
-      toast.classList.remove('translate-y-24', 'opacity-0');
-      toast.classList.add('translate-y-0', 'opacity-100');
-
-      setTimeout(() => {
-        toast.classList.add('translate-y-24', 'opacity-0');
-        toast.classList.remove('translate-y-0', 'opacity-100');
-      }, 3000);
-    }
-
-    // Parse lines according to academic structure
-    function parseContent() {
-      const text = document.getElementById('inputText').value;
-      const cleanRefHeading = document.getElementById('chkCleanRefHeading').checked;
-      const cleanRefEntries = document.getElementById('chkCleanRefEntries').checked;
-      const cleanBadges = document.getElementById('chkCleanBadges').checked;
-
-      const lines = text.split('\n');
-      const parsedItems = [];
-      let inReferences = false;
-      let firstLineProcessed = false;
-
-      // Aggregator patterns to clean up
-      const badgeRegex = /\s*(Wiley Online Library|Indian Journals|Knowledge4Policy|K4P)\+?\d*/gi;
-
-      for (let i = 0; i < lines.length; i++) {
-        let line = lines[i].trim();
-        if (!line) continue;
-
-        // Clean badges if enabled
-        if (cleanBadges) {
-          line = line.replace(badgeRegex, '').trim();
-        }
-
-        // Detect References heading
-        if (/^(\d+[\.\)]?\s*)?References\b/i.test(line)) {
-          inReferences = true;
-          let heading = line;
-          if (cleanRefHeading) {
-            heading = line.replace(/^\d+[\.\)]?\s*/, '').trim();
-          }
-          parsedItems.push({ type: 'ref-heading', text: heading });
-          continue;
-        }
-
-        // Inside References
-        if (inReferences) {
-          let refText = line;
-          if (cleanRefEntries) {
-            refText = refText.replace(/^\d+[\.\)]?\s*/, '').trim();
-          }
-          parsedItems.push({ type: 'reference-item', text: refText });
-          continue;
-        }
-
-        // First non-empty line is Title
-        if (!firstLineProcessed && !/^\d+\./.test(line)) {
-          parsedItems.push({ type: 'title', text: line });
-          firstLineProcessed = true;
-          continue;
-        }
-
-        // Level 1 Section Heading (e.g., '1. Introduction', '10. Conclusion')
-        if (/^\d+\.\s+[A-Za-z]/.test(line)) {
-          parsedItems.push({ type: 'h1', text: line });
-          continue;
-        }
-
-        // Level 2 Sub-heading (e.g., '2.1 Research Design')
-        if (/^\d+\.\d+\s+[A-Za-z]/.test(line)) {
-          parsedItems.push({ type: 'h2', text: line });
-          continue;
-        }
-
-        // Abstract / Keywords / Author designations
-        if (/^(Abstract|Keywords:|Author Details|Designation|Department|Institution|Country)/i.test(line)) {
-          parsedItems.push({ type: 'meta', text: line });
-          continue;
-        }
-
-        // Bullet point
-        if (/^[\-\•\*]\s+/.test(line)) {
-          parsedItems.push({ type: 'bullet', text: line.replace(/^[\-\•\*]\s+/, '').trim() });
-          continue;
-        }
-
-        // Standard Body Paragraph
-        parsedItems.push({ type: 'paragraph', text: line });
-      }
-
-      return parsedItems;
-    }
-
-    // Real-time Visual Academic HTML Preview
-    function updateLivePreview() {
-      const items = parseContent();
-      const previewArea = document.getElementById('previewArea');
-
-      if (items.length === 0) {
-        previewArea.innerHTML = `<p class="text-slate-400 italic text-center py-20">Type or paste text in the left panel to preview formatted output.</p>`;
-        return;
-      }
-
-      let html = '';
-
-      items.forEach(item => {
-        switch (item.type) {
-          case 'title':
-            html += `<h1 class="text-xl font-bold text-center text-slate-900 mb-6 leading-snug">${escapeHtml(item.text)}</h1>`;
-            break;
-          case 'meta':
-            html += `<p class="font-semibold text-slate-800 mt-3 mb-1 text-sm">${escapeHtml(item.text)}</p>`;
-            break;
-          case 'h1':
-            html += `<h2 class="text-base font-bold text-slate-900 mt-6 mb-2 tracking-tight">${escapeHtml(item.text)}</h2>`;
-            break;
-          case 'h2':
-            html += `<h3 class="text-sm font-bold text-slate-800 mt-4 mb-2">${escapeHtml(item.text)}</h3>`;
-            break;
-          case 'bullet':
-            html += `<li class="ml-6 list-disc text-slate-700 text-xs mb-1">${escapeHtml(item.text)}</li>`;
-            break;
-          case 'ref-heading':
-            html += `<h2 class="text-base font-bold text-slate-900 mt-8 mb-3 pb-1 border-b border-slate-200">${escapeHtml(item.text)}</h2>`;
-            break;
-          case 'reference-item':
-            html += `<p class="text-xs text-slate-700 mb-2 pl-6 -indent-6 leading-relaxed">${escapeHtml(item.text)}</p>`;
-            break;
-          case 'paragraph':
-          default:
-            html += `<p class="text-xs text-slate-700 mb-3 text-justify leading-relaxed">${escapeHtml(item.text)}</p>`;
-            break;
-        }
-      });
-
-      previewArea.innerHTML = html;
-    }
-
-    function escapeHtml(str) {
-      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    }
-
-    // Generate genuine .docx file using docx.js
-    function generateDocx() {
-      const items = parseContent();
-      if (items.length === 0) {
-        showToast("Please enter or paste text first!", true);
-        return;
-      }
-
-      const docxChildren = [];
-
-      items.forEach(item => {
-        switch (item.type) {
-          case 'title':
-            docxChildren.push(new docx.Paragraph({
-              children: [
-                new docx.TextRun({
-                  text: item.text,
-                  bold: true,
-                  size: 32, // 16pt
-                  font: "Times New Roman"
-                })
-              ],
-              alignment: docx.AlignmentType.CENTER,
-              spacing: { before: 0, after: 240 }
-            }));
-            break;
-
-          case 'meta':
-            docxChildren.push(new docx.Paragraph({
-              children: [
-                new docx.TextRun({
-                  text: item.text,
-                  bold: true,
-                  size: 24, // 12pt
-                  font: "Times New Roman"
-                })
-              ],
-              spacing: { before: 100, after: 80 }
-            }));
-            break;
-
-          case 'h1':
-            docxChildren.push(new docx.Paragraph({
-              children: [
-                new docx.TextRun({
-                  text: item.text,
-                  bold: true,
-                  size: 26, // 13pt
-                  font: "Times New Roman"
-                })
-              ],
-              spacing: { before: 240, after: 120 }
-            }));
-            break;
-
-          case 'h2':
-            docxChildren.push(new docx.Paragraph({
-              children: [
-                new docx.TextRun({
-                  text: item.text,
-                  bold: true,
-                  size: 24, // 12pt
-                  font: "Times New Roman"
-                })
-              ],
-              spacing: { before: 180, after: 80 }
-            }));
-            break;
-
-          case 'bullet':
-            docxChildren.push(new docx.Paragraph({
-              children: [
-                new docx.TextRun({
-                  text: item.text,
-                  size: 24, // 12pt
-                  font: "Times New Roman"
-                })
-              ],
-              bullet: { level: 0 },
-              spacing: { after: 60 }
-            }));
-            break;
-
-          case 'ref-heading':
-            docxChildren.push(new docx.Paragraph({
-              children: [
-                new docx.TextRun({
-                  text: item.text,
-                  bold: true,
-                  size: 26, // 13pt
-                  font: "Times New Roman"
-                })
-              ],
-              spacing: { before: 260, after: 140 }
-            }));
-            break;
-
-          case 'reference-item':
-            // Formal hanging indent for unnumbered academic references
-            docxChildren.push(new docx.Paragraph({
-              children: [
-                new docx.TextRun({
-                  text: item.text,
-                  size: 22, // 11pt
-                  font: "Times New Roman"
-                })
-              ],
-              indent: {
-                left: 720,      // 0.5 inch left
-                hanging: 720    // 0.5 inch hanging indent
-              },
-              spacing: { after: 120 }
-            }));
-            break;
-
-          case 'paragraph':
-          default:
-            docxChildren.push(new docx.Paragraph({
-              children: [
-                new docx.TextRun({
-                  text: item.text,
-                  size: 24, // 12pt
-                  font: "Times New Roman"
-                })
-              ],
-              alignment: docx.AlignmentType.JUSTIFIED,
-              spacing: { line: 280, after: 160 } // ~1.15 line spacing
-            }));
-            break;
-        }
-      });
-
-      // Construct document with standard 1-inch margins
-      const doc = new docx.Document({
-        sections: [{
-          properties: {
-            page: {
-              margin: {
-                top: 1440,    // 1 inch = 1440 twips
-                right: 1440,
-                bottom: 1440,
-                left: 1440
-              }
-            }
-          },
-          children: docxChildren
-        }]
-      });
-
-      // Generate and trigger download
-      docx.Packer.toBlob(doc).then(blob => {
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        
-        // Auto derive a suitable filename from Title or fallback
-        const titleItem = items.find(i => i.type === 'title');
-        let filename = 'Academic_Paper.docx';
-        if (titleItem && titleItem.text) {
-          const safeName = titleItem.text.substring(0, 45).replace(/[^a-zA-Z0-9_-]/g, '_');
-          filename = `${safeName}.docx`;
-        }
-
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-        
-        showToast("Word document generated & downloaded!");
-      }).catch(err => {
-        console.error(err);
-        showToast("Error creating document. Check console.", true);
-      });
-    }
-  </script>
 </body>
 </html>
